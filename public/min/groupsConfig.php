@@ -46,6 +46,10 @@ return array(
         '../plugins/jquery-nestable/jquery.nestable.min.js',
         '../assets/default/js/category/admin-nestables.js',
     ],
+    'jsDefaultProductCategoryAdmin' => [
+        '../plugins/jquery-nestable/jquery.nestable.min.js',
+        '../assets/default/js/pcategory/admin-nestables.js',
+    ],
     'jsDefaultCoreSite' => [
         '../plugins/pace/pace.min.js',
         '../plugins/modernizr.custom.js',
@@ -92,6 +96,9 @@ return array(
     ],
     'cssDefaultCategoryAdmin' => [
         '../assets/default/css/category/admin-style.css',
+    ],
+    'cssDefaultProductCategoryAdmin' => [
+        '../assets/default/css/pcategory/admin-style.css',
     ],
     'cssDefaultCoreSite' => [
         '../plugins/pace/pace-theme-flash.css',

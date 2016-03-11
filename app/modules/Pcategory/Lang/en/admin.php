@@ -1,10 +1,10 @@
 <?php
 $messages = [
-    'page-title-index' => 'Category management',
-    'page-title-create' => 'Create new Category',
-    'page-title-edit' => 'Edit Category',
+    'page-title-index' => 'Product Category management',
+    'page-title-create' => 'Create new Product Category',
+    'page-title-edit' => 'Edit Product Category',
 
-    'title-index' => 'Category',
+    'title-index' => 'Product Category',
     'title-listing' => 'List',
     'title-create' => 'Create',
     'title-edit' => 'Edit',
@@ -24,9 +24,9 @@ $messages = [
     'form.button-submit' => 'Submit',
     'form.button-clear' => 'Clear',
 
-    'message-create-category-success' => 'Category <strong>###name###</strong> was created successfully.',
-    'message-update-category-success' => 'Category <strong>###name###</strong> was updated successfully.',
+    'message-create-pcategory-success' => 'Product Category <strong>###name###</strong> was created successfully.',
+    'message-update-pcategory-success' => 'Product Category <strong>###name###</strong> was updated successfully.',
     'message-name-notempty' => 'Name is required.',
     'message-status-notempty' => 'Status is required.',
-    'message-delete-success' => 'Category ID <strong>###id###</strong> was deleted successfully.',
+    'message-delete-success' => 'Product Category ID <strong>###id###</strong> was deleted successfully.',
 ];

@@ -146,6 +146,7 @@ class AdminController extends AbstractAdminController
                 $myUser->password = $this->security->hash($formData['password']);
 
                 if ($myUser->create()) {
+                    $formData = [];
                     $this->flash->success(str_replace('###name###', $myUser->name, $this->lang->_('message-create-user-success')));
                 } else {
                     foreach ($myUser->getMessages() as $msg) {

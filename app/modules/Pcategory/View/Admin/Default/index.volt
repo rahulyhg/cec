@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block css %}
-    <link href="{{ static_url('min/index.php?g=cssDefaultCategoryAdmin&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
+    <link href="{{ static_url('min/index.php?g=cssDefaultProductCategoryAdmin&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultCategoryAdmin&rev=' ~ config.global.version.js) }}"></script>
+    <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultProductCategoryAdmin&rev=' ~ config.global.version.js) }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="btn-group pull-right m-b-10">
-                <a href="{{ url('admin/category/create') }}" class="btn btn-complete"><i class="fa fa-plus"></i>&nbsp; {{ 'title-create'|i18n }}</a>
+                <a href="{{ url('admin/pcategory/create') }}" class="btn btn-complete"><i class="fa fa-plus"></i>&nbsp; {{ 'title-create'|i18n }}</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -47,8 +47,8 @@
                     </div>
                     <span class="pull-right btn-nestable-group">
                         <div class="btn-group btn-group-xs pull-right">
-                            <a href="{{ url('admin/category/edit/' ~ cat.id) }}" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; {{ 'panel-edit'|i18n }}</a>
-                            <a href="javascript:deleteConfirm('{{ url('admin/category/delete/' ~ cat.id) }}', '{{ cat.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                            <a href="{{ url('admin/pcategory/edit/' ~ cat.id) }}" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; {{ 'panel-edit'|i18n }}</a>
+                            <a href="javascript:deleteConfirm('{{ url('admin/pcategory/delete/' ~ cat.id) }}', '{{ cat.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
                         </div>
                     </span>
                     <div class="dd3-content">

@@ -21,6 +21,9 @@ return [
         ],
         'Category' => [
             'error/*'
+        ],
+        'ProductCategory' => [
+            'error/*'
         ]
     ],
 
@@ -33,6 +36,9 @@ return [
             'index/index'
         ],
         'Category' => [
+            'error/*'
+        ],
+        'ProductCategory' => [
             'error/*'
         ]
     ],

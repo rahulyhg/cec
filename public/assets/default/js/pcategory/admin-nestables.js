@@ -13,7 +13,7 @@
                 output = list.data('output');
             // console.log(JSON.stringify(list.nestable('serialize')));
             $.ajax({
-                url: root_url + '/category/sortable',
+                url: root_url + '/pcategory/sortable',
                 type: 'post',
                 dataType: 'json',
                 contentType: 'application/json',

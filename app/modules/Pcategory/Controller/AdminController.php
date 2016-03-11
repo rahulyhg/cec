@@ -1,19 +1,19 @@
 <?php
-namespace Category\Controller;
+namespace Pcategory\Controller;
 
 use Core\Controller\AbstractAdminController;
-use Category\Model\Category as Category;
+use Pcategory\Model\Pcategory as ProductCategory;
 
 /**
- * Category Home.
+ * Product Category Home.
  *
- * @category  ThePhalconPHP
+ * @pcategory  ThePhalconPHP
  * @author    Nguyen Duc Duy <nguyenducduy.it@gmail.com>
  * @copyright 2014-2015
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @RoutePrefix("/admin/category", name="admin-category-home")
+ * @RoutePrefix("/admin/pcategory", name="admin-pcategory-home")
  */
 class AdminController extends AbstractAdminController
 {
@@ -22,14 +22,14 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Get("/", name="admin-category-index")
+     * @Get("/", name="admin-pcategory-index")
      */
     public function indexAction()
     {
-        $myCategories = Category::find(array('order' => 'lft'));
+        $myCategories = ProductCategory::find(array('order' => 'lft'));
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/category');
-        $this->bc->add($this->lang->_('title-listing'), 'admin/category');
+        $this->bc->add($this->lang->_('title-index'), 'admin/pcategory');
+        $this->bc->add($this->lang->_('title-listing'), 'admin/pcategory');
         $this->view->setVars([
             'myCategories' => $myCategories,
             'bc' => $this->bc->generate(),
@@ -41,7 +41,7 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Route("/create", methods={"GET", "POST"}, name="admin-category-create")
+     * @Route("/create", methods={"GET", "POST"}, name="admin-pcategory-create")
      */
     public function createAction()
     {
@@ -53,13 +53,13 @@ class AdminController extends AbstractAdminController
                 $formData = array_merge($formData, $this->request->getPost());
 
                 if ($formData['root'] > 1) {
-                    $root = Category::findFirst($formData['root']);
+                    $root = ProductCategory::findFirst($formData['root']);
                 } else {
                     $root = self::checkRoot();
                 }
 
-                // Create category
-                $myCategory = new Category();
+                // Create pcategory
+                $myCategory = new ProductCategory();
                 $myCategory->assign([
                     'name' => $formData['name'],
                     'status' => $formData['status'],
@@ -70,7 +70,7 @@ class AdminController extends AbstractAdminController
 
                 if ($myCategory->appendTo($root)) {
                     $formData = [];
-                    $this->flash->success(str_replace('###name###', $myCategory->name, $this->lang->_('message-create-category-success')));
+                    $this->flash->success(str_replace('###name###', $myCategory->name, $this->lang->_('message-create-pcategory-success')));
                 } else {
                     foreach ($myCategory->getMessages() as $msg) {
                         $message .= $this->lang->_($msg->getMessage()) . '<br />';
@@ -82,13 +82,13 @@ class AdminController extends AbstractAdminController
             }
         }
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/category');
-        $this->bc->add($this->lang->_('title-create'), 'admin/category/create');
+        $this->bc->add($this->lang->_('title-index'), 'admin/pcategory');
+        $this->bc->add($this->lang->_('title-create'), 'admin/pcategory/create');
         $this->view->setVars([
             'bc' => $this->bc->generate(),
             'formData' => $formData,
-            'statusList' => Category::getStatusList(),
-            'categories' => Category::find(['order' => 'lft'])
+            'statusList' => ProductCategory::getStatusList(),
+            'categories' => ProductCategory::find(['order' => 'lft'])
         ]);
     }
 
@@ -97,7 +97,7 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Route("/edit/{id:[0-9]+}", methods={"GET", "POST"}, name="admin-category-edit")
+     * @Route("/edit/{id:[0-9]+}", methods={"GET", "POST"}, name="admin-pcategory-edit")
      */
     public function editAction($id = 0)
     {
@@ -107,8 +107,8 @@ class AdminController extends AbstractAdminController
         if ($this->request->hasPost('fsubmit')) {
             $formData = array_merge($formData, $this->request->getPost());
 
-            // Find category with primaryKey ID
-            $myCategory = Category::findFirst([
+            // Find pcategory with primaryKey ID
+            $myCategory = ProductCategory::findFirst([
                 'id = :id:',
                 'bind' => ['id' => (int) $id]
             ]);
@@ -121,7 +121,7 @@ class AdminController extends AbstractAdminController
 
             // Update Category Model
             if ($myCategory->update()) {
-                $this->flash->success(str_replace('###name###', $myCategory->name, $this->lang->_('message-update-category-success')));
+                $this->flash->success(str_replace('###name###', $myCategory->name, $this->lang->_('message-update-pcategory-success')));
             } else {
                 foreach ($myCategory->getMessages() as $msg) {
                     $message .= $this->lang->_($msg->getMessage()) . '<br />';
@@ -130,17 +130,17 @@ class AdminController extends AbstractAdminController
             }
         }
 
-        $formData = Category::findFirst([
+        $formData = ProductCategory::findFirst([
             'id = :id:',
             'bind' => ['id' => (int) $id]
         ])->toArray();
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/category');
-        $this->bc->add($this->lang->_('title-edit'), 'admin/category/edit');
+        $this->bc->add($this->lang->_('title-index'), 'admin/pcategory');
+        $this->bc->add($this->lang->_('title-edit'), 'admin/pcategory/edit');
         $this->view->setVars([
             'bc' => $this->bc->generate(),
             'formData' => $formData,
-            'statusList' => Category::getStatusList()
+            'statusList' => ProductCategory::getStatusList()
         ]);
     }
 
@@ -149,12 +149,12 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Get("/delete/{id:[0-9]+}", name="admin-category-delete")
+     * @Get("/delete/{id:[0-9]+}", name="admin-pcategory-delete")
      */
     public function deleteAction($id = 0)
     {
         $message = '';
-        $myCategory = Category::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
+        $myCategory = ProductCategory::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
 
         if ($myCategory->delete()) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
@@ -165,7 +165,7 @@ class AdminController extends AbstractAdminController
             $this->flashSession->error($message);
         }
 
-        return $this->response->redirect('admin/category');
+        return $this->response->redirect('admin/pcategory');
     }
 
     /**
@@ -173,7 +173,7 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Post("/sortable", name="admin-category-sortable")
+     * @Post("/sortable", name="admin-pcategory-sortable")
      */
     public function sortableAction()
     {
@@ -190,11 +190,11 @@ class AdminController extends AbstractAdminController
     {
         if (isset($root->children) && count($root->children) > 0) {
             foreach ($root->children as $child) {
-                $parentCategory = Category::findFirst($root->id);
+                $parentCategory = ProductCategory::findFirst($root->id);
                 // echo 'Parent is ' . $root->id . ', ';
                 self::doSort($child);
                 // print_r($child);
-                $childCategory = Category::findFirst($child->id);
+                $childCategory = ProductCategory::findFirst($child->id);
                 $childCategory->moveAsLast($parentCategory);
             }
             // echo "---------\n";
@@ -203,12 +203,12 @@ class AdminController extends AbstractAdminController
 
     private static function checkRoot()
     {
-        $root = Category::findFirst('lft = 1');
+        $root = ProductCategory::findFirst('lft = 1');
 
         if (!$root) {
-            $root = new Category();
+            $root = new ProductCategory();
             $root->root = 1;
-            $root->status = Category::STATUS_ENABLE;
+            $root->status = ProductCategory::STATUS_ENABLE;
             $root->name = 'Root';
             $root->description = 'Root description';
             $root->saveNode();

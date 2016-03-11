@@ -1,12 +1,12 @@
 <?php
-namespace Category\Model;
+namespace Pcategory\Model;
 
 use Engine\Db\AbstractModel;
 use Engine\Behavior\Model\Imageable;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
 
 /**
- * Category Model.
+ * Product Category Model.
  *
  * @category  ThePhalconPHP
  * @author    Nguyen Duc Duy <nguyenducduy.it@gmail.com>
@@ -14,68 +14,68 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @Source('cec_category');
+ * @Source('cec_product_category');
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  * @Behavior('\Engine\Behavior\Model\NestedSet', {
- * 	'tablePrefix': 'c_'
+ * 	'tablePrefix': 'pc_'
  * });
  */
-class Category extends AbstractModel
+class Pcategory extends AbstractModel
 {
     /**
     * @Primary
     * @Identity
-    * @Column(type="integer", nullable=false, column="c_id")
+    * @Column(type="integer", nullable=false, column="pc_id")
     */
     public $id;
 
     /**
-    * @Column(type="string", nullable=true, column="c_name")
+    * @Column(type="string", nullable=true, column="pc_name")
     */
     public $name;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_root")
+    * @Column(type="integer", nullable=true, column="pc_root")
     */
     public $root;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_lft")
+    * @Column(type="integer", nullable=true, column="pc_lft")
     */
     public $lft;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_rgt")
+    * @Column(type="integer", nullable=true, column="pc_rgt")
     */
     public $rgt;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_level")
+    * @Column(type="integer", nullable=true, column="pc_level")
     */
     public $level;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_status")
+    * @Column(type="integer", nullable=true, column="pc_status")
     */
     public $status;
 
     /**
-    * @Column(type="string", nullable=true, column="c_seo_description")
+    * @Column(type="string", nullable=true, column="pc_seo_description")
     */
     public $seodescription;
 
     /**
-    * @Column(type="string", nullable=true, column="c_seo_keyword")
+    * @Column(type="string", nullable=true, column="pc_seo_keyword")
     */
     public $seokeyword;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_datecreated")
+    * @Column(type="integer", nullable=true, column="pc_datecreated")
     */
     public $datecreated;
 
     /**
-    * @Column(type="integer", nullable=true, column="c_datemodified")
+    * @Column(type="integer", nullable=true, column="pc_datemodified")
     */
     public $datemodified;
 

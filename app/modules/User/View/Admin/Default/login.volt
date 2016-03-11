@@ -34,7 +34,7 @@
           <!-- START Login Background Pic Wrapper-->
           <div class="bg-pic">
             <!-- START Background Pic-->
-            <img src="{{static_url('demo-login-image.jpg')}}" data-src="" data-src-retina="" alt="" class="lazy">
+            <img src="{{static_url('assets/default/img/login.jpg')}}" data-src="" data-src-retina="" alt="" class="lazy">
             <!-- END Background Pic-->
             <!-- START Background Caption-->
             <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
@@ -71,14 +71,14 @@
                   </div>
                 </div>
                 <!-- START Form Control-->
-                <div class="row">
+                {#<div class="row">
                   <div class="col-md-6 no-padding">
                     <div class="checkbox ">
                         <input type="checkbox" name="fcookie" id="rememberMe" value="remember-me" {% if formData['fcookie'] == true %}checked{% endif %}/>
                       <label for="checkbox1">Duy trì đăng nhập</label>
                     </div>
                   </div>
-                </div>
+                </div>#}
                 <!-- END Form Control-->
                 <button class="btn btn-primary btn-cons m-t-10" type="submit" name="fsubmit">Đăng nhập</button>
               </form>
