@@ -1,0 +1,39 @@
+.dd3-content {
+    height: 50px;
+}
+.dd3-handle {
+    height: 50px;
+}
+.dd3-handle:before {
+    font-size: 15px;
+    top: 15px;
+}
+.dd-item>button {
+    height: 40px;
+}
+.btn-nestable-group {
+    margin: 15px;
+}
+.nestable-lists .img-circle {
+    display: inline-block;
+}
+
+.nestable-lists .mini-language-box {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.dd {
+    max-width: 100% !important;
+}
+
+li>.add_language_button {
+    background-color: #f0f0f0;
+}
+.add_language_button {
+    text-align: center;
+}
+.add_language_button i {
+    font-size: 16px;
+}

@@ -1,0 +1,28 @@
+/*
+
+* Override Pages default styles or create your own styles here
+
+*/
+.form-horizontal .form-group .control-label {
+    opacity: 1;
+}
+div.cs-skin-slide .cs-options {
+    max-height: none;
+}
+table.dataTable tfoot th, table.dataTable tfoot td {
+    padding: 12px 0px 6px 12px;
+    border-top: none;
+}
+table .checkbox label:before {
+    top: -10.6px;
+}
+.required {
+    color: red;
+}
+img.edit-image {
+        display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100px;
+    height: 100px;
+}
