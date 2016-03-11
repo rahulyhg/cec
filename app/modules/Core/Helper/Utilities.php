@@ -56,9 +56,16 @@ class Utilities extends EnHelper
         return implode('/', $relPath);
     }
 
-    // Get coutry code from model Language
-    public function getCountryCode($languageCode)
+    public static function getCurrentUrl()
     {
-        return Language::findFirstByCode((string) $languageCode)->countrycode;
+        $currentURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
+        $currentURL .= $_SERVER["SERVER_NAME"];
+
+        if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
+            $currentURL .= ":".$_SERVER["SERVER_PORT"];
+        }
+
+        $currentURL .= $_SERVER["REQUEST_URI"];
+        return base64_encode($currentURL);
     }
 }

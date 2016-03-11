@@ -6,6 +6,8 @@
  */
 define('ROLE_GUEST', 1);
 define('ROLE_ADMIN', 5);
+define('ROLE_MOD', 10);
+define('ROLE_MEMBER', 15);
 
 return [
     ROLE_GUEST => [
@@ -14,7 +16,7 @@ return [
             'index/index'
         ],
         'User' => [
-            'site/login',
+            'admin/login',
             'error/*'
         ],
         'Category' => [
@@ -27,7 +29,31 @@ return [
             'admin/*',
         ],
         'Core' => [
+            'error/*',
+            'index/index'
+        ],
+        'Category' => [
             'error/*'
+        ]
+    ],
+
+    ROLE_MOD => [
+        'User' => [
+            'admin/*',
+        ],
+        'Core' => [
+            'error/*',
+            'index/index'
+        ]
+    ],
+
+    ROLE_MEMBER => [
+        'User' => [
+            'admin/*',
+        ],
+        'Core' => [
+            'error/*',
+            'index/index'
         ]
     ]
 ];

@@ -65,11 +65,11 @@
                             </label>
                             <div class="col-sm-9">
                                 <input
-                                    type="text"
+                                    type="password"
                                     class="form-control"
                                     placeholder=""
                                     name="password"
-                                    value="{% if formData['password'] is defined %}{{ formData['password'] }}{% endif %}"
+                                    value=""
                                      />
                             </div>
                         </div>

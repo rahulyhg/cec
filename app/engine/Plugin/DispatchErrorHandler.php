@@ -5,6 +5,7 @@ use Engine\Application as EngineApplication;
 use Engine\Exception as EngineException;
 use Phalcon\Mvc\Dispatcher\Exception as PhDispatchException;
 use Phalcon\Mvc\User\Plugin as PhUserPlugin;
+use Core\Helper\Utilities;
 
 /**
  * Not found plugin.
@@ -40,7 +41,17 @@ class DispatchErrorHandler extends PhUserPlugin
 
                 return false;
             } else {
-                return $this->getDI()->get('response')->redirect('admin/login');
+                $controllerName = strtolower($dispatcher->getControllerName());
+
+                switch ($controllerName) {
+                    case 'admin':
+                        $url = '/admin/user/login?redirect=' . Utilities::getCurrentUrl();
+                        break;
+                    case 'site':
+                        $url = '/login?redirect=' . Utilities::getCurrentUrl();
+                        break;
+                }
+                return $this->getDI()->get('response')->redirect($url, true, 301);
             }
 
             return true;

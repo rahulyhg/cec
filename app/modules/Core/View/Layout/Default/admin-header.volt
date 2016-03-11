@@ -93,7 +93,7 @@
             <div class="dropdown pull-right">
                 <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="thumbnail-wrapper d32 circular inline m-t-5">
-                    {# <img src="" alt="" data-src="img/profiles/avatar.jpg" data-src-retina="img/profiles/avatar_small2x.jpg" width="32" height="32"> #}
+                     <img src="{{ static_url(session.get('me').avatar) }}" alt="{{ session.get('me').name }}" data-src="{{ static_url(session.get('me').avatar) }}" data-src-retina="{{ static_url(session.get('me').avatar) }}" width="32" height="32">
                 </span>
                 </button>
                 <ul class="dropdown-menu profile-dropdown" role="menu">

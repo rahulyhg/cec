@@ -275,4 +275,120 @@ class AdminController extends AbstractAdminController
             '_result' => $result
         ]);
     }
+
+    /**
+     * Admin user login action.
+     *
+     * @return void
+     *
+     * @Route("/login", methods={"GET", "POST"}, name="admin-user-login")
+     */
+    public function loginAction()
+    {
+        $redirectUrl = base64_decode($this->request->getQuery('redirect', null, ''));
+
+        $formData = [];
+        $cookie = false;
+        $formData['fname'] = $this->request->getPost('fname', null, '');
+        $formData['fpassword'] = $this->request->getPost('fpassword', null, '');
+        $formData['fcookie'] = $this->request->getPost('fcookie', null, false);
+
+        if ($this->request->hasPost('fsubmit')) {
+            if ($this->security->checkToken()) {
+                if (isset($formData['fcookie']) && $formData['fcookie'] == 'remember-me') {
+                    $cookie = (boolean) true;
+                }
+
+                $identity = $this->check(
+                    (string) $formData['fname'],
+                    (string) $formData['fpassword'],
+                    $cookie,
+                    true);
+
+                if ($identity == true) {
+                    if ($redirectUrl != null) {
+                        return $this->response->redirect($redirectUrl, true, 301);
+                    } else {
+                        return $this->response->redirect('admin');
+                    }
+                }
+            }
+        }
+
+        $this->tag->prependTitle('Login');
+        $this->view->setVars([
+            'formData' => $formData
+        ]);
+    }
+
+    /**
+     * Checking user existing in system
+     *
+     * @param  string  $email
+     * @param  string  $password
+     * @param  boolean $cookie
+     * @param  boolean $log
+     * @return boolean
+     */
+    public function check($email, $password, $cookie = false, $log = false)
+    {
+        $validated = false;
+
+        $me = new \stdClass();
+        $myUser = UserModel::findFirst([
+            'email = :femail: AND status = :status:',
+            'bind' => [
+                'femail' => $email,
+                'status' => UserModel::STATUS_ENABLE
+            ]
+        ]);
+
+        if ($myUser) {
+            if ($this->security->checkHash($password, $myUser->password)) {
+                $me->id = $myUser->id;
+                $me->email = $myUser->email;
+                $me->name = $myUser->name;
+                $me->role = $myUser->role;
+                $me->roleName = $myUser->getRoleName();
+                $me->avatar = $myUser->getThumbnailImage();
+
+                // create session for user
+                $this->session->set('me', $me);
+
+                // store cookie if chosen
+                if ($cookie == true) {
+                    $this->cookie->set('remember-me', $me->id, time() + 15 * 86400);
+                }
+
+                $validated = true;
+            } else {
+                $this->flash->error('Wrong password!');
+            }
+        } else {
+            $this->flash->error('Wrong user information!');
+        }
+
+        return $validated;
+    }
+
+    /**
+     * Admin user logout action.
+     *
+     * @return void
+     *
+     * @Route("/logout", methods={"GET"}, name="admin-user-logout")
+     */
+    public function logoutAction()
+    {
+        // delete cookie
+        if ($this->cookie->has('remember-me')) {
+            $rememberMe = $this->cookie->get('remember-me');
+            $rememberMe->delete();
+        }
+
+        // remove session
+        $this->session->destroy();
+
+        return $this->response->redirect('/admin/user/login');
+    }
 }

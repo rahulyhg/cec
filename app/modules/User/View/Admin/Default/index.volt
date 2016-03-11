@@ -80,7 +80,8 @@
                             <td class="v-align-middle">{{ item.id }}</td>
                             <td class="v-align-middle">
                                 <img src="{{ static_url(item.getThumbnailImage()) }}" class="img-rounded" alt="{{ item.getThumbnailImage() }}" width="50" height="50">
-                                &nbsp; {{ item.name }}
+                                &nbsp; {{ item.name }} <br/>
+                                <small class="user-role">{{ item.getRoleName() }}</small>
                             </td>
                             <td class="v-align-middle">{{ item.email }}</td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>

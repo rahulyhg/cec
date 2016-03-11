@@ -3,6 +3,7 @@ $messages = [
     'page-title-index' => 'User management',
     'page-title-create' => 'Create new user',
     'page-title-edit' => 'Edit user',
+    'page-title-login' => 'Login',
 
     'title-index' => 'User',
     'title-listing' => 'List',
@@ -35,4 +36,9 @@ $messages = [
     'message-email-unique' => 'Email has already existed.',
     'message-email-invalid' => 'Email Invalid.',
     'message-delete-success' => 'User ID <strong>###id###</strong> was deleted successfully.',
+
+    'form.login-username-label' => 'Đăng nhập',
+    'form.login-username-placeholder' => 'Địa chỉ email',
+    'form.login-password-label' => 'Mật khẩu',
+    'form.login-password-placeholder' => 'Mật khẩu',
 ];

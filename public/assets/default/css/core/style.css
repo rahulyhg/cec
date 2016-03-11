@@ -26,3 +26,13 @@ img.edit-image {
     width: 100px;
     height: 100px;
 }
+.form-group label:not(.error) {
+    font-family: 'Arial';
+}
+.user-role {
+    display: inline-block;
+    float: left;
+    margin-left: 61px;
+    margin-top: -18px;
+    color: red;
+}

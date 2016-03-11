@@ -328,4 +328,26 @@ class User extends AbstractModel
 
         return $class;
     }
+
+    public function getRoleName()
+    {
+        $name = '';
+
+        switch ($this->role) {
+            case ROLE_ADMIN:
+                $name = 'Administrator';
+                break;
+            case ROLE_MOD:
+                $name = 'Moderator';
+                break;
+            case ROLE_MEMBER:
+                $name = 'Member';
+                break;
+            case ROLE_GUEST:
+                $name = 'Guest';
+                break;
+        }
+
+        return $name;
+    }
 }

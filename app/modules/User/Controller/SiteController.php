@@ -13,7 +13,7 @@ use User\Model\User as UserModel;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @RoutePrefix("/admin/login", name="user-site-home")
+ * @RoutePrefix("/", name="user-site-home")
  */
 class SiteController extends AbstractAdminController
 {
@@ -22,10 +22,10 @@ class SiteController extends AbstractAdminController
      *
      * @return void
      *
-     * @Route("/", methods={"GET", "POST"}, name="user-site-index")
+     * @Route("/login", methods={"GET", "POST"}, name="user-site-index")
      */
     public function loginAction()
     {
-
+        die('site login');
     }
 }
