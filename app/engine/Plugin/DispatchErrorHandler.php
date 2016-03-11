@@ -41,17 +41,31 @@ class DispatchErrorHandler extends PhUserPlugin
 
                 return false;
             } else {
-                $controllerName = strtolower($dispatcher->getControllerName());
+                $session = $this->getDI()->get('session');
 
-                switch ($controllerName) {
-                    case 'admin':
-                        $url = '/admin/user/login?redirect=' . Utilities::getCurrentUrl();
-                        break;
-                    case 'site':
-                        $url = '/login?redirect=' . Utilities::getCurrentUrl();
-                        break;
+                if ($session->get('me')) {
+                    $dispatcher->forward([
+                        'module' => EngineApplication::SYSTEM_DEFAULT_MODULE,
+                        'namespace' => ucfirst(EngineApplication::SYSTEM_DEFAULT_MODULE) . '\Controller',
+                        'controller' => 'Error',
+                        'action' => 'show404'
+                    ]);
+
+                    return false;
+                } else {
+                    $controllerName = strtolower($dispatcher->getControllerName());
+
+                    switch ($controllerName) {
+                        case 'admin':
+                            $url = '/admin/user/login?redirect=' . Utilities::getCurrentUrl();
+                            break;
+                        case 'site':
+                            $url = '/login?redirect=' . Utilities::getCurrentUrl();
+                            break;
+                    }
+
+                    return $this->getDI()->get('response')->redirect($url, true, 301);
                 }
-                return $this->getDI()->get('response')->redirect($url, true, 301);
             }
 
             return true;

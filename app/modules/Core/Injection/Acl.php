@@ -128,8 +128,9 @@ class Acl extends AbstractInjection
 
         $acl = $this->getAcl($config);
         $allowed = (int) $acl->isAllowed($role, $current_resource, $current_action);
+        // var_dump($allowed, $current_resource, $current_action, $me);die;
 
-        if ($allowed !== PhAcl::ALLOW && $me === null) {
+        if ($allowed !== PhAcl::ALLOW) {
             $this->getDI()->getEventsManager()->fire(
                 'dispatch:beforeException',
                 $dispatcher,

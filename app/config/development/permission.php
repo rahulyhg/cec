@@ -36,10 +36,16 @@ return [
             'index/index'
         ],
         'Category' => [
-            'error/*'
+            'error/*',
+            'admin/*'
         ],
         'ProductCategory' => [
-            'error/*'
+            'error/*',
+            'admin/*'
+        ],
+        'Article' => [
+            'error/*',
+            'admin/*'
         ]
     ],
 
