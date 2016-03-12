@@ -22,7 +22,7 @@ return [
         'Category' => [
             'error/*'
         ],
-        'ProductCategory' => [
+        'Pcategory' => [
             'error/*'
         ]
     ],
@@ -39,7 +39,7 @@ return [
             'error/*',
             'admin/*'
         ],
-        'ProductCategory' => [
+        'Pcategory' => [
             'error/*',
             'admin/*'
         ],

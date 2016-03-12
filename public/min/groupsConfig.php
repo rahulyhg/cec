@@ -42,6 +42,9 @@ return array(
     'jsDefaultUserAdmin' => [
         '../assets/default/js/user/admin-main.js',
     ],
+    'jsDefaultArticleAdmin' => [
+        '../assets/default/js/article/admin-main.js',
+    ],
     'jsDefaultCategoryAdmin' => [
         '../plugins/jquery-nestable/jquery.nestable.min.js',
         '../assets/default/js/category/admin-nestables.js',
@@ -93,6 +96,9 @@ return array(
     ],
     'cssDefaultUserAdmin' => [
         '../assets/default/css/user/admin-style.css',
+    ],
+    'cssDefaultArticleAdmin' => [
+        '../assets/default/css/article/admin-style.css',
     ],
     'cssDefaultCategoryAdmin' => [
         '../assets/default/css/category/admin-style.css',

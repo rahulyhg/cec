@@ -2,9 +2,12 @@
 namespace Core\Model;
 
 use Engine\Db\AbstractModel;
+use Engine\Behavior\Model\Imageable;
+use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model\Validator\PresenceOf;
 
 /**
- * Language Model.
+ * Image Model.
  *
  * @category  ThePhalconPHP
  * @author    Nguyen Duc Duy <nguyenducduy.it@gmail.com>
@@ -12,96 +15,101 @@ use Engine\Db\AbstractModel;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @Source('ph_language');
+ * @Source('cec_image');
+ * @Behavior('\Engine\Behavior\Model\Timestampable');
  */
-class Language extends AbstractModel
+class Image extends AbstractModel
 {
     /**
     * @Primary
     * @Identity
-    * @Column(type="integer", nullable=false, column="l_id")
+    * @Column(type="integer", nullable=false, column="i_id")
     */
     public $id;
 
     /**
-    * @Column(type="string", nullable=true, column="l_code")
+    * @Column(type="integer", nullable=true, column="a_id")
     */
-    public $code;
+    public $aid;
 
     /**
-    * @Column(type="string", nullable=true, column="l_country_code")
+    * @Column(type="integer", nullable=true, column="p_id")
     */
-    public $countrycode;
+    public $pid;
 
     /**
-    * @Column(type="string", nullable=true, column="l_name")
+    * @Column(type="string", nullable=true, column="i_name")
     */
     public $name;
 
     /**
-    * @Column(type="integer", nullable=true, column="l_default")
+    * @Column(type="string", nullable=true, column="i_path")
     */
-    public $default;
+    public $path;
 
     /**
-    * @Column(type="integer", nullable=true, column="l_order_no")
+    * @Column(type="string", nullable=true, column="i_extension")
     */
-    public $orderno;
+    public $extension;
 
     /**
-    * @Column(type="integer", nullable=false, column="l_status")
+    * @Column(type="integer", nullable=true, column="i_size")
+    */
+    public $size;
+
+    /**
+    * @Column(type="integer", nullable=true, column="i_status")
     */
     public $status;
 
     /**
-    * @Column(type="integer", nullable=true, column="l_datecreated")
+    * @Column(type="integer", nullable=true, column="i_datecreated")
     */
     public $datecreated;
 
     /**
-    * @Column(type="integer", nullable=true, column="l_datemodified")
+    * @Column(type="integer", nullable=true, column="i_datemodified")
     */
     public $datemodified;
 
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
-    const IS_DEFAULT = 1;
-    const IS_NOT_DEFAULT = 0;
 
     /**
      * Initialize model
      */
     public function initialize()
     {
-        // $config = $this->getDI()->get('config');
-        //
-        // $this->avatar = $config->global->user->directory . date('Y') . '/' . date('m');
-        // $this->addBehavior(new Imageable([
-        //     'uploadPath' => $this->avatar,
-        //     'sanitize' => $config->global->user->sanitize,
-        //     'allowedFormats' => $config->global->user->mimes->toArray(),
-        //     'allowedMinimumSize' => $config->global->user->minsize,
-        //     'allowedMaximunSize' => $config->global->user->maxsize
-        // ]));
+        $config = $this->getDI()->get('config');
+
+        $this->path = $config->global->product_article->directory . date('Y') . '/' . date('m');
+        $this->addBehavior(new Imageable([
+            'uploadPath' => $this->path,
+            'sanitize' => $config->global->product_article->sanitize,
+            'allowedFormats' => $config->global->product_article->mimes->toArray(),
+            'allowedMinimumSize' => $config->global->product_article->minsize,
+            'allowedMaximunSize' => $config->global->product_article->maxsize,
+            'isoverwrite' => $config->global->product_article->isoverwrite
+        ]));
     }
 
     /**
      * Form field validation
      */
-    // public function validation()
-    // {
-    //     $this->validate(new PresenceOf(
-    //         [
-    //             'field'  => 'name',
-    //             'message' => 'message-name-notempty'
-    //         ]
-    //     ));
-    //
-    //     return $this->validationHasFailed() != true;
-    // }
+    public function validation()
+    {
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'path',
+                'message' => 'message-path-notempty'
+            ]
+        ));
+
+        return $this->validationHasFailed() != true;
+    }
 
     /**
-     * Create Paginator Object for Language Listing
+     * Create Paginator Object
      *
      * @param  [array] $formData    Store condition, order, select column to prepare for query
      * @param  [int] $limit         Record per page

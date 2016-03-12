@@ -41,6 +41,11 @@ class Imageable extends Behavior implements BehaviorInterface
     protected $filesystem = null;
 
     /**
+     * Phalcon Session
+     */
+    protected $session = null;
+
+    /**
      * Option sanitize
      * @var bool
      */
@@ -104,6 +109,7 @@ class Imageable extends Behavior implements BehaviorInterface
     {
         $di = \Phalcon\DI\FactoryDefault::getDefault();
         $this->filesystem = $di->get('file');
+        $this->session = $di->get('session');
 
         $this->setAllowedFormats($options)
              ->setUploadPath($options)
@@ -247,6 +253,7 @@ class Imageable extends Behavior implements BehaviorInterface
         if (isset($options['isoverwrite']) && is_array($options['isoverwrite'])) {
             $this->isoverwrite = $options['isoverwrite'];
         }
+
         return $this;
     }
 
@@ -281,11 +288,12 @@ class Imageable extends Behavior implements BehaviorInterface
                 }
 
                 if ($error == 0) {
-
+                    // Process image upload.
                     $fileName = $file->getName();
                     if ($this->customName != '') {
                         $fileName = $this->customName;
                     }
+
                     //find namepart and extension part
                     $pos = strrpos($fileName, '.');
                     if ($pos === false) {
@@ -300,35 +308,41 @@ class Imageable extends Behavior implements BehaviorInterface
                     }
 
                     if (isset($this->isoverwrite) === true
-                        && $this->isoverwrite == false) {
+                        && $this->isoverwrite === false) {
                         while (file_exists(PUBLIC_PATH . rtrim($this->uploadPath, '/\\')
                             . DIRECTORY_SEPARATOR . $namePart .'.'. $file->getExtension())) {
                             $namePart .= '-' . time();
                         }
                     }
 
-                    if(isset($filename) === false) {
-                        $filename   =   $namePart .'.'. $file->getExtension();
-                    }
-
-                    $path = rtrim($this->uploadPath, '/\\') . DIRECTORY_SEPARATOR . $filename;
+                    $fileName = $namePart .'.'. $file->getExtension();
+                    $path = rtrim($this->uploadPath, '/\\') . DIRECTORY_SEPARATOR . $fileName;
 
                     $fullPath = PUBLIC_PATH . $path;
 
                     if ($file->moveTo($fullPath)) {
                         if ($this->imageField != null) {
-                            $owner->writeAttribute($this->imageField, $filename);
+                            $owner->writeAttribute($this->imageField, $fileName);
                         }
                         $this->setInfo($key, [
                             'path' => $path,
-                            'size'  =>  $file->getSize(),
-                            'extension'  =>  $file->getExtension()
+                            'size' => $file->getSize(),
+                            'extension' => $file->getExtension()
                         ]);
 
                         // Resize image
                         $myResize = new PhImage($fullPath);
-                        $myResize->resize(540, 1000)->crop(540, 1000)->save(PUBLIC_PATH . rtrim($this->uploadPath, '/\\') . DIRECTORY_SEPARATOR . $namePart . '-medium' .'.'. $file->getExtension());
-                        $myResize->resize(300, 200)->crop(300, 200)->save(PUBLIC_PATH . rtrim($this->uploadPath, '/\\') . DIRECTORY_SEPARATOR . $namePart . '-thumb' .'.'. $file->getExtension());
+                        $mediumPath = rtrim($this->uploadPath, '/\\') . DIRECTORY_SEPARATOR . $namePart . '-medium' .'.'. $file->getExtension();
+                        $thumbPath = rtrim($this->uploadPath, '/\\') . DIRECTORY_SEPARATOR . $namePart . '-thumb' .'.'. $file->getExtension();
+                        $myResize->resize(540, 1000)->crop(540, 1000)->save(PUBLIC_PATH . $mediumPath);
+                        $myResize->resize(300, 200)->crop(300, 200)->save(PUBLIC_PATH . $thumbPath);
+
+                        // Add to session to feature remove from dropzone
+                        $this->session->set($file->getName(), [
+                            $path,
+                            $mediumPath,
+                            $thumbPath
+                        ]);
 
                         // Delete old file
                         $this->processDelete();

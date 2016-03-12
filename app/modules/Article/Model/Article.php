@@ -14,11 +14,10 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @Source('ph_article');
- * @HasMany('id', '\Article\Model\ArticleLang', 'aid', {'alias': 'lang'})
+ * @Source('cec_article');
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  */
-class Category extends AbstractModel
+class Article extends AbstractModel
 {
     /**
     * @Primary
@@ -43,44 +42,44 @@ class Category extends AbstractModel
     public $slug;
 
     /**
-    * @Column(type="integer", nullable=true, column="a_order_no")
+    * @Column(type="integer", nullable=true, column="a_display_order")
     */
-    public $orderNo;
+    public $displayorder;
 
     /**
-    * @Column(type="string", nullable=true, column="a_identifier")
+    * @Column(type="integer", nullable=true, column="a_display_to_home")
     */
-    public $identifier;
+    public $displaytohome;
 
     /**
-    * @Column(type="integer", nullable=true, column="a_count_comment")
+    * @Column(type="string", nullable=true, column="a_content")
     */
-    public $countComment;
+    public $content;
 
     /**
-    * @Column(type="integer", nullable=true, column="a_count_view")
+    * @Column(type="string", nullable=true, column="a_image")
     */
-    public $countView;
+    public $image;
 
     /**
-    * @Column(type="integer", nullable=true, column="a_allow_comment")
+    * @Column(type="string", nullable=true, column="a_seo_description")
     */
-    public $allowComment;
+    public $seodescription;
 
     /**
-    * @Column(type="integer", nullable=true, column="a_ip_address")
+    * @Column(type="string", nullable=true, column="a_seo_keyword")
     */
-    public $ipAddress;
+    public $seokeyword;
 
     /**
-    * @Column(type="string", nullable=true, column="a_contributor_list")
+    * @Column(type="integer", nullable=true, column="a_status")
     */
-    public $contributorList;
+    public $status;
 
     /**
-    * @Column(type="integer", nullable=true, column="a_datepublish")
+    * @Column(type="integer", nullable=true, column="a_type")
     */
-    public $datepublish;
+    public $type;
 
     /**
     * @Column(type="integer", nullable=true, column="a_datecreated")
@@ -92,29 +91,68 @@ class Category extends AbstractModel
     */
     public $datemodified;
 
-    protected $lang;
-
-    const IS_ALLOW_COMMENT = 1;
-    const IS_NOT_ALLOW_COMMENT = 0;
     const STATUS_DISABLE = 3;
-    const STATUS_PUBLISH = 1;
-    const STATUS_DRAFT = 5;
+    const STATUS_ENABLE = 1;
 
     public function initialize()
     {
 
     }
 
-    // Overwrite related magic method to get category information
-    // based on language code from session
-    public function getLang()
+    /**
+     * Get label style for status
+     */
+    public function getStatusStyle()
     {
-        return $this->getRelated('lang', [
-            'lcode = :languageCode:',
-            'bind' => [
-                'languageCode' => $this->getDI()->get('session')->get('languageCode')
-            ]
-        ]);
+        $class = '';
+        switch ($this->status) {
+            case self::STATUS_ENABLE:
+                $class = 'label label-info';
+                break;
+            case self::STATUS_DISABLE:
+                $class = 'label label-important';
+                break;
+        }
+
+        return $class;
     }
 
+    public function getStatusName()
+    {
+        $name = '';
+
+        switch ($this->status) {
+            case self::STATUS_ENABLE:
+                $name = 'label-status-enable';
+                break;
+            case self::STATUS_DISABLE:
+                $name = 'label-status-disable';
+                break;
+        }
+
+        return $name;
+    }
+
+    public static function getStatusList()
+    {
+        return $data = [
+            [
+                "name" => 'label-status-enable',
+                "value" => self::STATUS_ENABLE
+            ],
+            [
+                "name" => 'label-status-disable',
+                "value" => self::STATUS_DISABLE
+            ],
+        ];
+    }
+
+    public static function getStatusListArray()
+    {
+        return [
+            self::STATUS_ENABLE,
+            self::STATUS_DISABLE,
+
+        ];
+    }
 }

@@ -63,8 +63,8 @@ return [
         ],
         'sanitize' => true
     ],
-    'article' => [
-        'directory' => '/uploads/article/',
+    'product_article' => [
+        'directory' => '/uploads/product_article/',
         'minsize' => 1000,
         'maxsize' => 1000000,
         'mimes' => [
@@ -73,18 +73,7 @@ return [
             'image/jpg',
             'image/png',
         ],
-        'sanitize' => true
-    ],
-    'product' => [
-        'directory' => '/uploads/product/',
-        'minsize' => 1000,
-        'maxsize' => 1000000,
-        'mimes' => [
-            'image/gif',
-            'image/jpeg',
-            'image/jpg',
-            'image/png',
-        ],
-        'sanitize' => true
+        'sanitize' => true,
+        'isoverwrite' => false
     ],
 ];

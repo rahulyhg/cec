@@ -88,7 +88,7 @@
         <!-- START User Info-->
         <div class="visible-lg visible-md m-t-10">
             <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-                <span class="semi-bold">David</span> <span class="text-master">Nest</span>
+                <span class="semi-bold">{{ session.get('me').name }}</span>
             </div>
             <div class="dropdown pull-right">
                 <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,14 +97,12 @@
                 </span>
                 </button>
                 <ul class="dropdown-menu profile-dropdown" role="menu">
-                    <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
+                    <li><a href="#"><i class="pg-settings_small"></i> Change password</a>
                 </li>
-                <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
             </li>
-            <li><a href="#"><i class="pg-signals"></i> Help</a>
         </li>
         <li class="bg-master-lighter">
-            <a href="#" class="clearfix">
+            <a href="{{ url('admin/user/logout') }}" class="clearfix">
                 <span class="pull-left">Logout</span>
                 <span class="pull-right"><i class="pg-power"></i></span>
             </a>

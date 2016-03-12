@@ -390,6 +390,6 @@ class AdminController extends AbstractAdminController
         // remove session
         $this->session->destroy();
 
-        return $this->response->redirect('/admin/user/login');
+        return $this->response->redirect('admin/user/login');
     }
 }

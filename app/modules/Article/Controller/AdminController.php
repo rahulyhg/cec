@@ -3,6 +3,7 @@ namespace Article\Controller;
 
 use Core\Controller\AbstractAdminController;
 use Article\Model\Article as ArticleModel;
+use Core\Model\Image as ImageModel;
 
 /**
  * Article admin home.
@@ -130,7 +131,7 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Route("/create", methods={"GET", "POST"}, name="admin-user-create")
+     * @Route("/create", methods={"GET", "POST"}, name="admin-article-create")
      */
     public function createAction()
     {
@@ -138,18 +139,19 @@ class AdminController extends AbstractAdminController
         $message = '';
 
         if ($this->request->hasPost('fsubmit')) {
+            var_dump($this->request->getPost());
+            die;
             if ($this->security->checkToken()) {
                 $formData = array_merge($formData, $this->request->getPost());
 
-                $myUser = new UserModel();
-                $myUser->assign($formData);
-                $myUser->password = $this->security->hash($formData['password']);
+                $myArticle = new ArticleModel();
+                $myArticle->assign($formData);
 
-                if ($myUser->create()) {
+                if ($myArticle->create()) {
                     $formData = [];
-                    $this->flash->success(str_replace('###name###', $myUser->name, $this->lang->_('message-create-user-success')));
+                    $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-create-user-success')));
                 } else {
-                    foreach ($myUser->getMessages() as $msg) {
+                    foreach ($myArticle->getMessages() as $msg) {
                         $message .= $this->lang->_($msg->getMessage()) . '<br />';
                     }
                     $this->flash->error($message);
@@ -159,13 +161,12 @@ class AdminController extends AbstractAdminController
             }
         }
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/user');
+        $this->bc->add($this->lang->_('title-index'), 'admin/article');
         $this->bc->add($this->lang->_('title-create'), '');
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
-            'statusList' => UserModel::getStatusList(),
-            'roleList' => UserModel::getRoleList()
+            'statusList' => ArticleModel::getStatusList()
         ]);
     }
 
@@ -250,25 +251,60 @@ class AdminController extends AbstractAdminController
     }
 
     /**
-     * Upload iconpath action.
+     * Upload image action.
      *
      * @return void
      *
-     * @Post("/uploadavatar", name="admin-user-uploadavatar")
+     * @Post("/uploadimage", name="admin-article-uploadimage")
      */
-    public function uploadavatarAction()
+    public function uploadimageAction()
     {
         $meta = $result = [];
-        $myUser = new UserModel();
-        $upload = $myUser->processUpload();
+        $myImage = new ImageModel();
+        $upload = $myImage->processUpload();
 
-        if ($upload == $myUser->isSuccessUpload()) {
+        if ($upload == $myImage->isSuccessUpload()) {
             $meta['status'] = true;
             $meta['message'] = 'Upload successfully.';
-            $result = $myUser->getInfo();
+            $result = $myImage->getInfo();
         } else {
             $meta['success'] = false;
-            $meta['message'] = $myUser->getMessage();
+            $meta['message'] = $myImage->getMessage();
+        }
+
+        $this->view->setVars([
+            '_meta' => $meta,
+            '_result' => $result
+        ]);
+    }
+
+    /**
+     * Delete image action.
+     *
+     * @return void
+     *
+     * @Post("/deleteimage", name="admin-article-deleteimage")
+     */
+    public function deleteimageAction()
+    {
+        $meta = $result = [];
+        $deleted = false;
+        $fileName = $this->request->getPost('name');
+        $arrayToDelete = $this->session->get($fileName);
+
+        foreach ($arrayToDelete as $path) {
+            if ($this->file->delete($path)) {
+                $deleted = true;
+            }
+        }
+
+        if ($deleted) {
+            $meta['status'] = true;
+            $meta['message'] = 'Remove uploaded file successfully.';
+            $result = $arrayToDelete[0];
+        } else {
+            $meta['success'] = false;
+            $meta['message'] = 'Error occurred when delete uploaded file!!!';
         }
 
         $this->view->setVars([
