@@ -24,6 +24,10 @@ return [
         ],
         'Pcategory' => [
             'error/*'
+        ],
+        'Article' => [
+            'error/*',
+            'site/*'
         ]
     ],
 

@@ -12,6 +12,7 @@ use Core\Controller\AbstractController;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
+ * @RoutePrefix("/", name="user-admin-home")
  */
 class SiteController extends AbstractController
 {
@@ -26,11 +27,11 @@ class SiteController extends AbstractController
      *
      * @return void
      *
-     * @Route("/", methods={"GET", "POST"}, name="site-article-index")
+     * @Route("/", methods={"GET"}, name="site-article-index")
      */
     public function indexAction()
     {
-
+        
     }
 
 }

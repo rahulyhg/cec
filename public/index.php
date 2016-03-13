@@ -12,10 +12,16 @@ if (ENV == ENV_DEVELOPMENT) {
 }
 
 /**
+ * Detect sub domain for routing
+ */
+$sudomaininfo = explode(".",$_SERVER['HTTP_HOST']);
+define('SUBDOMAIN', array_shift($sudomaininfo));
+
+/**
  * Versions.
  */
 define('PHALCON_VERSION_REQUIRED', '2.0.8');
-define('PHP_VERSION_REQUIRED', '5.4.14');
+define('PHP_VERSION_REQUIRED', '5.5');
 
 /**
  * Check phalcon framework installation.
