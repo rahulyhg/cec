@@ -31,11 +31,7 @@ $(document).ready(function() {
                     success: function(response) {
                         if (response._meta.status == true) {
                             // Remove input value
-                            $('input[type=hidden]').each(function() {
-                                if ($(this).val() == response._result) {
-                                    $(this).remove();
-                                }
-                            });
+                            $("#uploadCoverInput").val("");
 
                             toastr.success(response._meta.message);
                         } else {
@@ -61,6 +57,18 @@ $(document).ready(function() {
         dictMaxFilesExceeded: "Only 10 images allowed per upload.",
         acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
         init: function() {
+            // Show images existed
+            if ($("#edit-article").length > 0) {
+                var thisDropzone = this;
+                var galleries = $.parseJSON(imageList);
+
+                $.each(galleries, function(key, item) {
+                    var mockFile = {name: item.name, size: item.size};
+                    thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+                    thisDropzone.options.thumbnail.call(thisDropzone, mockFile, static_url + item.path);
+                });
+            }
+
             this.on("success", function(file, response) {
                 if (response._meta.status == true) {
                     $.each(response._result, function(key, item) {
@@ -99,18 +107,18 @@ $(document).ready(function() {
 
     $('#summernote').summernote({
         height: 300,
-        toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['fontname', 'strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'hr']],
-            ['view', ['fullscreen', 'codeview']],
-        ],
+        // toolbar: [
+        //     // [groupName, [list of button]]
+        //     ['style', ['bold', 'italic', 'underline', 'clear']],
+        //     ['font', ['fontname', 'strikethrough', 'superscript', 'subscript']],
+        //     ['fontsize', ['fontsize']],
+        //     ['color', ['color']],
+        //     ['para', ['ul', 'ol', 'paragraph']],
+        //     ['height', ['height']],
+        //     ['table', ['table']],
+        //     ['insert', ['link', 'picture', 'hr']],
+        //     ['view', ['fullscreen', 'codeview']],
+        // ],
         onfocus: function(e) {
             $('body').addClass('overlay-disabled');
         },

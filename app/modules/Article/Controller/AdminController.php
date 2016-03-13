@@ -55,7 +55,7 @@ class AdminController extends AbstractAdminController
                         $successId = [];
 
                         foreach ($deletearr as $deleteid) {
-                            $myUsers = UserModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]])->delete();
+                            $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]])->delete();
 
                             // If fail stop a transaction
                             if ($myUsers == false) {
@@ -84,7 +84,7 @@ class AdminController extends AbstractAdminController
 
         // Search keyword in specified field model
         $searchKeywordInData = [
-            'name'
+            'title'
         ];
         $page = (int) $this->request->getQuery('page', null, 1);
         $orderBy = (string) $this->request->getQuery('orderby', null, 'id');
@@ -92,7 +92,6 @@ class AdminController extends AbstractAdminController
         $keyword = (string) $this->request->getQuery('keyword', null, '');
         // optional Filter
         $id = (int) $this->request->getQuery('id', null, 0);
-        $name = (int) $this->request->getQuery('name', null, 0);
         $status = (int) $this->request->getQuery('status', null, 0);
         $datecreated = (int) $this->request->getQuery('datecreated', null, 0);
         $formData['columns'] = '*';
@@ -101,7 +100,6 @@ class AdminController extends AbstractAdminController
             'searchKeywordIn' => $searchKeywordInData,
             'filterBy' => [
                 'id' => $id,
-                'name' => $name,
                 'status' => $status,
                 'datecreated' => $datecreated,
             ],
@@ -114,16 +112,16 @@ class AdminController extends AbstractAdminController
             $paginateUrl .= '&keyword=' . $formData['conditions']['keyword'];
         }
 
-        $myUsers = UserModel::getList($formData, $this->recordPerPage, $page);
+        $myArticles = ArticleModel::getList($formData, $this->recordPerPage, $page);
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/user');
+        $this->bc->add($this->lang->_('title-index'), 'admin/article');
         $this->bc->add($this->lang->_('title-listing'), '');
         $this->view->setVars([
             'formData' => $formData,
-            'myUsers' => $myUsers,
+            'myArticles' => $myArticles,
             'recordPerPage' => $this->recordPerPage,
             'bc' => $this->bc->generate(),
-            'paginator' => $myUsers,
+            'paginator' => $myArticles,
             'paginateUrl' => $paginateUrl
         ]);
     }
@@ -168,11 +166,17 @@ class AdminController extends AbstractAdminController
                         $imageList = array_unique($formData['uploadfiles']);
 
                         foreach ($imageList as $image) {
+                            $path_parts = pathinfo(PUBLIC_PATH . $image);
+
                             $myImage = new ImageModel();
                             $myImage->assign([
                                 'aid' => $myArticle->id,
                                 'name' => $myArticle->title,
                                 'path' => $image,
+                                'filename' => $path_parts['filename'],
+                                'basename' => $path_parts['basename'],
+                                'extension' => $path_parts['extension'],
+                                'size' => $this->file->getSize($image),
                                 'status' => ImageModel::STATUS_ENABLE
                             ]);
                             $myImage->create();
@@ -209,7 +213,7 @@ class AdminController extends AbstractAdminController
      *
      * @return void
      *
-     * @Route("/edit/{id:[0-9]+}", methods={"GET", "POST"}, name="admin-user-edit")
+     * @Route("/edit/{id:[0-9]+}", methods={"GET", "POST"}, name="admin-article-edit")
      */
     public function editAction($id = 0)
     {
@@ -220,16 +224,38 @@ class AdminController extends AbstractAdminController
             if ($this->security->checkToken()) {
                 $formData = array_merge($formData, $this->request->getPost());
 
-                $myUser = UserModel::findFirst([
+                $myArticle = ArticleModel::findFirst([
                     'id = :id:',
                     'bind' => ['id' => (int) $id]
                 ]);
-                $myUser->assign($formData);
 
-                if ($myUser->update()) {
-                    $this->flash->success(str_replace('###name###', $myUser->name, $this->lang->_('message-update-user-success')));
+                // Delete old image when user change image cover
+                if ($myArticle->image != $formData['image']) {
+                    if ($myArticle->image != "") {
+                        $this->file->delete($myArticle->image);
+                        $this->file->delete($myArticle->getThumbnailImage());
+                        $this->file->delete($myArticle->getMediumImage());
+                    }
                 } else {
-                    foreach ($myUser->getMessages() as $msg) {
+                    $formData['image'] = "";
+                }
+
+                $myArticle->cid = (int) $formData['cid'];
+                $myArticle->uid = (int) $this->session->get('me')->id;
+                $myArticle->title = $formData['title'];
+                $myArticle->slug = Utilities::slug($formData['title']);
+                $myArticle->content = $formData['content'];
+                $myArticle->status = $formData['status'];
+                $myArticle->displaytohome = $formData['displaytohome'];
+                $myArticle->type = $formData['type'];
+                $myArticle->seodescription = $formData['seodescription'];
+                $myArticle->seokeyword = $formData['seokeyword'];
+                $myArticle->image = $formData['image'];
+
+                if ($myArticle->update()) {
+                    $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-update-user-success')));
+                } else {
+                    foreach ($myArticle->getMessages() as $msg) {
                         $message .= $this->lang->_($msg->getMessage()) . '<br />';
                     }
                     $this->flash->error($message);
@@ -240,48 +266,68 @@ class AdminController extends AbstractAdminController
         }
 
         /**
-         * Find user by id
+         * Find article by id
          */
-        $myUser = UserModel::findFirst([
+        $myArticle = ArticleModel::findFirst([
             'id = :id:',
             'bind' => ['id' => (int) $id]
         ]);
 
-        $formData = $myUser->toArray();
-        $formData['thumbnailImage'] = $myUser->getThumbnailImage();
+        $formData = $myArticle->toArray();
+        $formData['thumbnailImage'] = $myArticle->getThumbnailImage();
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/user');
+        // Get article gallery
+        $formData['imageList'] = [];
+        $myImages = ImageModel::find([
+            'aid = :articleId:',
+            'bind' => ['articleId' => (int) $id]
+        ]);
+
+        if ($myImages) {
+            foreach ($myImages as $image) {
+                $formData['imageList'][] = [
+                    'name' => $image->basename,
+                    'path' => $image->path,
+                    'size' => $image->size
+                ];
+            }
+            $formData['imageList'] = (string) json_encode($formData['imageList']);
+        }
+
+        $this->bc->add($this->lang->_('title-index'), 'admin/article');
         $this->bc->add($this->lang->_('title-create'), '');
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
-            'statusList' => UserModel::getStatusList(),
-            'roleList' => UserModel::getRoleList()
+            'statusList' => ArticleModel::getStatusList(),
+            'typeList' => ArticleModel::getTypeList(),
+            'ishomeList' => ArticleModel::getDisplayToHomeList(),
+            'categories' => Category::find(['order' => 'lft'])
         ]);
     }
 
     /**
-     * Delete user action.
+     * Delete article action.
      *
      * @return void
      *
-     * @Get("/delete/{id:[0-9]+}", name="admin-user-delete")
+     * @Get("/delete/{id:[0-9]+}", name="admin-article-delete")
      */
     public function deleteAction($id = 0)
     {
         $message = '';
-        $myUser = UserModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]])->delete();
+        $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]])->delete();
 
-        if ($myUser) {
+        if ($myArticle) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
         } else {
-            foreach ($myUser->getMessages() as $msg) {
+            foreach ($myArticle->getMessages() as $msg) {
                 $message .= $this->lang->_($msg->getMessage()) . "</br>";
             }
             $this->flashSession->error($message);
         }
 
-        return $this->response->redirect('admin/user');
+        return $this->response->redirect('admin/article');
     }
 
     /**

@@ -107,12 +107,147 @@ class Article extends AbstractModel
 
     public function initialize()
     {
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'title',
+                'message' => 'message-title-notempty'
+            ]
+        ));
 
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'content',
+                'message' => 'message-content-notempty'
+            ]
+        ));
+
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'type',
+                'message' => 'message-type-notempty'
+            ]
+        ));
+
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'status',
+                'message' => 'message-status-notempty'
+            ]
+        ));
+
+        return $this->validationHasFailed() != true;
     }
 
-    public static function getDisplayOrder()
+    /**
+     * Create Paginator Object for Article Listing
+     *
+     * @param  [array] $formData    Store condition, order, select column to prepare for query
+     * @param  [int] $limit         Record per page
+     * @param  [int] $offset        Current Page
+     * @return [object] $paginator  Phalcon Paginator Builder Object
+     */
+    public static function getList($formData, $limit, $offset)
     {
-        
+        $modelName = get_class();
+        $whereString = '';
+        $bindParams = [];
+        $bindTypeParams = [];
+
+        if (is_array($formData['conditions'])) {
+            if (isset($formData['conditions']['keyword'])
+                && strlen($formData['conditions']['keyword']) > 0
+                && isset($formData['conditions']['searchKeywordIn'])
+                && count($formData['conditions']['searchKeywordIn']) > 0) {
+                /**
+                 * Search keyword
+                 */
+                $searchKeyword = $formData['conditions']['keyword'];
+                $searchKeywordIn = $formData['conditions']['searchKeywordIn'];
+
+                $whereString .= $whereString != '' ? ' OR ' : ' (';
+
+                $sp = '';
+                foreach ($searchKeywordIn as $searchIn) {
+                    $sp .= ($sp != '' ? ' OR ' : '') . $searchIn . ' LIKE :searchKeyword:';
+                }
+
+                $whereString .= $sp . ')';
+                $bindParams['searchKeyword'] = '%' . $searchKeyword . '%';
+            }
+
+            /**
+             * Optional Filter by tags
+             */
+            if (count($formData['conditions']['filterBy']) > 0) {
+                $filterby = $formData['conditions']['filterBy'];
+
+                foreach ($filterby as $k => $v) {
+                    if ($v) {
+                        $whereString .= ($whereString != '' ? ' AND ' : '') . $k . ' = :' . $k . ':';
+                        $bindParams[$k] = $v;
+
+                        switch (gettype($v)) {
+                            case 'string':
+                                $bindTypeParams[$k] =  \PDO::PARAM_STR;
+                                break;
+
+                            default:
+                                $bindTypeParams[$k] = \PDO::PARAM_INT;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            if (strlen($whereString) > 0 && count($bindParams) > 0) {
+                $formData['conditions'] = [
+                    [
+                        $whereString,
+                        $bindParams,
+                        $bindTypeParams
+                    ]
+                ];
+            } else {
+                $formData['conditions'] = '';
+            }
+        }
+
+        $params = [
+            'models' => $modelName,
+            'columns' => $formData['columns'],
+            'conditions' => $formData['conditions'],
+            'order' => [$modelName . '.' . $formData['orderBy'] .' '. $formData['orderType'] .'']
+        ];
+
+        return parent::runPaginate($params, $limit, $offset);
+    }
+
+    /**
+     * Get thumbnail image
+     * @return [string] Images thumb url.
+     */
+    public function getThumbnailImage()
+    {
+        $pos = strrpos($this->image, '.');
+        $extPart = substr($this->image, $pos+1) != '' ? substr($this->image, $pos+1) : 'jpeg';
+        $namePart =  substr($this->image,0, $pos);
+        $file = $namePart . '-thumb.' . $extPart;
+
+        return $file;
+    }
+
+    /**
+     * Get medium image
+     * @return [string] Images medium url.
+     */
+    public function getMediumImage()
+    {
+        $pos = strrpos($this->image, '.');
+        $extPart = substr($this->image, $pos+1) != '' ? substr($this->image, $pos+1) : 'jpeg';
+        $namePart =  substr($this->image,0, $pos);
+        $file = $namePart . '-medium.' . $extPart;
+
+        return $file;
     }
 
     /**

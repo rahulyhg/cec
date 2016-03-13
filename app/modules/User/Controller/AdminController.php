@@ -184,13 +184,23 @@ class AdminController extends AbstractAdminController
         if ($this->request->hasPost('fsubmit')) {
             if ($this->security->checkToken()) {
                 $formData = array_merge($formData, $this->request->getPost());
-
                 $myUser = UserModel::findFirst([
                     'id = :id:',
                     'bind' => ['id' => (int) $id]
                 ]);
-                $myUser->assign($formData);
 
+                // Delete old image when user change avatar
+                if ($myUser->avatar != $formData['avatar']) {
+                    if ($myUser->avatar != "") {
+                        $this->file->delete($myUser->avatar);
+                        $this->file->delete($myUser->getThumbnailImage());
+                        $this->file->delete($myUser->getMediumImage());
+                    }
+                } else {
+                    $formData['avatar'] = "";
+                }
+
+                $myUser->assign($formData);
                 if ($myUser->update()) {
                     $this->flash->success(str_replace('###name###', $myUser->name, $this->lang->_('message-update-user-success')));
                 } else {
@@ -250,7 +260,7 @@ class AdminController extends AbstractAdminController
     }
 
     /**
-     * Upload iconpath action.
+     * Upload avatar action.
      *
      * @return void
      *
@@ -269,6 +279,41 @@ class AdminController extends AbstractAdminController
         } else {
             $meta['success'] = false;
             $meta['message'] = $myUser->getMessage();
+        }
+
+        $this->view->setVars([
+            '_meta' => $meta,
+            '_result' => $result
+        ]);
+    }
+
+    /**
+     * Delete avatar action.
+     *
+     * @return void
+     *
+     * @Post("/deleteavatar", name="admin-user-deleteavatar")
+     */
+    public function deleteimageAction()
+    {
+        $meta = $result = [];
+        $deleted = false;
+        $fileName = $this->request->getPost('name');
+        $arrayToDelete = $this->session->get($fileName);
+
+        foreach ($arrayToDelete as $path) {
+            if ($this->file->delete($path)) {
+                $deleted = true;
+            }
+        }
+
+        if ($deleted) {
+            $meta['status'] = true;
+            $meta['message'] = 'File removed!';
+            $result = $arrayToDelete[0];
+        } else {
+            $meta['success'] = false;
+            $meta['message'] = 'Error occurred when delete uploaded file!!!';
         }
 
         $this->view->setVars([
