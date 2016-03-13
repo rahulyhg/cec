@@ -31,6 +31,29 @@
                         {{ content() }}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">
+                                {{ 'form.category'|i18n }}
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <select
+                                    class="cs-select cs-skin-slide"
+                                    data-init-plugin="cs-select"
+                                    name="cid">
+                                    <option value="1">----</option>
+                                    {% for n, cat in categories %}
+                                        <option
+                                            value="{{ cat.id }}"
+                                            {% if formData['cid'] is defined and formData['cid'] == cat.id %}
+                                            selected="selected"
+                                            {% endif %}>
+                                            {{ str_repeat('-', cat.level) }} {{ cat.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
                                 {{ 'form.title'|i18n }}
                                 <span class="required">*</span>
                             </label>
@@ -89,7 +112,7 @@
                                 <select
                                     class="cs-select cs-skin-slide"
                                     data-init-plugin="cs-select"
-                                    name="status">
+                                    name="displaytohome">
                                     {% for ishome in ishomeList %}
                                     <option
                                         value="{{ ishome['value'] }}"
@@ -97,6 +120,28 @@
                                             selected="selected"
                                         {% endif %}>
                                         {{ ishome['name'] | i18n }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                {{ 'form.type'|i18n }}
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <select
+                                    class="cs-select cs-skin-slide"
+                                    data-init-plugin="cs-select"
+                                    name="type">
+                                    {% for type in typeList %}
+                                    <option
+                                        value="{{ type['value'] }}"
+                                        {% if formData['type'] is defined and formData['type'] == type['value'] %}
+                                            selected="selected"
+                                        {% endif %}>
+                                        {{ type['name'] | i18n }}
                                     </option>
                                     {% endfor %}
                                 </select>
@@ -134,6 +179,18 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ 'form.cover'|i18n }}</label>
+                            <div class="col-sm-10">
+                                <div id="uploadCover" class="dropzone" style="min-height: 240px"></div>
+                                <input
+                                    type="hidden"
+                                    name="image"
+                                    value="{% if formData['image'] is defined %}{{ formData['image'] }}{% endif %}"
+                                    id="uploadCoverInput"/>
+                            </div>
+                        </div>
+                        <br>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{ 'form.gallery'|i18n }}</label>
                             <div class="col-sm-10">

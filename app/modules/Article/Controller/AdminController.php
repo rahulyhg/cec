@@ -4,6 +4,8 @@ namespace Article\Controller;
 use Core\Controller\AbstractAdminController;
 use Article\Model\Article as ArticleModel;
 use Core\Model\Image as ImageModel;
+use Category\Model\Category;
+use Core\Helper\Utilities;
 
 /**
  * Article admin home.
@@ -139,16 +141,45 @@ class AdminController extends AbstractAdminController
         $message = '';
 
         if ($this->request->hasPost('fsubmit')) {
-            var_dump($this->request->getPost());
-            die;
             if ($this->security->checkToken()) {
                 $formData = array_merge($formData, $this->request->getPost());
 
+                $displayorder = ArticleModel::maximum([
+                    'column' => 'displayorder'
+                ]);
+
                 $myArticle = new ArticleModel();
-                $myArticle->assign($formData);
+                $myArticle->cid = (int) $formData['cid'];
+                $myArticle->uid = (int) $this->session->get('me')->id;
+                $myArticle->title = $formData['title'];
+                $myArticle->slug = Utilities::slug($formData['title']);
+                $myArticle->content = $formData['content'];
+                $myArticle->status = $formData['status'];
+                $myArticle->displayorder = $displayorder + 1;
+                $myArticle->displaytohome = $formData['displaytohome'];
+                $myArticle->type = $formData['type'];
+                $myArticle->seodescription = $formData['seodescription'];
+                $myArticle->seokeyword = $formData['seokeyword'];
+                $myArticle->image = $formData['image'];
 
                 if ($myArticle->create()) {
-                    $formData = [];
+                    // insert to image table.
+                    if (isset($formData['uploadfiles']) && count($formData['uploadfiles']) > 0) {
+                        $imageList = array_unique($formData['uploadfiles']);
+
+                        foreach ($imageList as $image) {
+                            $myImage = new ImageModel();
+                            $myImage->assign([
+                                'aid' => $myArticle->id,
+                                'name' => $myArticle->title,
+                                'path' => $image,
+                                'status' => ImageModel::STATUS_ENABLE
+                            ]);
+                            $myImage->create();
+                        }
+                    }
+
+                    $formData = []; //Reset form
                     $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-create-user-success')));
                 } else {
                     foreach ($myArticle->getMessages() as $msg) {
@@ -167,7 +198,9 @@ class AdminController extends AbstractAdminController
             'formData' => $formData,
             'bc' => $this->bc->generate(),
             'statusList' => ArticleModel::getStatusList(),
-            'ishomeList' => ArticleModel::getDisplayToHomeList()
+            'typeList' => ArticleModel::getTypeList(),
+            'ishomeList' => ArticleModel::getDisplayToHomeList(),
+            'categories' => Category::find(['order' => 'lft'])
         ]);
     }
 

@@ -37,6 +37,11 @@ class Article extends AbstractModel
     public $uid;
 
     /**
+    * @Column(type="string", nullable=true, column="a_title")
+    */
+    public $title;
+
+    /**
     * @Column(type="string", nullable=true, column="a_slug")
     */
     public $slug;
@@ -103,6 +108,11 @@ class Article extends AbstractModel
     public function initialize()
     {
 
+    }
+
+    public static function getDisplayOrder()
+    {
+        
     }
 
     /**
@@ -197,6 +207,60 @@ class Article extends AbstractModel
         return [
             self::IS_NOTHOME,
             self::IS_HOME
+        ];
+    }
+
+    public function getTypeName()
+    {
+        $name = '';
+
+        switch ($this->type) {
+            case self::TYPE_NORMAL:
+                $name = 'label-type-normal';
+                break;
+            case self::TYPE_PROJECT:
+                $name = 'label-type-project';
+                break;
+            case self::TYPE_ACTIVITY:
+                $name = 'label-type-activity';
+                break;
+            case self::TYPE_PAGE:
+                $name = 'label-type-page';
+                break;
+        }
+
+        return $name;
+    }
+
+    public static function getTypeList()
+    {
+        return $data = [
+            [
+                "name" => 'label-type-normal',
+                "value" => self::TYPE_NORMAL
+            ],
+            [
+                "name" => 'label-type-project',
+                "value" => self::TYPE_PROJECT
+            ],
+            [
+                "name" => 'label-type-activity',
+                "value" => self::TYPE_ACTIVITY
+            ],
+            [
+                "name" => 'label-type-page',
+                "value" => self::TYPE_PAGE
+            ]
+        ];
+    }
+
+    public static function getTypeListArray()
+    {
+        return [
+            self::TYPE_NORMAL,
+            self::TYPE_PROJECT,
+            self::TYPE_ACTIVITY,
+            self::TYPE_PAGE
         ];
     }
 }

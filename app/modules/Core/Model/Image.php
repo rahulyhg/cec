@@ -48,16 +48,6 @@ class Image extends AbstractModel
     public $path;
 
     /**
-    * @Column(type="string", nullable=true, column="i_extension")
-    */
-    public $extension;
-
-    /**
-    * @Column(type="integer", nullable=true, column="i_size")
-    */
-    public $size;
-
-    /**
     * @Column(type="integer", nullable=true, column="i_status")
     */
     public $status;

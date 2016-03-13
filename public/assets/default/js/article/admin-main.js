@@ -1,5 +1,53 @@
 $(document).ready(function() {
     Dropzone.autoDiscover = false;
+
+    // Cover upload
+    $('div#uploadCover').dropzone({
+        url: root_url + '/article/uploadimage',
+        paramName: 'image',
+        maxFileSize: 10,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
+        init: function() {
+            this.on("maxfilesexceeded", function(file) {
+                toastr.error("Cannot upload more than 1 file!");
+            });
+            this.on("success", function(file, response) {
+                if (response._meta.status == true) {
+                    var path = response._result.image.path;
+                    $("#uploadCoverInput").val(path);
+                }
+                toastr.success(response._meta.message);
+            });
+            this.on("removedfile", function(file) {
+                var name = file.name;
+                $.ajax({
+                    type: 'POST',
+                    url: root_url + '/article/deleteimage',
+                    data: "name="+name,
+                    dataType: 'json',
+                    cache: false,
+                    success: function(response) {
+                        if (response._meta.status == true) {
+                            // Remove input value
+                            $('input[type=hidden]').each(function() {
+                                if ($(this).val() == response._result) {
+                                    $(this).remove();
+                                }
+                            });
+
+                            toastr.success(response._meta.message);
+                        } else {
+                            toastr.error(response._meta.message);
+                        }
+                    }
+                });
+            });
+        },
+    });
+
+    // Gallery upload
     $('div#uploadImages').dropzone({
         url: root_url + '/article/uploadimage',
         paramName: 'products',
@@ -74,6 +122,7 @@ $(document).ready(function() {
         }
     });
 
+    // upload image to server
     function sendFile(file, editor, welEditable) {
         data = new FormData();
         data.append("file", file);
