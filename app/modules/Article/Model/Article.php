@@ -93,6 +93,12 @@ class Article extends AbstractModel
 
     const STATUS_DISABLE = 3;
     const STATUS_ENABLE = 1;
+    const IS_HOME = 1;
+    const IS_NOTHOME = 3;
+    const TYPE_NORMAL = 1;
+    const TYPE_ACTIVITY = 3;
+    const TYPE_PROJECT = 5;
+    const TYPE_PAGE = 7;
 
     public function initialize()
     {
@@ -153,6 +159,44 @@ class Article extends AbstractModel
             self::STATUS_ENABLE,
             self::STATUS_DISABLE,
 
+        ];
+    }
+
+    public function getDisplayToHomeName()
+    {
+        $name = '';
+
+        switch ($this->displaytohome) {
+            case self::IS_NOTHOME:
+                $name = 'label-ishome-disable';
+                break;
+            case self::IS_HOME:
+                $name = 'label-ishome-enable';
+                break;
+        }
+
+        return $name;
+    }
+
+    public static function getDisplayToHomeList()
+    {
+        return $data = [
+            [
+                "name" => 'label-ishome-disable',
+                "value" => self::IS_NOTHOME
+            ],
+            [
+                "name" => 'label-ishome-enable',
+                "value" => self::IS_HOME
+            ]
+        ];
+    }
+
+    public static function getDisplayToHomeListArray()
+    {
+        return [
+            self::IS_NOTHOME,
+            self::IS_HOME
         ];
     }
 }

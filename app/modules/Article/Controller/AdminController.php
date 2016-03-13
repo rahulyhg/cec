@@ -166,7 +166,8 @@ class AdminController extends AbstractAdminController
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
-            'statusList' => ArticleModel::getStatusList()
+            'statusList' => ArticleModel::getStatusList(),
+            'ishomeList' => ArticleModel::getDisplayToHomeList()
         ]);
     }
 
@@ -251,7 +252,7 @@ class AdminController extends AbstractAdminController
     }
 
     /**
-     * Upload image action.
+     * Upload image gallery action.
      *
      * @return void
      *
@@ -265,7 +266,7 @@ class AdminController extends AbstractAdminController
 
         if ($upload == $myImage->isSuccessUpload()) {
             $meta['status'] = true;
-            $meta['message'] = 'Upload successfully.';
+            $meta['message'] = 'File uploaded!';
             $result = $myImage->getInfo();
         } else {
             $meta['success'] = false;
@@ -279,7 +280,7 @@ class AdminController extends AbstractAdminController
     }
 
     /**
-     * Delete image action.
+     * Delete image gallery action.
      *
      * @return void
      *
@@ -300,7 +301,7 @@ class AdminController extends AbstractAdminController
 
         if ($deleted) {
             $meta['status'] = true;
-            $meta['message'] = 'Remove uploaded file successfully.';
+            $meta['message'] = 'File removed!';
             $result = $arrayToDelete[0];
         } else {
             $meta['success'] = false;

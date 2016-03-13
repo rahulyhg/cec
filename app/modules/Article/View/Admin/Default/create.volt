@@ -27,14 +27,14 @@
         <div class="panel panel-transparent">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                         {{ content() }}
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">
+                            <label class="col-sm-2 control-label">
                                 {{ 'form.title'|i18n }}
                                 <span class="required">*</span>
                             </label>
-                            <div class="col-sm-9">
+                            <div class="col-sm-10">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -45,11 +45,26 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">
+                            <label class="col-sm-2 control-label">
+                                {{ 'form.content'|i18n }}
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <div class="summernote-wrapper">
+                                    <textarea
+                                        class="form-control"
+                                        placeholder=""
+                                        name="content"
+                                        id="summernote">{% if formData['content'] is defined %}{{ formData['content'] }}{% endif %}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
                                 {{ 'form.status'|i18n }}
                                 <span class="required">*</span>
                             </label>
-                            <div class="col-sm-9">
+                            <div class="col-sm-10">
                                 <select
                                     class="cs-select cs-skin-slide"
                                     data-init-plugin="cs-select"
@@ -66,6 +81,49 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                {{ 'form.displaytohome'|i18n }}
+                            </label>
+                            <div class="col-sm-10">
+                                <select
+                                    class="cs-select cs-skin-slide"
+                                    data-init-plugin="cs-select"
+                                    name="status">
+                                    {% for ishome in ishomeList %}
+                                    <option
+                                        value="{{ ishome['value'] }}"
+                                        {% if formData['ishome'] is defined and formData['ishome'] == ishome['value'] %}
+                                            selected="selected"
+                                        {% endif %}>
+                                        {{ ishome['name'] | i18n }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                {{ 'form.seodescription'|i18n }}
+                            </label>
+                            <div class="col-sm-10">
+                                <textarea
+                                    class="form-control"
+                                    placeholder=""
+                                    name="seodescription">{% if formData['seodescription'] is defined %}{{ formData['seodescription'] }}{% endif %}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                {{ 'form.seokeyword'|i18n }}
+                            </label>
+                            <div class="col-sm-10">
+                                <textarea
+                                    class="form-control tagsinput custom-tag-input"
+                                    placeholder=""
+                                    name="seokeyword">{% if formData['seokeyword'] is defined %}{{ formData['seokeyword'] }}{% endif %}</textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,20 +133,20 @@
         <div class="panel panel-transparent">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">{{ 'form.avatar'|i18n }}</label>
-                            <div class="col-sm-9">
+                            <label class="col-sm-2 control-label">{{ 'form.gallery'|i18n }}</label>
+                            <div class="col-sm-10">
                                 <div id="uploadImages" class="dropzone" style="min-height: 240px"></div>
                                 <div class="multipleFiles"></div>
                             </div>
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-sm-3">
-                            <span class="required">*</span>: Required field
+                            <div class="col-sm-2">
+                            <span class="required">*</span>: {{ 'default.required'|i18n }}
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-10">
                                 <button class="btn btn-success" type="submit" name="fsubmit">{{ 'form.button-submit'|i18n }}</button>
                                 <button class="btn btn-default" type="reset"><i class="pg-close"></i> {{ 'form.button-clear'|i18n }}</button>
                             </div>

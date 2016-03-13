@@ -16,13 +16,13 @@
             </ul>
             <!-- END BREADCRUMB -->
             {% endif %}
-            {% if jumpbotron is defined %}
+            {#{% if jumpbotron is defined %}
             <div class="row">
                 <div class="col-lg-7 col-md-6 ">
                     <!-- START PANEL -->
                     <div class="full-height">
                         <div class="panel-body text-center">
-                            {# <img class="image-responsive-height demo-mw-600" src="{{ static_url('img/demo/nest.png') }}" alt=""> #}
+                             <img class="image-responsive-height demo-mw-600" src="{{ static_url('img/demo/nest.png') }}" alt=""> 
                         </div>
                     </div>
                     <!-- END PANEL -->
@@ -48,7 +48,7 @@
                     <!-- END PANEL -->
                 </div>
             </div>
-            {% endif %}
+            {% endif %}#}
         </div>
     </div>
 </div>

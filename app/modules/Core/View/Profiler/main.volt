@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{ static_url('plugins/profiler/profiler.css') }}">
 <script type="text/javascript" src="{{ static_url('plugins/profiler/profiler.js') }}"></script>
-{{ partial("Profiler/window", ['name':'config', 'title':'Phalcon Eye Config', 'content':htmlConfig]) }}
+{{ partial("Profiler/window", ['name':'config', 'title':'Phalcon Config', 'content':htmlConfig]) }}
 {{ partial("Profiler/window", ['name':'router', 'title':'Router', 'content':htmlRouter]) }}
 {{ partial("Profiler/window", ['name':'memory', 'title':'Memory', 'content':htmlMemory]) }}
 {{ partial("Profiler/window", ['name':'time', 'title':'Time', 'content':htmlTime]) }}

@@ -71,14 +71,14 @@
                   </div>
                 </div>
                 <!-- START Form Control-->
-                {#<div class="row">
+                <div class="row">
                   <div class="col-md-6 no-padding">
                     <div class="checkbox ">
-                        <input type="checkbox" name="fcookie" id="rememberMe" value="remember-me" {% if formData['fcookie'] == true %}checked{% endif %}/>
+                        <input type="checkbox" name="fcookie" id="checkbox1" value="remember-me" {% if formData['fcookie'] == true %}checked{% endif %}/>
                       <label for="checkbox1">Duy trì đăng nhập</label>
                     </div>
                   </div>
-                </div>#}
+                </div>
                 <!-- END Form Control-->
                 <button class="btn btn-primary btn-cons m-t-10" type="submit" name="fsubmit">Đăng nhập</button>
               </form>

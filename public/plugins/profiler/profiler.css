@@ -1,13 +1,14 @@
 .profiler {
   position: fixed;
   width: 100%;
-  background: white;
+  background: #ffd740;
   bottom: 0;
   left: 0;
-  color: black;
+  color: #333;
   height: 25px;
   border-top: 1px solid #cdcdcd;
   box-shadow: 0 5px 21px black;
+  z-index: 1000;
 }
 
 .profiler .item {
@@ -21,7 +22,7 @@
 
 .profiler .item:hover,
 .profiler .item.active {
-  border-top: 2px solid #2f5dff;
+    border-top: 3px solid #5677fc;
 }
 
 .profiler .item-right {
@@ -80,7 +81,7 @@
   right: 0px;
   background: white;
   max-width: 700px;
-  z-index: 1;
+  z-index: 100;
   border-top: 1px solid #cdcdcd;
   border-left: 1px solid #cdcdcd;
   display: none;
@@ -88,7 +89,7 @@
 }
 
 .profiler_window_title {
-  height: 20px;
+  height: 40px;
   border-bottom: 1px solid #cdcdcd;
   padding: 10px;
   text-shadow: 1px 1px 1px grey;
@@ -97,7 +98,7 @@
 .profiler_window_body {
   padding: 10px;
   overflow-y: auto;
-  height: 340px;
+  height: 350px;
 }
 
 .profiler_window_close {
@@ -115,7 +116,7 @@
 }
 
 .profiler_window_body .label {
-  color: #2f5dff;
+  color: #3f51b5;
 }
 
 .profiler_window_body .code {

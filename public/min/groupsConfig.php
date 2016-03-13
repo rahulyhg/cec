@@ -25,6 +25,7 @@ return array(
         '../plugins/jquery-scrollbar/jquery.scrollbar.min.js',
         '../plugins/bootstrap-select2/select2.min.js',
         '../plugins/bootstrap3-editable/js/bootstrap-editable.min.js',
+        '../plugins/bootstrap-tag/bootstrap-tagsinput.min.js',
         '../plugins/jquery-datatable/media/js/jquery.dataTables.min.js',
         '../plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js',
         '../plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js',
@@ -36,13 +37,13 @@ return array(
         '../plugins/sweetalert/dist/sweetalert.min.js',
         '../assets/default/js/core/pages.js',
         '../assets/default/js/core/tables.js',
-        '../assets/default/js/core/form_elements.js',
         '../assets/default/js/core/scripts.js',
     ],
     'jsDefaultUserAdmin' => [
         '../assets/default/js/user/admin-main.js',
     ],
     'jsDefaultArticleAdmin' => [
+        '../plugins/summernote/js/summernote.min.js',
         '../assets/default/js/article/admin-main.js',
     ],
     'jsDefaultCategoryAdmin' => [
@@ -69,7 +70,6 @@ return array(
         '../plugins/jquery-toastr/toastr.min.js',
         '../plugins/sweetalert/dist/sweetalert.min.js',
         '../assets/default/js/core/pages.js',
-        '../assets/default/js/core/form_elements.js',
         '../assets/default/js/core/scripts.js',
     ],
     /**
@@ -98,6 +98,7 @@ return array(
         '../assets/default/css/user/admin-style.css',
     ],
     'cssDefaultArticleAdmin' => [
+        '../plugins/summernote/css/summernote.css',
         '../assets/default/css/article/admin-style.css',
     ],
     'cssDefaultCategoryAdmin' => [

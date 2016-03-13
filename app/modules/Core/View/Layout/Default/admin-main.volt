@@ -23,6 +23,7 @@
         <script type="text/javascript" src="{{ static_url('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script type="text/javascript">
             var root_url = "{{ url.getBaseUri() }}admin";
+            var static_url = "{{ url.getStaticBaseUri() }}";
             window.onload = function() {
                 // fix for windows 8
                 if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)

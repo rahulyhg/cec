@@ -55,4 +55,7 @@
         // $(this).parent().parent().parent().parent().parent().find("tr").removeClass('selected');
         // $(this).parent().parent().parent().parent().parent().find("tr").addClass('selected');
     });
+
+    //Single instance of tag inputs - can be initiated with simply using data-role="tagsinput" attribute in any input field
+    $('.custom-tag-input').tagsinput({});
 })

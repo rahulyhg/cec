@@ -48,4 +48,46 @@ $(document).ready(function() {
             });
         },
     });
+
+    $('#summernote').summernote({
+        height: 300,
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['fontname', 'strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'hr']],
+            ['view', ['fullscreen', 'codeview']],
+        ],
+        onfocus: function(e) {
+            $('body').addClass('overlay-disabled');
+        },
+        onblur: function(e) {
+            $('body').removeClass('overlay-disabled');
+        },
+        onImageUpload: function(files, editor, welEditable) {
+            sendFile(files[0], editor, welEditable);
+        }
+    });
+
+    function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: root_url + "/article/uploadimage",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                var url = static_url + response._result.file.path;
+                editor.insertImage(welEditable, url);
+            }
+        });
+    }
 });

@@ -36,3 +36,19 @@ img.edit-image {
     margin-top: -18px;
     color: red;
 }
+.jumbotron {
+    margin-bottom: 0;
+}
+.bootstrap-tagsinput .tag {
+    margin-left: 4px;
+    line-height: 35px;
+}
+.bootstrap-tagsinput {
+    padding-bottom: 0;
+    height: auto;
+    min-height: 35px;
+    border-radius: 0;
+}
+.bootstrap-tagsinput .tag.label {
+    font-size: 12px;
+}
