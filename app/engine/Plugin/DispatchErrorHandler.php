@@ -43,6 +43,7 @@ class DispatchErrorHandler extends PhUserPlugin
             } else {
                 $session = $this->getDI()->get('session');
 
+                // Logged in and not permission
                 if ($session->get('me')) {
                     $dispatcher->forward([
                         'module' => EngineApplication::SYSTEM_DEFAULT_MODULE,
@@ -56,7 +57,7 @@ class DispatchErrorHandler extends PhUserPlugin
                     $controllerName = strtolower($dispatcher->getControllerName());
 
                     switch ($controllerName) {
-                        case 'admin':
+                        case ('admin' || 'core'):
                             $url = '/admin/user/login?redirect=' . Utilities::getCurrentUrl();
                             break;
                         case 'site':

@@ -150,7 +150,7 @@ class AdminController extends AbstractAdminController
                 $myArticle->cid = (int) $formData['cid'];
                 $myArticle->uid = (int) $this->session->get('me')->id;
                 $myArticle->title = $formData['title'];
-                $myArticle->slug = Utilities::slug($formData['title']);
+                // $myArticle->slug = Utilities::slug($formData['title']);
                 $myArticle->content = $formData['content'];
                 $myArticle->status = $formData['status'];
                 $myArticle->displayorder = $displayorder + 1;
@@ -243,7 +243,7 @@ class AdminController extends AbstractAdminController
                 $myArticle->cid = (int) $formData['cid'];
                 $myArticle->uid = (int) $this->session->get('me')->id;
                 $myArticle->title = $formData['title'];
-                $myArticle->slug = Utilities::slug($formData['title']);
+                // $myArticle->slug = Utilities::slug($formData['title']);
                 $myArticle->content = $formData['content'];
                 $myArticle->status = $formData['status'];
                 $myArticle->displaytohome = $formData['displaytohome'];

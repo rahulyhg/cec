@@ -12,7 +12,6 @@ use Core\Controller\AbstractController;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @RoutePrefix("/", name="user-admin-home")
  */
 class SiteController extends AbstractController
 {
@@ -23,7 +22,7 @@ class SiteController extends AbstractController
     protected $recordPerPage = 30;
 
     /**
-     * Main action.
+     * Homepage.
      *
      * @return void
      *
@@ -31,7 +30,26 @@ class SiteController extends AbstractController
      */
     public function indexAction()
     {
-        
+
     }
+
+    /**
+     * Category list of article / product.
+     *
+     * @return void
+     *
+     * @Route("/{slug:[a-zA-Z0-9\-\_]+}", methods={"GET"}, name="site-article-product-list")
+     */
+    public function listAction($slug = "")
+    {
+        if ($slug == "admin") {
+            return $this->response->redirect('admin/dashboard');
+        }
+
+
+        echo md5('test1231');
+        die;
+    }
+
 
 }

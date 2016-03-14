@@ -9,16 +9,31 @@ namespace Core\Controller;
  * @copyright 2014-2015
  * @license   New BSD License
  * @link      http://thephalconphp.com/
+ *
+ * @RoutePrefix("/admin", name="admin-dashboard-home")
  */
 class IndexController extends AbstractController
 {
     /**
-     * 404 page.
+     * Core not found page.
      *
      * @return void
+     *
      */
     public function indexAction()
     {
         $this->response->setStatusCode('404', 'Page not found');
+    }
+
+    /**
+     * Admin dashboard.
+     *
+     * @return void
+     *
+     * @Get("/dashboard", name="admin-dashboard-index")
+     */
+    public function dashboardAction()
+    {
+        // $this->response->setStatusCode('404', 'Page not found');
     }
 }

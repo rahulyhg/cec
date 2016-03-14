@@ -5,22 +5,22 @@
 {% endblock %}
 
 {% block css %}
-    <link href="{{ static_url('min/index.php?g=cssDefaultArticleAdmin&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
+    <link href="{{ static_url('min/index.php?g=cssDefaultProductAdmin&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultArticleAdmin&rev=' ~ config.global.version.js) }}"></script>
+    <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultProductAdmin&rev=' ~ config.global.version.js) }}"></script>
 {% endblock %}
 
 {% block content %}
 <!-- START CONTAINER FLUID -->
-<div class="container-fluid container-fixed-lg bg-white" rel="article-admin">
+<div class="container-fluid container-fixed-lg bg-white" rel="user-admin">
     <!-- BEGIN PlACE PAGE CONTENT HERE -->
     <!-- START PANEL -->
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="btn-group pull-right m-b-10">
-                  <a href="{{ url('admin/article/create') }}" class="btn btn-complete"><i class="fa fa-plus"></i>&nbsp; {{ 'default.button-create'|i18n }}</a>
+                  <a href="{{ url('admin/product/create') }}" class="btn btn-complete"><i class="fa fa-plus"></i>&nbsp; {{ 'default.button-create'|i18n }}</a>
                 </div>
             <div class="clearfix"></div>
         </div>
@@ -38,14 +38,9 @@
                                   <label for="checkall"></label>
                                 </div>
                             </th>
-                            <th style="width:63%">{{ 'th.title'|i18n }}</th>
-                            <th style="width:10%">
-                                <a href="{{ url.getBaseUri() }}admin/article?orderby=type&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
-                                    {{ 'th.type'|i18n }}
-                                </a>
-                            </th>
-                            <th style="width:12%">
-                                <a href="{{ url.getBaseUri() }}admin/article?orderby=status&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
+                            <th>{{ 'th.name'|i18n }}</th>
+                            <th style="width:15%">
+                                <a href="{{ url.getBaseUri() }}admin/product?orderby=status&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
                                     {{ 'th.status'|i18n }}
                                 </a>
                             </th>
@@ -71,22 +66,20 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                    {% for item in myArticles.items %}
+                    {% for item in myProducts.items %}
                         <tr>
                             <td class="v-align-middle">
                                 <input type="checkbox" name="fbulkid[]" value="{{ item.id }}" {% if formData['fbulkid'] is defined %}{% for key, value in formData['fbulkid'] if value == item.id %}checked="checked"{% endfor %}{% endif %} id="checkbox{{ item.id }}"/>
                             </td>
                             <td class="v-align-middle">
                                 <img src="{{ static_url(item.getThumbnailImage()) }}" class="img-rounded" alt="{{ item.getThumbnailImage() }}" width="50" height="50">
-                                &nbsp; {{ item.title }} <br/>
-                                <small class="user-role"><a href="{{ url(item.slug) }}">{{ url(item.slug) }}</a></small>
+                                &nbsp; {{ item.name }}
                             </td>
-                            <td><span class="text-primary">{{ item.getTypeName()|i18n }}</span></td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>
                             <td class="v-align-middle">
                                 <div class="btn-group btn-group-xs pull-right">
-                                    <a href="{{ url('admin/article/edit/' ~ item.id) }}" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; {{ 'td.edit'|i18n }}</a>
-                                    <a href="javascript:deleteConfirm('{{ url('admin/article/delete/' ~ item.id) }}', '{{ item.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                                    <a href="{{ url('admin/product/edit/' ~ item.id) }}" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; {{ 'td.edit'|i18n }}</a>
+                                    <a href="javascript:deleteConfirm('{{ url('admin/product/delete/' ~ item.id) }}', '{{ item.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             </td>
                         </tr>

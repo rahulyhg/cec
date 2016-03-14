@@ -28,6 +28,9 @@ return [
         'Article' => [
             'error/*',
             'site/*'
+        ],
+        'Product' => [
+            'error/*'
         ]
     ],
 
@@ -37,7 +40,7 @@ return [
         ],
         'Core' => [
             'error/*',
-            'index/index'
+            'index/*'
         ],
         'Category' => [
             'error/*',
@@ -48,6 +51,11 @@ return [
             'admin/*'
         ],
         'Article' => [
+            'error/*',
+            'admin/*',
+            'site/*'
+        ],
+        'Product' => [
             'error/*',
             'admin/*'
         ]

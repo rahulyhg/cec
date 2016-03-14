@@ -28,7 +28,7 @@ class Config extends PhConfig
         /**
          * Listing modules will be load in application.
          */
-        CONFIG_MODULES_WILL_LOAD = 'user,category,article,pcategory',
+        CONFIG_MODULES_WILL_LOAD = 'user,category,article,pcategory,product',
 
         /**
          * Default configuration section.

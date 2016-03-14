@@ -42,11 +42,6 @@ class Article extends AbstractModel
     public $title;
 
     /**
-    * @Column(type="string", nullable=true, column="a_slug")
-    */
-    public $slug;
-
-    /**
     * @Column(type="integer", nullable=true, column="a_display_order")
     */
     public $displayorder;
