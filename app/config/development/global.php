@@ -21,6 +21,7 @@ return [
     ],
     'defaultLanguage' => 'en', // Default language, which will be choose when region language is not available.
     'cookieEncryptionkey' => 'KkX+DVfEA>196yN',
+    'tinypngApiKey' => 'g2TEDWMaD9hpyQvqQFoFqNUqfLB-Jkcf', //nguyenducduy.it@gmail.com
     'cache' => [
         'lifetime' => 86400,
         'adapter' => 'File',

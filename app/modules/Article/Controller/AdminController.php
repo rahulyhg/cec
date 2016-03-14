@@ -253,6 +253,28 @@ class AdminController extends AbstractAdminController
                 $myArticle->image = $formData['image'];
 
                 if ($myArticle->update()) {
+                    // insert to image table.
+                    if (isset($formData['uploadfiles']) && count($formData['uploadfiles']) > 0) {
+                        $imageList = array_unique($formData['uploadfiles']);
+
+                        foreach ($imageList as $image) {
+                            $path_parts = pathinfo(PUBLIC_PATH . $image);
+
+                            $myImage = new ImageModel();
+                            $myImage->assign([
+                                'aid' => $myArticle->id,
+                                'name' => $myArticle->title,
+                                'path' => $image,
+                                'filename' => $path_parts['filename'],
+                                'basename' => $path_parts['basename'],
+                                'extension' => $path_parts['extension'],
+                                'size' => $this->file->getSize($image),
+                                'status' => ImageModel::STATUS_ENABLE
+                            ]);
+                            $myImage->create();
+                        }
+                    }
+
                     $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-update-user-success')));
                 } else {
                     foreach ($myArticle->getMessages() as $msg) {
@@ -295,7 +317,7 @@ class AdminController extends AbstractAdminController
         }
 
         $this->bc->add($this->lang->_('title-index'), 'admin/article');
-        $this->bc->add($this->lang->_('title-create'), '');
+        $this->bc->add($this->lang->_('title-edit'), '');
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
@@ -370,21 +392,40 @@ class AdminController extends AbstractAdminController
         $meta = $result = [];
         $deleted = false;
         $fileName = $this->request->getPost('name');
-        $arrayToDelete = $this->session->get($fileName);
+        $isEdit = $this->request->getPost('edit', null, 0);
 
-        foreach ($arrayToDelete as $path) {
-            if ($this->file->delete($path)) {
-                $deleted = true;
+        if ($isEdit > 0) {
+            $myImage = ImageModel::findFirst([
+                'basename = :name:',
+                'bind' => ['name' => $fileName]
+            ]);
+            if ($myImage) {
+                $this->file->delete($myImage->path);
+                $this->file->delete($myImage->getMediumImage());
+                $this->file->delete($myImage->getThumbnailImage());
+                $myImage->delete();
+                $meta['status'] = true;
+                $meta['message'] = 'File removed!';
+            } else {
+                $meta['success'] = false;
+                $meta['message'] = 'Image file not found!!!';
             }
-        }
-
-        if ($deleted) {
-            $meta['status'] = true;
-            $meta['message'] = 'File removed!';
-            $result = $arrayToDelete[0];
         } else {
-            $meta['success'] = false;
-            $meta['message'] = 'Error occurred when delete uploaded file!!!';
+            $arrayToDelete = $this->session->get($fileName);
+            foreach ($arrayToDelete as $path) {
+                if ($this->file->delete($path)) {
+                    $deleted = true;
+                }
+            }
+
+            if ($deleted) {
+                $meta['status'] = true;
+                $meta['message'] = 'File removed!';
+                $result = $arrayToDelete[0];
+            } else {
+                $meta['success'] = false;
+                $meta['message'] = 'Error occurred when delete uploaded file!!!';
+            }
         }
 
         $this->view->setVars([

@@ -1,7 +1,7 @@
 {% extends "../../Core/View/Layout/Default/admin-main.volt" %}
 
 {% block title %}
-    {{ 'page-title-create'|i18n }} | {{ config.global.title }}
+    {{ 'page-title-edit'|i18n }} | {{ config.global.title }}
 {% endblock %}
 
 {% block css %}

@@ -242,28 +242,28 @@ class Image extends AbstractModel
     }
 
     /**
-     * Get thumbnail avatar image
+     * Get thumbnail path image
      * @return [string] Images thumb url.
      */
     public function getThumbnailImage()
     {
-        $pos = strrpos($this->avatar, '.');
-        $extPart = substr($this->avatar, $pos+1) != '' ? substr($this->avatar, $pos+1) : 'jpeg';
-        $namePart =  substr($this->avatar,0, $pos);
+        $pos = strrpos($this->path, '.');
+        $extPart = substr($this->path, $pos+1) != '' ? substr($this->path, $pos+1) : 'jpeg';
+        $namePart =  substr($this->path,0, $pos);
         $file = $namePart . '-thumb.' . $extPart;
 
         return $file;
     }
 
     /**
-     * Get medium avatar image
+     * Get medium path image
      * @return [string] Images medium url.
      */
     public function getMediumImage()
     {
-        $pos = strrpos($this->avatar, '.');
-        $extPart = substr($this->avatar, $pos+1) != '' ? substr($this->avatar, $pos+1) : 'jpeg';
-        $namePart =  substr($this->avatar,0, $pos);
+        $pos = strrpos($this->path, '.');
+        $extPart = substr($this->path, $pos+1) != '' ? substr($this->path, $pos+1) : 'jpeg';
+        $namePart =  substr($this->path,0, $pos);
         $file = $namePart . '-medium.' . $extPart;
 
         return $file;

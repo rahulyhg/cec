@@ -61,7 +61,7 @@ $(document).ready(function() {
             if ($("#edit-article").length > 0) {
                 var thisDropzone = this;
                 var galleries = $.parseJSON(imageList);
-
+                $('#uploadImages .dz-message').remove();
                 $.each(galleries, function(key, item) {
                     var mockFile = {name: item.name, size: item.size};
                     thisDropzone.options.addedfile.call(thisDropzone, mockFile);
@@ -80,10 +80,16 @@ $(document).ready(function() {
             });
             this.on("removedfile", function(file) {
                 var name = file.name;
+                if ($("#edit-article").length > 0) {
+                    var data = "name=" + name + "&edit=1";
+                } else {
+                    var data = "name="+name;
+                }
+
                 $.ajax({
                     type: 'POST',
                     url: root_url + '/article/deleteimage',
-                    data: "name="+name,
+                    data: data,
                     dataType: 'json',
                     cache: false,
                     success: function(response) {
