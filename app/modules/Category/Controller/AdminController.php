@@ -3,6 +3,8 @@ namespace Category\Controller;
 
 use Core\Controller\AbstractAdminController;
 use Category\Model\Category as Category;
+use Core\Model\Slug as SlugModel;
+use Core\Helper\Utilities;
 
 /**
  * Category Home.
@@ -69,6 +71,22 @@ class AdminController extends AbstractAdminController
                 ]);
 
                 if ($myCategory->appendTo($root)) {
+                    // insert to slug table
+                    $mySlug = new SlugModel();
+                    $mySlug->assign([
+                        'uid' => $this->session->get('me')->id,
+                        'slug' => Utilities::slug($formData['name']),
+                        'hash' => md5(Utilities::slug($formData['name'])),
+                        'objectid' => $myCategory->id,
+                        'model' => SlugModel::MODEL_CATEGORY,
+                        'status' => SlugModel::STATUS_ENABLE
+                    ]);
+                    if (!$mySlug->create()) {
+                        foreach ($mySlug->getMessages() as $msg) {
+                            $this->flash->error($msg);
+                        }
+                    }
+
                     $formData = [];
                     $this->flash->success(str_replace('###name###', $myCategory->name, $this->lang->_('message-create-category-success')));
                 } else {

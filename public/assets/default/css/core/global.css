@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    min-width: 1024px;
+}
+
+img {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.clr {
+    clear: both;
+}
+
+p {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    text-rendering: geometricPrecision;
+}
+
+body, input, button, option, textarea, label, legend, h1, h2, h3, h4, h5, h6, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    font: 14px/18px Arial, Helvetica, sans-serif;
+    color: #333;
+    outline: none;
+}
+
+/*define new icon*/
+[class^="icontgdd-"], [class*="icontgdd-"] {
+    background-image:url(../../images/icon-fastbuy@1x.png);
+    background-repeat:no-repeat;
+    display:inline-block;
+    height:30px;
+    width:30px;
+    line-height:30px;
+    vertical-align:middle;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  [class^="icontgdd-"], [class*="icontgdd-"] {
+    	background-image:url(../../images/icon-fastbuy@2x.png);
+		background-size:420px 110px;
+	}
+}
+
+header {
+    position: absolute;
+    top: 0;
+    min-width: 1024px;
+    background: #f8f8f8 url(../../images/header_line.png) repeat-x top;
+    width: 100%;
+    display:block;
+	overflow:visible;
+}
+.head{display:block; overflow:hidden; width:100%; max-width:1200px; margin:auto; padding:25px 0 10px 0; background:url(../../images/bg-top.png) no-repeat right center}
+.head .logo{float:left; width:300px; height:60px; margin-left:10px;}
+.head .logo img{display:block; width:300px; height:60px;}
+.head .hotline{display:block; overflow:hidden; font-size:30px; font-weight:600; color:#8ec043; text-align:center; padding:15px; text-transform:uppercase}
+.head .hotline span{color:#888}
+.head .aboutus{float:right; font-size:14px; color:#666; padding:20px 15px}
+.head .aboutus:hover{color:#8ec043}
+.head .contact{float:right; font-size:14px; color:#666; padding:20px 15px; margin-right:520px}
+.head .contact:hover{color:#8ec043}
+.head .current{color:#ffaa30}
+
+nav{display:block; overflow:visible; width:100%;height:60px; margin:auto; background:#8ec043}
+nav ul{width:100%; max-width:1200px; height:60px; margin:auto;}
+nav li{float:left; overflow:visible; position:relative; height:60px;}
+nav li a{display:block; padding:21px 27px; font-size:16px; color:#fff; text-transform:capitalize}
+nav li:hover > a{background:#ffaa30; color:#fff}
+nav li a:hover{background:#ffaa30; color:#fff}
+nav li a.actived{background:#ffaa30; color:#fff}
+
+nav li .submenu{
+	visibility: hidden;
+	position: absolute;
+    top:56px;
+	left:0;
+	z-index:3;
+	width:280px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.25);
+	opacity: 0;
+    transform: translate(0px, 20px);
+    -webkit-transform: translate(0px, 20px);
+    -moz-transform: translate(0px, 20px);
+    -o-transform: translate(0px, 20px);
+    transition: transform 0.6s ease 0s, opacity 0.6s ease 0s;
+}
+nav li:hover .submenu {
+    visibility: visible;
+    display: block;
+	height:auto;
+    opacity: 1;
+    transform: translate(0px, 0px);
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+    -o-transform: translate(0px, 0px);
+    transition: transform 0.6s ease 0s, opacity 0.6s ease 0s;
+}
+nav li .submenu a{display:block; overflow:hidden; padding:15px 10px; color:#333; font-size:15px}
+nav li .submenu a:hover{background:#8ec043; color:#fff}
+
+section {
+	display:block;
+    max-width: 1200px;
+    width: 100%;
+    min-width: 980px;
+    margin: 155px auto 0;
+    position: relative;
+	overflow:hidden;
+}
+
+footer {
+    width: 100%;
+    min-width: 980px;
+    margin: 15px auto 0;
+    background: #336E7B;
+    overflow: hidden;
+    border-top: 1px solid #eee;
+}
+
+.rowfoot{display:block; overflow:hidden; width:100%; max-width:1200px; margin:auto;}
+
+.footermenu{float:left; overflow:hidden; width:70%;}
+.footermenu li{float:left; overflow:hidden; width:50%}
+.footermenu li a{display:block; overflow:hidden; padding:15px 10px; font-size:14px; color:#fff}
+.footermenu li a:hover{color:#ffff00}
+
+.footcontact{float:right; overflow:hidden; width:28%; font-size:14px; color:white; padding:10px 0; line-height:28px}
+footer p{display:block; overflow:hidden; padding:5px 0; font-size:14px; color:#fafafa; clear:both}
+
+.breadcrumb{display:block; height:40px; overflow:hidden;background:#fff}
+.breadcrumb li{float:left; overflow:hidden; padding-top:6px;}
+.breadcrumb li a{float:left; white-space:nowrap; font-size:14px; color:#4a90e2; padding:10px 5px;}
+.breadcrumb span{float:left; font-size:16px; color:#444; padding:11px 2px 0 0; line-height:1}
+.breadcrumb li h1{display:inline-block; line-height:1; color:#444; font-weight:normal;}
+.breadcrumb li h2{display:inline-block; line-height:1; color:#4a90e2; font-weight:normal;}
+.breadcrumb li h1 a{color:#444; padding-left:2px}
+.breadcrumb li h2 a{color:#4a90e2; padding-left:2px; color:#444}
+
+@media screen and (max-width: 1024px){
+	.head .contact{margin-right:410px}
+}

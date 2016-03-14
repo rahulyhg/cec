@@ -15,6 +15,7 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  * @link      http://thephalconphp.com/
  *
  * @Source('cec_article');
+ * @HasOne('id', '\Core\Model\Slug', 'objectid', {'alias': 'seo'})
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  */
 class Article extends AbstractModel
@@ -100,7 +101,10 @@ class Article extends AbstractModel
     const TYPE_PROJECT = 5;
     const TYPE_PAGE = 7;
 
-    public function initialize()
+    /**
+     * Form field validation
+     */
+    public function validation()
     {
         $this->validate(new PresenceOf(
             [

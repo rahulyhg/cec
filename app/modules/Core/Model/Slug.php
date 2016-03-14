@@ -23,7 +23,7 @@ class Slug extends AbstractModel
     /**
     * @Primary
     * @Identity
-    * @Column(type="integer", nullable=false, column="i_id")
+    * @Column(type="integer", nullable=false, column="s_id")
     */
     public $id;
 
@@ -32,6 +32,10 @@ class Slug extends AbstractModel
     */
     public $uid;
 
+    /**
+    * @Column(type="string", nullable=true, column="s_slug")
+    */
+    public $slug;
 
     /**
     * @Column(type="integer", nullable=true, column="s_objectid")
@@ -66,12 +70,23 @@ class Slug extends AbstractModel
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
 
-    /**
-     * Initialize model
-     */
-    public function initialize()
-    {
+    const MODEL_ARTICLE = "Article";
+    const MODEL_PRODUCT = "Product";
+    const MODEL_CATEGORY = "Category";
+    const MODEL_PCATEGORY = "Pcategory";
 
+    public function beforeCreate()
+    {
+        // Change slug when duplicate
+        $mySlug = Slug::findFirst([
+            'hash = :hash:',
+            'bind' => ['hash' => $this->hash]
+        ]);
+
+        if ($mySlug) {
+            $this->slug = $this->slug . '-' . time();
+            $this->hash = md5($this->slug);
+        }
     }
 
     /**
@@ -83,13 +98,6 @@ class Slug extends AbstractModel
             [
                 'field'  => 'slug',
                 'message' => 'message-slug-notempty'
-            ]
-        ));
-
-        $this->validate(new Uniqueness(
-            [
-                'field'  => 'hash',
-                'message' => 'message-hash-unique'
             ]
         ));
 

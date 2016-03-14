@@ -1,119 +1,46 @@
-<!-- START PAGE HEADER WRAPPER -->
-<!-- START HEADER -->
-<div class="header ">
-    <!-- START MOBILE CONTROLS -->
-    <!-- LEFT SIDE -->
-    <div class="pull-left full-height visible-sm visible-xs">
-        <!-- START ACTION BAR -->
-        <div class="sm-action-bar">
-            <a href="#" class="btn-link toggle-sidebar" data-toggle="sidebar">
-                <span class="icon-set menu-hambuger"></span>
-            </a>
-        </div>
-        <!-- END ACTION BAR -->
+<header>
+    <div class="head">
+        <a href="{{ url('/') }}" class="logo"><img width="300" height="60" src="{{ static_url('assets/default/images/logo-cec.png') }}" alt="logo-cec" ></a>
+
+        <a href="lien-he.html" class="contact">Liên hệ</a>
+        <a href="bai-viet.html" class="aboutus">Giới thiệu CEC</a>
+
+        <!--<a href="tel:0918496939" class="hotline">Công ty TNHH Xây Dựng & Môi Trường CEC</a>-->
     </div>
-    <!-- RIGHT SIDE -->
-    <div class="pull-right full-height visible-sm visible-xs">
-        <!-- START ACTION BAR -->
-        <div class="sm-action-bar">
-            <a href="#" class="btn-link" data-toggle="quickview" data-toggle-element="#quickview">
-                <span class="icon-set menu-hambuger-plus"></span>
-            </a>
-        </div>
-        <!-- END ACTION BAR -->
-    </div>
-    <!-- END MOBILE CONTROLS -->
-    <div class=" pull-left sm-table">
-        <div class="header-inner">
-            <div class="brand inline">
-                {#<img src="img/logo.png" alt="logo" data-src="img/logo.png" data-src-retina="img/logo_2x.png" width="78" height="22">#}
-            </div>
-            <!-- BEGIN NOTIFICATION DROPDOWN -->
-            <ul class="notification-list no-margin hidden-sm hidden-xs b-grey b-l b-r no-style p-l-30 p-r-20">
-                <li class="p-r-15 inline">
-                    <div class="dropdown">
-                        <a href="javascript:;" id="notification-center" class="icon-set globe-fill" data-toggle="dropdown">
-                            <span class="bubble"></span>
-                        </a>
-                        <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
-                            <div class="notification-panel">
-                                <!-- START Notification Body-->
-                                <div class="notification-body scrollable">
-                                    <!-- START Notification Item-->
-                                    <div class="notification-item  clearfix">
-                                        <div class="heading">
-                                            <a href="#" class="text-danger">
-                                                <i class="fa fa-exclamation-triangle m-r-10"></i>
-                                                <span class="bold">98% Server Load</span>
-                                                <span class="fs-12 m-l-10">Take Action</span>
-                                            </a>
-                                            <span class="pull-right time">2 mins ago</span>
-                                        </div>
-                                        <div class="option">
-                                            <a href="#" class="mark"></a>
-                                        </div>
-                                    </div>
-                                    <!-- END Notification Item-->
-                                </div>
-                                <!-- END Notification Body-->
-                                <!-- START Notification Footer-->
-                                <div class="notification-footer text-center">
-                                    <a href="#" class="">Read all notifications</a>
-                                    <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
-                                        <i class="pg-refresh_new"></i>
-                                    </a>
-                                </div>
-                                <!-- END Notification Footer-->
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="p-r-15 inline">
-                    <a href="#" class="icon-set clip "></a>
-                </li>
-                <li class="p-r-15 inline">
-                    <a href="#" class="icon-set grid-box"></a>
-                </li>
-            </ul>
-            <!-- END NOTIFICATION DROPDOWN -->
-            <a href="#" class="search-link" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a>
-        </div>
-    </div>
-    <div class=" pull-right">
-        <div class="header-inner">
-            <a href="#" class="btn-link icon-set menu-hambuger-plus m-l-20 sm-no-margin hidden-sm hidden-xs" data-toggle="quickview" data-toggle-element="#quickview"></a>
-        </div>
-    </div>
-    <div class=" pull-right">
-        <!-- START User Info-->
-        <div class="visible-lg visible-md m-t-10">
-            <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-                <span class="semi-bold">David</span> <span class="text-master">Nest</span>
-            </div>
-            <div class="dropdown pull-right">
-                <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="thumbnail-wrapper d32 circular inline m-t-5">
-                    {# <img src="" alt="" data-src="img/profiles/avatar.jpg" data-src-retina="img/profiles/avatar_small2x.jpg" width="32" height="32"> #}
-                </span>
-                </button>
-                <ul class="dropdown-menu profile-dropdown" role="menu">
-                    <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
-                </li>
-                <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html" class="actived">Trang chủ</a>
             </li>
-            <li><a href="#"><i class="pg-signals"></i> Help</a>
-        </li>
-        <li class="bg-master-lighter">
-            <a href="#" class="clearfix">
-                <span class="pull-left">Logout</span>
-                <span class="pull-right"><i class="pg-power"></i></span>
-            </a>
-        </li>
-    </ul>
-</div>
-</div>
-<!-- END User Info-->
-</div>
-</div>
-<!-- END HEADER -->
-<!-- END PAGE HEADER WRAPPER -->
+            <li>
+                <a href="product.html">Sản phẩm thiết bị</a>
+                <div class="submenu">
+                    <a href="#">Thiết bị ngành nước</a>
+                    <a href="#">Thiết bị điện</a>
+                    <a href="#">Thiết bị xây dựng</a>
+                    <a href="#">Hóa chất xử lý nước</a>
+                </div>
+            </li>
+            <li>
+                <a href="bai-viet.html">Tư vấn thiết kế</a>
+                <div class="submenu">
+                    <a href="#">Cấp thoát nước & môi trường</a>
+                    <a href="#">Xây dựng dân dụng & công nghiệp</a>
+                </div>
+            </li>
+            <li>
+                <a href="bai-viet.html">Xử lý nước</a>
+                <div class="submenu">
+                    <a href="#">Xử lý nước cấp</a>
+                    <a href="#">Xử lý nước thải</a>
+                </div>
+            </li>
+            <li>
+                <a href="cong-trinh-tieu-bieu.html">Công trình tiêu biểu</a>
+            </li>
+            <li>
+                <a href="mau-nha-dep.html">Các mẫu nhà đẹp</a>
+            </li>
+        </ul>
+    </nav>
+</header>

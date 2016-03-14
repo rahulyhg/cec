@@ -15,6 +15,7 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  * @link      http://thephalconphp.com/
  *
  * @Source('cec_product_category');
+ * @HasOne('id', '\Core\Model\Slug', 'objectid', {'alias': 'seo'})
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  * @Behavior('\Engine\Behavior\Model\NestedSet', {
  * 	'tablePrefix': 'pc_'

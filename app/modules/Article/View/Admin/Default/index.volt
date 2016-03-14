@@ -79,7 +79,7 @@
                             <td class="v-align-middle">
                                 <img src="{{ static_url(item.getThumbnailImage()) }}" class="img-rounded" alt="{{ item.getThumbnailImage() }}" width="50" height="50">
                                 &nbsp; {{ item.title }} <br/>
-                                <small class="user-role"><a href="{{ url(item.slug) }}">{{ url(item.slug) }}</a></small>
+                                <small class="user-role"><a href="{{ url(item.getSeo().slug) }}">{{ url(item.getSeo().slug) }}</a></small>
                             </td>
                             <td><span class="text-primary">{{ item.getTypeName()|i18n }}</span></td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>

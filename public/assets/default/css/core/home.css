@@ -1,0 +1,45 @@
+.hometitle{display:block; height:40px; background:#fff; border-top:3px solid #ffb300; position:relative; top:40px; width:375px; margin:0 auto 35px; text-align:center}
+.hometitle h3{display:inline-block; overflow:hidden; padding:10px 20px; font-size:26px; color:#888; text-transform:uppercase; margin-top:-20px; background:white}
+
+.whatwedo{display:block; overflow:hidden; margin:10px auto}
+
+.whatwedo li{float:left; overflow:hidden; width:33.33%;}
+.whatwedo li a{display:block; width:95%; overflow:hidden; margin:auto; position:relative}
+.whatwedo li img{display:block; width:100%; height:auto; margin:auto; transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -iwebkit-transition: all 0.3s ease-out 0s;
+}
+.whatwedo li h3{display:block; overflow:hidden; padding:10px; background:rgba(255,179,0,0.96); font-size:16px; color:#fff; position:absolute; bottom:0; left:0;
+right:0; transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -iwebkit-transition: all 0.3s ease-out 0s;
+}
+
+.whatwedo li p{display:block; overflow:hidden; padding:10px; font-size:14px; color:#333; line-height:22px}
+.whatwedo li:hover img{transform:scale(1.05);
+  -moz-transform:scale(1.05);
+  -iwebkit-transform:scale(1.05);}
+
+.whatwedo li:hover h3{background:rgba(142,192,67,0.8); color:#fff; padding:15px}
+
+/**/
+.projects{display:block; overflow:hidden; margin:10px auto}
+
+.projects li{float:left; overflow:hidden; width:33.33%;}
+.projects li a{display:block; width:95%; overflow:hidden; margin:auto; position:relative}
+.projects li img{display:block; width:100%; height:auto; margin:auto; transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -iwebkit-transition: all 0.3s ease-out 0s;
+}
+.projects li h3{display:block; overflow:hidden; padding:10px; background:rgba(142,192,67,0.8); font-size:16px; color:#fff; position:absolute; bottom:0; left:0;
+right:0; transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -iwebkit-transition: all 0.3s ease-out 0s;
+}
+
+.projects li p{display:block; overflow:hidden; padding:10px; font-size:14px; color:#333; line-height:22px}
+.projects li:hover img{transform:scale(1.05);
+  -moz-transform:scale(1.05);
+  -iwebkit-transform:scale(1.05);}
+
+.projects li:hover h3{background:rgba(255,179,0,0.8); color:#fff; padding:15px}

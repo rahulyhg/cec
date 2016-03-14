@@ -6,6 +6,7 @@ use Article\Model\Article as ArticleModel;
 use Core\Model\Image as ImageModel;
 use Category\Model\Category;
 use Core\Helper\Utilities;
+use Core\Model\Slug as SlugModel;
 
 /**
  * Article admin home.
@@ -150,7 +151,6 @@ class AdminController extends AbstractAdminController
                 $myArticle->cid = (int) $formData['cid'];
                 $myArticle->uid = (int) $this->session->get('me')->id;
                 $myArticle->title = $formData['title'];
-                // $myArticle->slug = Utilities::slug($formData['title']);
                 $myArticle->content = $formData['content'];
                 $myArticle->status = $formData['status'];
                 $myArticle->displayorder = $displayorder + 1;
@@ -161,6 +161,22 @@ class AdminController extends AbstractAdminController
                 $myArticle->image = $formData['image'];
 
                 if ($myArticle->create()) {
+                    // insert to slug table
+                    $mySlug = new SlugModel();
+                    $mySlug->assign([
+                        'uid' => $this->session->get('me')->id,
+                        'slug' => Utilities::slug($formData['title']),
+                        'hash' => md5(Utilities::slug($formData['title'])),
+                        'objectid' => $myArticle->id,
+                        'model' => SlugModel::MODEL_ARTICLE,
+                        'status' => SlugModel::STATUS_ENABLE
+                    ]);
+                    if (!$mySlug->create()) {
+                        foreach ($mySlug->getMessages() as $msg) {
+                            $this->flash->error($msg);
+                        }
+                    }
+
                     // insert to image table.
                     if (isset($formData['uploadfiles']) && count($formData['uploadfiles']) > 0) {
                         $imageList = array_unique($formData['uploadfiles']);
