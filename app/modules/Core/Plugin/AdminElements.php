@@ -83,6 +83,23 @@ class AdminElements extends Component
                 ]
             ]
         ],
+        'Product' => [
+            'controller' => '',
+            'action' => '',
+            'icon' => '<i class="fa fa-adn"></i>',
+            'sub-menu' => [
+                'Create' => [
+                    'controller' => 'admin',
+                    'action' => 'create',
+                    'icon' => '<i class="fa fa-plus"></i>',
+                ],
+                'Listing' => [
+                    'controller' => 'admin',
+                    'action' => '',
+                    'icon' => '<i class="fa fa-bars"></i>',
+                ]
+            ]
+        ],
     ];
 
     /**

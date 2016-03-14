@@ -18,4 +18,5 @@
     </body>
     {% include '../../Core/View/Layout/Default/site-header.volt' %}
     {% include '../../Core/View/Layout/Default/site-footer.volt' %}
+    <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultCoreSite&rev=' ~ config.global.version.js) }}"></script>
 </html>

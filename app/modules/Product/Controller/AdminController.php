@@ -188,15 +188,13 @@ class AdminController extends AbstractAdminController
                     'bind' => ['id' => (int) $id]
                 ]);
 
-                // Delete old image when user change avatar
-                if ($myProduct->avatar != $formData['avatar']) {
-                    if ($myProduct->avatar != "") {
+                // Delete old image when user change image
+                if ($formData['image'] != "") {
+                    if ($myProduct->image != "" && $myProduct->image != $formData['image']) {
                         $this->file->delete($myProduct->avatar);
                         $this->file->delete($myProduct->getThumbnailImage());
                         $this->file->delete($myProduct->getMediumImage());
                     }
-                } else {
-                    $formData['avatar'] = "";
                 }
 
                 $myProduct->assign($formData);

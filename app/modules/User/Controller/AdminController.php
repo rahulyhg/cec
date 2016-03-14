@@ -190,14 +190,12 @@ class AdminController extends AbstractAdminController
                 ]);
 
                 // Delete old image when user change avatar
-                if ($myUser->avatar != $formData['avatar']) {
-                    if ($myUser->avatar != "") {
+                if ($formData['avatar'] != "") {
+                    if ($myUser->avatar != "" && $myUser->avatar != $formData['avatar']) {
                         $this->file->delete($myUser->avatar);
                         $this->file->delete($myUser->getThumbnailImage());
                         $this->file->delete($myUser->getMediumImage());
                     }
-                } else {
-                    $formData['avatar'] = "";
                 }
 
                 $myUser->assign($formData);

@@ -25,7 +25,7 @@ class SiteController extends AbstractController
      * number record on 1 page
      * @var integer
      */
-    protected $articleRecordPerPage = 6;
+    protected $articleRecordPerPage = 1;
     protected $productRecordPerPage = 8;
 
     /**
@@ -52,10 +52,11 @@ class SiteController extends AbstractController
      *
      * @return void
      *
-     * @Route("{slug:[a-zA-Z0-9\-\_]+}", methods={"GET"}, name="site-article-product-list")
+     * @Route("{slug:[a-zA-Z0-9\-]+}", methods={"GET"}, name="site-article-product-list")
      */
     public function listAction($slug = "")
     {
+        $page = $this->request->getQuery('page', null, 1);
         $formData = [];
 
         // if url is admin, redirect to admin dashboard
@@ -72,24 +73,45 @@ class SiteController extends AbstractController
         ]);
 
         if ($mySlug) {
-            $formData['columns'] = '*';
-            $formData['conditions'] = [
-                'keyword' => '',
-                'searchKeywordIn' => [],
-                'filterBy' => []
-            ];
-            $formData['orderBy'] = 'id';
-            $formData['orderType'] = 'asc';
-
             switch ($mySlug->model) {
                 case SlugModel::MODEL_CATEGORY:
-                    $myArticles = ArticleModel::getList($formData, $this->articleRecordPerPage, 1);
+                    $formData['columns'] = '*';
+                    $formData['conditions'] = [
+                        'keyword' => '',
+                        'searchKeywordIn' => [],
+                        'filterBy' => [
+                            'cid' => $mySlug->objectid,
+                        ]
+                    ];
+                    $formData['orderBy'] = 'id';
+                    $formData['orderType'] = 'asc';
+
+                    $myArticles = ArticleModel::getList($formData, $this->articleRecordPerPage, $page);
+                    $myCategory = CategoryModel::findFirst($mySlug->objectid);
+
+                    $this->bc->add('Trang chủ', '');
+                    $this->bc->add($myCategory->name, $slug);
                     $this->view->setVars([
-                        'myArticles' => $myArticles
+                        'myArticles' => $myArticles,
+                        'bc' => $this->bc->generate()
                     ]);
                     break;
+
                 case SlugModel::MODEL_PCATEGORY:
-                    $myProducts = ProductModel::getList($formData, $this->productRecordPerPage, 1);
+                    $formData['columns'] = '*';
+                    $formData['conditions'] = [
+                        'keyword' => '',
+                        'searchKeywordIn' => [],
+                        'filterBy' => [
+                            'pcid' => $mySlug->objectid,
+                        ]
+                    ];
+                    $formData['orderBy'] = 'id';
+                    $formData['orderType'] = 'asc';
+
+                    $myProducts = ProductModel::getList($formData, $this->productRecordPerPage, $page);
+                    $myProductCategory = PcategoryModel::findFirst($mySlug->objectid);
+
                     $this->view->setVars([
                         'myProducts' => $myProducts
                     ]);
@@ -98,7 +120,7 @@ class SiteController extends AbstractController
 
             $myCategories = CategoryModel::find([
                 'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
-                'oder' => 'lft'
+                'order' => 'lft'
             ]);
 
             $this->view->setVars([
@@ -109,22 +131,12 @@ class SiteController extends AbstractController
         }
     }
 
-    public function loadarticle()
-    {
-
-    }
-
-    public function loadproduct()
-    {
-
-    }
-
     /**
      * Detail of article / product
      *
      * @return void
      *
-     * @Route("/{category:[a-zA-Z0-9\-\_]+}/{slug:[a-zA-Z0-9\-\_]+}", methods={"GET"}, name="site-article-product-list")
+     * @Route("{category:[a-zA-Z0-9\-]+}/{slug:[a-zA-Z0-9\-]+}", methods={"GET"}, name="site-article-product-list")
      */
     public function detailAction($category = "", $slug = "")
     {

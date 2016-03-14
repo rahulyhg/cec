@@ -246,14 +246,12 @@ class AdminController extends AbstractAdminController
                 ]);
 
                 // Delete old image when user change image cover
-                if ($myArticle->image != $formData['image']) {
-                    if ($myArticle->image != "") {
+                if ($formData['image'] != "") {
+                    if ($myArticle->image != "" && $myArticle->image != $formData['image']) {
                         $this->file->delete($myArticle->image);
                         $this->file->delete($myArticle->getThumbnailImage());
                         $this->file->delete($myArticle->getMediumImage());
                     }
-                } else {
-                    $formData['image'] = "";
                 }
 
                 $myArticle->cid = (int) $formData['cid'];
