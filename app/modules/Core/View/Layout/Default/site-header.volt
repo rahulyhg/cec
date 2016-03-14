@@ -8,7 +8,7 @@
         <!--<a href="tel:0918496939" class="hotline">Công ty TNHH Xây Dựng & Môi Trường CEC</a>-->
     </div>
     <nav>
-        <ul>
+        {#<ul>
             <li>
                 <a href="index.html" class="actived">Trang chủ</a>
             </li>
@@ -41,6 +41,29 @@
             <li>
                 <a href="mau-nha-dep.html">Các mẫu nhà đẹp</a>
             </li>
-        </ul>
+        </ul>#}
+
+        {% set level = 1 %}
+        {% for n, cat in myCategories %}
+            {% if cat.level == level %}
+                </li>
+            {% elseif cat.level > level %}
+                <ul class="dd-list">
+            {% else %}
+                </li>
+                {% set x = level - cat.level %}
+                {% for i in x..1 if i > 0 %}
+                    </ul>
+                    </li>
+                {% endfor %}
+            {% endif %}
+            <li class="dd-item dd3-item">
+                <p>{{ cat.name }}</p>
+            {% set level = cat.level %}
+        {% endfor %}
+        {% for i in level..0 if i > 1 %}
+            </li>
+            </ul>
+        {% endfor %}
     </nav>
 </header>

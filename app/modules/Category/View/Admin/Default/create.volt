@@ -53,14 +53,14 @@
                                 class="cs-select cs-skin-slide"
                                 data-init-plugin="cs-select"
                                 name="root">
-                                <option value="1">----</option>
+                                <option value="0">----</option>
                                 {% for n, cat in categories %}
                                     <option
                                         value="{{ cat.id }}"
                                         {% if formData['root'] is defined and formData['root'] == cat.id %}
-                                        selected="selected"
+                                            selected="selected"
                                         {% endif %}>
-                                        {{ str_repeat('-', cat.level) }} {{ cat.name }}
+                                            {{ str_repeat('-', cat.level) }} {{ cat.name }}
                                     </option>
                                 {% endfor %}
                             </select>

@@ -1,5 +1,8 @@
 {% extends "../../Core/View/Layout/Default/site-main.volt" %}
 
+{% block css %}
+    <link href="{{ static_url('min/index.php?g=cssDefaultHomeSite&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block content %}
 <section>
     <div class="hometitle"><h3>Hoạt động tại CEC</h3></div>

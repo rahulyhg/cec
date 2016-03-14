@@ -17,6 +17,7 @@ use Pcategory\Model\Pcategory as PcategoryModel;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
+ * @RoutePrefix("/", name="site-article-home")
  */
 class SiteController extends AbstractController
 {
@@ -36,7 +37,14 @@ class SiteController extends AbstractController
      */
     public function indexAction()
     {
+        $myCategories = CategoryModel::find([
+            'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
+            'order' => 'lft'
+        ]);
 
+        $this->view->setVars([
+            'myCategories' =>  $myCategories
+        ]);
     }
 
     /**
@@ -44,7 +52,7 @@ class SiteController extends AbstractController
      *
      * @return void
      *
-     * @Route("/{slug:[a-zA-Z0-9\-\_]+}", methods={"GET"}, name="site-article-product-list")
+     * @Route("{slug:[a-zA-Z0-9\-\_]+}", methods={"GET"}, name="site-article-product-list")
      */
     public function listAction($slug = "")
     {
@@ -87,6 +95,15 @@ class SiteController extends AbstractController
                     ]);
                     break;
             }
+
+            $myCategories = CategoryModel::find([
+                'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
+                'oder' => 'lft'
+            ]);
+
+            $this->view->setVars([
+                'myCategories' =>  $myCategories
+            ]);
         } else {
             return $this->response->redirect('notfound');
         }
@@ -99,7 +116,7 @@ class SiteController extends AbstractController
 
     public function loadproduct()
     {
-        
+
     }
 
     /**

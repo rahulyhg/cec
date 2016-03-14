@@ -9,6 +9,7 @@
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
         <link href="{{ static_url('min/index.php?g=cssDefaultCoreSite&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
+        {% block css %}{% endblock %}
         <script type="text/javascript" src="{{ static_url('plugins/jquery/jquery-1.11.1.min.js') }}"></script>
     </head>
 

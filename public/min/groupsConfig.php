@@ -94,6 +94,11 @@ return array(
     ],
     'cssDefaultCoreSite' => [
         '../assets/default/css/core/global.css',
+    ],
+    'cssDefaultHomeSite' => [
         '../assets/default/css/core/home.css',
+    ],
+    'cssDefaultProductSite' => [
+        '../assets/default/css/core/product.css',
     ],
 );

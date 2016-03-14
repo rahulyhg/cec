@@ -2,6 +2,7 @@
 namespace Core\Controller;
 
 use Phalcon\Mvc\Controller as PhController;
+use Core\Plugin\AdminBreadcrumbs;
 
 /**
  * Abstract Sitse controller.
@@ -14,6 +15,8 @@ use Phalcon\Mvc\Controller as PhController;
  */
 abstract class AbstractController extends PhController
 {
+    protected $lang;
+
     /**
      * Initializes the controller.
      *
@@ -25,9 +28,14 @@ abstract class AbstractController extends PhController
         $config = $di->getConfig();
         $dispatcher = $di->getDispatcher();
 
+        // Load Language service
+        $this->lang = $di->get('lang');
+
         if ($di->has('profiler')) {
             $this->profiler->start();
         }
+
+        $this->bc = new AdminBreadcrumbs();
     }
 
     public function afterExecuteRoute()
