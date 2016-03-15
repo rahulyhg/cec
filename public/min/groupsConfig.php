@@ -55,6 +55,9 @@ return array(
         '../assets/default/js/pcategory/admin-nestables.js',
     ],
     'jsDefaultCoreSite' => [
+        '../plugins/photoswipe/photoswipe.min.js',
+        '../plugins/photoswipe/photoswipe-ui-default.min.js',
+        '../assets/default/js/core/custom-photoswipe.js',
         '../assets/default/js/core/site-main.js',
     ],
     /**
@@ -99,6 +102,8 @@ return array(
         '../assets/default/css/core/home.css',
     ],
     'cssDefaultProductSite' => [
+        '../plugins/photoswipe/photoswipe.css',
+        '../plugins/photoswipe/default-skin/default-skin.css',
         '../assets/default/css/core/product.css',
     ],
 );

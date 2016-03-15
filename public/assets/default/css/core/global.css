@@ -234,3 +234,28 @@ footer p{display:block; overflow:hidden; padding:5px 0; font-size:14px; color:#f
 @media screen and (max-width: 1024px){
 	.head .contact{margin-right:410px}
 }
+
+.my-gallery {
+    width: 212px;
+    height: 52px;
+    position: absolute;
+    top: 0;
+    margin-top: 55px;
+    margin-left: 172px;
+    overflow: hidden;
+    background-color: #333;
+    padding-left: 2px;
+    padding-top: 3px;
+}
+.my-gallery img {
+  width: 50px !important;
+  height: 50px !important;
+}
+.my-gallery figure {
+  display: block;
+  float: left;
+  margin: 0 3px 3px 0;
+}
+.my-gallery figcaption {
+  display: none;
+}

@@ -16,6 +16,7 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  *
  * @Source('cec_article');
  * @HasOne('id', '\Core\Model\Slug', 'objectid', {'alias': 'seo'})
+ * @HasMany('id', '\Core\Model\Image', 'aid', {'alias': 'galleries'})
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  */
 class Article extends AbstractModel
@@ -135,6 +136,16 @@ class Article extends AbstractModel
         ));
 
         return $this->validationHasFailed() != true;
+    }
+
+    // Get model relation with conditions
+    public function getGalleries()
+    {
+        return $this->getRelated('galleries', [
+            'conditions' => 'status = ' . self::STATUS_ENABLE,
+            'order' => 'id ASC',
+            'limit' => 4
+        ]);
     }
 
     /**

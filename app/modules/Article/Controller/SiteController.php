@@ -7,6 +7,7 @@ use Article\Model\Article as ArticleModel;
 use Product\Model\Product as ProductModel;
 use Category\Model\Category as CategoryModel;
 use Pcategory\Model\Pcategory as PcategoryModel;
+use Core\Helper\Utilities;
 
 /**
  * Article site home.
@@ -25,7 +26,7 @@ class SiteController extends AbstractController
      * number record on 1 page
      * @var integer
      */
-    protected $articleRecordPerPage = 1;
+    protected $articleRecordPerPage = 6;
     protected $productRecordPerPage = 8;
 
     /**
@@ -73,48 +74,115 @@ class SiteController extends AbstractController
         ]);
 
         if ($mySlug) {
+            $currentUrl = base64_decode(Utilities::getCurrentUrl());
+            $formData['columns'] = '*';
+            $formData['orderBy'] = 'id';
+            $formData['orderType'] = 'asc';
+
             switch ($mySlug->model) {
                 case SlugModel::MODEL_CATEGORY:
-                    $formData['columns'] = '*';
                     $formData['conditions'] = [
                         'keyword' => '',
                         'searchKeywordIn' => [],
                         'filterBy' => [
                             'cid' => $mySlug->objectid,
+                            'status' => CategoryModel::STATUS_ENABLE
                         ]
                     ];
-                    $formData['orderBy'] = 'id';
-                    $formData['orderType'] = 'asc';
 
                     $myArticles = ArticleModel::getList($formData, $this->articleRecordPerPage, $page);
                     $myCategory = CategoryModel::findFirst($mySlug->objectid);
 
-                    $this->bc->add('Trang chủ', '');
-                    $this->bc->add($myCategory->name, $slug);
-                    $this->view->setVars([
-                        'myArticles' => $myArticles,
-                        'bc' => $this->bc->generate()
-                    ]);
+                    if ($this->request->isAjax()) {
+                        $this->viewmorearticle($myArticles, $myCategory);
+                    } else {
+                        $this->bc->add('Trang chủ', '');
+                        $ancestors = $myCategory->ancestors();
+
+                        if ($ancestors) {
+                            foreach ($ancestors as $category) {
+                                if ($category->level != 1) {
+                                    $this->bc->add($category->name, $category->getSeo()->slug);
+                                }
+                            }
+                        }
+                        $this->bc->add($myCategory->name, $slug);
+                        $this->view->setVars([
+                            'myCategory' => $myCategory,
+                            'myArticles' => $myArticles,
+                            'bc' => $this->bc->generate(),
+                            'paginateUrl' => $currentUrl
+                        ]);
+                    }
                     break;
 
                 case SlugModel::MODEL_PCATEGORY:
-                    $formData['columns'] = '*';
                     $formData['conditions'] = [
                         'keyword' => '',
                         'searchKeywordIn' => [],
                         'filterBy' => [
                             'pcid' => $mySlug->objectid,
+                            'status' => PcategoryModel::STATUS_ENABLE
                         ]
                     ];
-                    $formData['orderBy'] = 'id';
-                    $formData['orderType'] = 'asc';
 
                     $myProducts = ProductModel::getList($formData, $this->productRecordPerPage, $page);
                     $myProductCategory = PcategoryModel::findFirst($mySlug->objectid);
 
+                    if ($this->request->isAjax()) {
+                        $this->viewmoreproduct($myProducts, $myProductCategory);
+                    } else {
+                        $this->bc->add('Trang chủ', '');
+                        $ancestors = $myProductCategory->ancestors();
+                        if ($ancestors) {
+                            foreach ($ancestors as $category) {
+                                if ($category->level != 1) {
+                                    $this->bc->add($category->name, $category->getSeo()->slug);
+                                }
+                            }
+                        }
+                        $this->bc->add($myProductCategory->name, $slug);
+                        $this->view->setVars([
+                            'myProductCategory' => $myProductCategory,
+                            'myProducts' => $myProducts,
+                            'bc' => $this->bc->generate(),
+                            'paginateUrl' => $currentUrl
+                        ]);
+                    }
+
                     $this->view->setVars([
                         'myProducts' => $myProducts
                     ]);
+                    break;
+
+                case SlugModel::MODEL_ARTICLE:
+                    $myArticle = ArticleModel::findFirst([
+                        'id = :articleId: AND status = :status:',
+                        'bind' => [
+                            'articleId' => $mySlug->objectid,
+                            'status' => ArticleModel::STATUS_ENABLE
+                        ]
+                    ]);
+
+                    $myArticleActivity = ArticleModel::find([
+                        'type = :type: AND status = :status:',
+                        'bind' => [
+                            'type' => ArticleModel::TYPE_ACTIVITY,
+                            'status' => ArticleModel::STATUS_ENABLE
+                        ]
+                    ]);
+
+                    if ($myArticle) {
+                        $this->bc->add('Trang chủ', '');
+                        $this->bc->add($myArticle->title, $slug);
+                        $this->view->setVars([
+                            'myArticle' => $myArticle,
+                            'myArticleActivity' => $myArticleActivity,
+                            'bc' => $this->bc->generate(),
+                        ]);
+                    } else {
+                        return $this->response->redirect('notfound');
+                    }
                     break;
             }
 
@@ -131,17 +199,25 @@ class SiteController extends AbstractController
         }
     }
 
-    /**
-     * Detail of article / product
-     *
-     * @return void
-     *
-     * @Route("{category:[a-zA-Z0-9\-]+}/{slug:[a-zA-Z0-9\-]+}", methods={"GET"}, name="site-article-product-list")
-     */
-    public function detailAction($category = "", $slug = "")
+    // Ajax load more article
+    public function viewmorearticle($myArticles, $myCategory)
     {
-        var_dump($category, $slug);
+        $meta = $result = [];
 
-        die;
+        foreach ($myArticles->items as $item) {
+            $result['data'][] = [
+                'title' => $item->title,
+                'image' => $this->url->getStaticBaseUri() . $item->getMediumImage(),
+                'seodescription' => $item->seodescription,
+                'slug' => $item->getSeo()->slug
+            ];
+        }
+
+        $meta['status'] = true;
+        // $meta['message'] = 'test ajax';
+        $this->view->setVars([
+            '_meta' => $meta,
+            '_result' => $result
+        ]);
     }
 }

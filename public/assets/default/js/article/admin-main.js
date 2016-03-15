@@ -61,12 +61,14 @@ $(document).ready(function() {
             if ($("#edit-article").length > 0) {
                 var thisDropzone = this;
                 var galleries = $.parseJSON(imageList);
-                $('#uploadImages .dz-message').remove();
-                $.each(galleries, function(key, item) {
-                    var mockFile = {name: item.name, size: item.size};
-                    thisDropzone.options.addedfile.call(thisDropzone, mockFile);
-                    thisDropzone.options.thumbnail.call(thisDropzone, mockFile, static_url + item.path);
-                });
+                if (galleries.length > 0) {
+                    $('#uploadImages .dz-message').remove();
+                    $.each(galleries, function(key, item) {
+                        var mockFile = {name: item.name, size: item.size};
+                        thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+                        thisDropzone.options.thumbnail.call(thisDropzone, mockFile, static_url + item.path);
+                    });
+                }
             }
 
             this.on("success", function(file, response) {
