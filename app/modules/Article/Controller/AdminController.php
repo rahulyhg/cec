@@ -257,7 +257,6 @@ class AdminController extends AbstractAdminController
                 $myArticle->cid = (int) $formData['cid'];
                 $myArticle->uid = (int) $this->session->get('me')->id;
                 $myArticle->title = $formData['title'];
-                // $myArticle->slug = Utilities::slug($formData['title']);
                 $myArticle->content = $formData['content'];
                 $myArticle->status = $formData['status'];
                 $myArticle->displaytohome = $formData['displaytohome'];
@@ -352,9 +351,35 @@ class AdminController extends AbstractAdminController
     public function deleteAction($id = 0)
     {
         $message = '';
-        $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]])->delete();
+        $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
 
-        if ($myArticle) {
+        // delete slug
+        SlugModel::findFirst([
+            'hash = :hash:',
+            'bind' => ['hash' => md5($myArticle->title)]
+        ])->delete();
+
+        // delete cover
+        if ($myArticle->image != "") {
+            $this->file->delete($myArticle->image);
+        }
+
+        // delete images gallery if exist
+        $myImages = ImageModel::find([
+            'aid = :aid:',
+            'bind' => [
+                'aid' => $myArticle->id
+            ]
+        ]);
+        if ($myImages) {
+            foreach ($myImages as $img) {
+                $this->file->delete($img->path);
+                // delete in db
+                $img->delete();
+            }
+        }
+
+        if ($myArticle->delete()) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
         } else {
             foreach ($myArticle->getMessages() as $msg) {

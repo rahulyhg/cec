@@ -46,6 +46,10 @@ return array(
         '../plugins/summernote/js/summernote.min.js',
         '../assets/default/js/article/admin-main.js',
     ],
+    'jsDefaultProductAdmin' => [
+        '../plugins/summernote/js/summernote.min.js',
+        '../assets/default/js/product/admin-main.js',
+    ],
     'jsDefaultCategoryAdmin' => [
         '../plugins/jquery-nestable/jquery.nestable.min.js',
         '../assets/default/js/category/admin-nestables.js',
@@ -88,6 +92,10 @@ return array(
     'cssDefaultArticleAdmin' => [
         '../plugins/summernote/css/summernote.css',
         '../assets/default/css/article/admin-style.css',
+    ],
+    'cssDefaultProductAdmin' => [
+        '../plugins/summernote/css/summernote.css',
+        '../assets/default/css/product/admin-style.css',
     ],
     'cssDefaultCategoryAdmin' => [
         '../assets/default/css/category/admin-style.css',

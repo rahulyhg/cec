@@ -224,7 +224,7 @@ class AdminController extends AbstractAdminController
         $formData['thumbnailImage'] = $myUser->getThumbnailImage();
 
         $this->bc->add($this->lang->_('title-index'), 'admin/user');
-        $this->bc->add($this->lang->_('title-create'), '');
+        $this->bc->add($this->lang->_('title-edit'), '');
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
@@ -244,6 +244,11 @@ class AdminController extends AbstractAdminController
     {
         $message = '';
         $myUser = UserModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]])->delete();
+
+        // delete avatar
+        if ($myUser->avatar != "") {
+            $this->file->delete($myUser->avatar);
+        }
 
         if ($myUser) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));

@@ -3,6 +3,9 @@ namespace Product\Controller;
 
 use Core\Controller\AbstractAdminController;
 use Product\Model\Product as ProductModel;
+use Pcategory\Model\Pcategory as ProductCategory;
+use Core\Model\Slug as SlugModel;
+use Core\Helper\Utilities;
 
 /**
  * Product admin home.
@@ -141,11 +144,37 @@ class AdminController extends AbstractAdminController
             if ($this->security->checkToken()) {
                 $formData = array_merge($formData, $this->request->getPost());
 
+                $displayorder = ProductModel::maximum([
+                    'column' => 'displayorder'
+                ]);
+
                 $myProduct = new ProductModel();
-                $myProduct->assign($formData);
-                $myProduct->password = $this->security->hash($formData['password']);
+                $myProduct->pcid = (int) $formData['pcid'];
+                $myProduct->uid = (int) $this->session->get('me')->id;
+                $myProduct->name = $formData['name'];
+                $myProduct->status = $formData['status'];
+                $myProduct->displayorder = $displayorder + 1;
+                $myProduct->seodescription = $formData['seodescription'];
+                $myProduct->seokeyword = $formData['seokeyword'];
+                $myProduct->image = $formData['image'];
 
                 if ($myProduct->create()) {
+                    // insert to slug table
+                    $mySlug = new SlugModel();
+                    $mySlug->assign([
+                        'uid' => $this->session->get('me')->id,
+                        'slug' => Utilities::slug($formData['name']),
+                        'hash' => md5(Utilities::slug($formData['name'])),
+                        'objectid' => $myProduct->id,
+                        'model' => SlugModel::MODEL_PRODUCT,
+                        'status' => SlugModel::STATUS_ENABLE
+                    ]);
+                    if (!$mySlug->create()) {
+                        foreach ($mySlug->getMessages() as $msg) {
+                            $this->flash->error($msg);
+                        }
+                    }
+
                     $formData = [];
                     $this->flash->success(str_replace('###name###', $myProduct->name, $this->lang->_('message-create-product-success')));
                 } else {
@@ -164,7 +193,8 @@ class AdminController extends AbstractAdminController
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
-            'statusList' => ProductModel::getStatusList()
+            'statusList' => ProductModel::getStatusList(),
+            'categories' => ProductCategory::find(['order' => 'lft'])
         ]);
     }
 
@@ -188,18 +218,25 @@ class AdminController extends AbstractAdminController
                     'bind' => ['id' => (int) $id]
                 ]);
 
-                // Delete old image when user change image
+                // Delete old image when product change image cover
                 if ($formData['image'] != "") {
                     if ($myProduct->image != "" && $myProduct->image != $formData['image']) {
-                        $this->file->delete($myProduct->avatar);
+                        $this->file->delete($myProduct->image);
                         $this->file->delete($myProduct->getThumbnailImage());
                         $this->file->delete($myProduct->getMediumImage());
                     }
                 }
 
-                $myProduct->assign($formData);
+                $myProduct->pcid = (int) $formData['pcid'];
+                $myProduct->uid = (int) $this->session->get('me')->id;
+                $myProduct->name = $formData['name'];
+                $myProduct->status = $formData['status'];
+                $myProduct->seodescription = $formData['seodescription'];
+                $myProduct->seokeyword = $formData['seokeyword'];
+                $myProduct->image = $formData['image'];
+
                 if ($myProduct->update()) {
-                    $this->flash->success(str_replace('###name###', $myProduct->name, $this->lang->_('message-update-user-success')));
+                    $this->flash->success(str_replace('###name###', $myProduct->name, $this->lang->_('message-update-product-success')));
                 } else {
                     foreach ($myProduct->getMessages() as $msg) {
                         $message .= $this->lang->_($msg->getMessage()) . '<br />';
@@ -212,7 +249,7 @@ class AdminController extends AbstractAdminController
         }
 
         /**
-         * Find user by id
+         * Find product by id
          */
         $myProduct = ProductModel::findFirst([
             'id = :id:',
@@ -222,29 +259,40 @@ class AdminController extends AbstractAdminController
         $formData = $myProduct->toArray();
         $formData['thumbnailImage'] = $myProduct->getThumbnailImage();
 
-        $this->bc->add($this->lang->_('title-index'), 'admin/user');
-        $this->bc->add($this->lang->_('title-create'), '');
+        $this->bc->add($this->lang->_('title-index'), 'admin/product');
+        $this->bc->add($this->lang->_('title-edit'), '');
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate(),
             'statusList' => ProductModel::getStatusList(),
-            'roleList' => ProductModel::getRoleList()
+            'categories' => ProductCategory::find(['order' => 'lft'])
         ]);
     }
 
     /**
-     * Delete user action.
+     * Delete product action.
      *
      * @return void
      *
-     * @Get("/delete/{id:[0-9]+}", name="admin-user-delete")
+     * @Get("/delete/{id:[0-9]+}", name="admin-product-delete")
      */
     public function deleteAction($id = 0)
     {
         $message = '';
-        $myProduct = ProductModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]])->delete();
+        $myProduct = ProductModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
 
-        if ($myProduct) {
+        // delete slug
+        SlugModel::findFirst([
+            'objectid = :id: AND model = "Product"',
+            'bind' => ['id' => $myProduct->id]
+        ])->delete();
+
+        // delete cover
+        if ($myProduct->image != "") {
+            $this->file->delete($myProduct->image);
+        }
+
+        if ($myProduct->delete()) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
         } else {
             foreach ($myProduct->getMessages() as $msg) {
@@ -253,17 +301,17 @@ class AdminController extends AbstractAdminController
             $this->flashSession->error($message);
         }
 
-        return $this->response->redirect('admin/user');
+        return $this->response->redirect('admin/product');
     }
 
     /**
-     * Upload avatar action.
+     * Upload image action.
      *
      * @return void
      *
-     * @Post("/uploadavatar", name="admin-user-uploadavatar")
+     * @Post("/uploadimage", name="admin-product-uploadimage")
      */
-    public function uploadavatarAction()
+    public function uploadimageAction()
     {
         $meta = $result = [];
         $myProduct = new ProductModel();
@@ -285,11 +333,11 @@ class AdminController extends AbstractAdminController
     }
 
     /**
-     * Delete avatar action.
+     * Delete image action.
      *
      * @return void
      *
-     * @Post("/deleteavatar", name="admin-user-deleteavatar")
+     * @Post("/deleteimage", name="admin-product-deleteimage")
      */
     public function deleteimageAction()
     {
@@ -317,121 +365,5 @@ class AdminController extends AbstractAdminController
             '_meta' => $meta,
             '_result' => $result
         ]);
-    }
-
-    /**
-     * Admin user login action.
-     *
-     * @return void
-     *
-     * @Route("/login", methods={"GET", "POST"}, name="admin-user-login")
-     */
-    public function loginAction()
-    {
-        $redirectUrl = base64_decode($this->request->getQuery('redirect', null, ''));
-
-        $formData = [];
-        $cookie = false;
-        $formData['fname'] = $this->request->getPost('fname', null, '');
-        $formData['fpassword'] = $this->request->getPost('fpassword', null, '');
-        $formData['fcookie'] = $this->request->getPost('fcookie', null, false);
-
-        if ($this->request->hasPost('fsubmit')) {
-            if ($this->security->checkToken()) {
-                if (isset($formData['fcookie']) && $formData['fcookie'] == 'remember-me') {
-                    $cookie = (boolean) true;
-                }
-
-                $identity = $this->check(
-                    (string) $formData['fname'],
-                    (string) $formData['fpassword'],
-                    $cookie,
-                    true);
-
-                if ($identity == true) {
-                    if ($redirectUrl != null) {
-                        return $this->response->redirect($redirectUrl, true, 301);
-                    } else {
-                        return $this->response->redirect('admin');
-                    }
-                }
-            }
-        }
-
-        $this->tag->prependTitle('Login');
-        $this->view->setVars([
-            'formData' => $formData
-        ]);
-    }
-
-    /**
-     * Checking user existing in system
-     *
-     * @param  string  $email
-     * @param  string  $password
-     * @param  boolean $cookie
-     * @param  boolean $log
-     * @return boolean
-     */
-    public function check($email, $password, $cookie = false, $log = false)
-    {
-        $validated = false;
-
-        $me = new \stdClass();
-        $myProduct = ProductModel::findFirst([
-            'email = :femail: AND status = :status:',
-            'bind' => [
-                'femail' => $email,
-                'status' => ProductModel::STATUS_ENABLE
-            ]
-        ]);
-
-        if ($myProduct) {
-            if ($this->security->checkHash($password, $myProduct->password)) {
-                $me->id = $myProduct->id;
-                $me->email = $myProduct->email;
-                $me->name = $myProduct->name;
-                $me->role = $myProduct->role;
-                $me->roleName = $myProduct->getRoleName();
-                $me->avatar = $myProduct->getThumbnailImage();
-
-                // create session for user
-                $this->session->set('me', $me);
-
-                // store cookie if chosen
-                if ($cookie == true) {
-                    $this->cookie->set('remember-me', $me->id, time() + 15 * 86400);
-                }
-
-                $validated = true;
-            } else {
-                $this->flash->error('Wrong password!');
-            }
-        } else {
-            $this->flash->error('Wrong user information!');
-        }
-
-        return $validated;
-    }
-
-    /**
-     * Admin user logout action.
-     *
-     * @return void
-     *
-     * @Route("/logout", methods={"GET"}, name="admin-user-logout")
-     */
-    public function logoutAction()
-    {
-        // delete cookie
-        if ($this->cookie->has('remember-me')) {
-            $rememberMe = $this->cookie->get('remember-me');
-            $rememberMe->delete();
-        }
-
-        // remove session
-        $this->session->destroy();
-
-        return $this->response->redirect('admin/user/login');
     }
 }

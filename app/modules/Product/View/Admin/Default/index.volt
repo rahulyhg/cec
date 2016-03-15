@@ -38,7 +38,7 @@
                                   <label for="checkall"></label>
                                 </div>
                             </th>
-                            <th>{{ 'th.name'|i18n }}</th>
+                            <th style="width:60%">{{ 'th.name'|i18n }}</th>
                             <th style="width:15%">
                                 <a href="{{ url.getBaseUri() }}admin/product?orderby=status&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
                                     {{ 'th.status'|i18n }}

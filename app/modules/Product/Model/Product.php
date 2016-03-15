@@ -28,6 +28,11 @@ class Product extends AbstractModel
     public $id;
 
     /**
+    * @Column(type="integer", nullable=false, column="u_id")
+    */
+    public $uid;
+
+    /**
     * @Column(type="integer", nullable=false, column="pc_id")
     */
     public $pcid;
@@ -56,6 +61,11 @@ class Product extends AbstractModel
     * @Column(type="integer", nullable=false, column="p_status")
     */
     public $status;
+
+    /**
+    * @Column(type="integer", nullable=false, column="p_display_order")
+    */
+    public $displayorder;
 
     /**
     * @Column(type="integer", nullable=true, column="p_datecreated")

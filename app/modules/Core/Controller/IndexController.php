@@ -12,7 +12,7 @@ namespace Core\Controller;
  *
  * @RoutePrefix("/admin", name="admin-dashboard-home")
  */
-class IndexController extends AbstractController
+class IndexController extends AbstractAdminController
 {
     /**
      * Core not found page.
@@ -34,6 +34,10 @@ class IndexController extends AbstractController
      */
     public function dashboardAction()
     {
-        // $this->response->setStatusCode('404', 'Page not found');
+        $this->bc->add($this->lang->_('title-index'), 'admin/dashboard');
+        $this->bc->add($this->lang->_('title-listing'), '');
+        $this->view->setVars([
+            'bc' => $this->bc->generate(),
+        ]);
     }
 }

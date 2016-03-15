@@ -18,6 +18,8 @@
     {% if myArticle is defined %}
         {{ myArticle.title }}
     {% endif %}
+
+    Liên hệ
 {% endblock %}
 
 {% block content %}
@@ -39,5 +41,8 @@
             {% include '../../Article/View/Site/Default/Partials/detail.volt' %}
         {% endif %}
 
+        {% if slug == 'lien-he' %}
+            {% include '../../Article/View/Site/Default/Partials/contact.volt' %}
+        {% endif %}
     </section>
 {% endblock %}

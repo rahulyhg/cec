@@ -143,8 +143,7 @@ class Article extends AbstractModel
     {
         return $this->getRelated('galleries', [
             'conditions' => 'status = ' . self::STATUS_ENABLE,
-            'order' => 'id ASC',
-            'limit' => 4
+            'order' => 'id ASC'
         ]);
     }
 

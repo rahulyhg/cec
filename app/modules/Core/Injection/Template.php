@@ -31,6 +31,7 @@ class Template extends AbstractInjection
         $config = $this->getDI()->get('config')->toArray();
         $controllerName = $dispatcher->getControllerName();
         $actionName = $dispatcher->getActionName();
+        // var_dump($controllerName, $actionName);die;
         $viewDir = $controllerName . '/' . $config['global']['template'][$controllerName] . '/' . $actionName;
 
         if (SUBDOMAIN == 'm' && $controllerName == 'Site') {

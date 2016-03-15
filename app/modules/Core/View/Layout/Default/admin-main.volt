@@ -47,8 +47,6 @@
                 {% include '../../Core/View/Layout/Default/admin-footer.volt' %}
         </div>
         <!-- END PAGE CONTAINER -->
-        {% include '../../Core/View/Layout/Default/admin-quickview.volt' %}
-        {% include '../../Core/View/Layout/Default/admin-search.volt' %}
         <!-- BEGIN PAGE LEVEL JS -->
         <script type="text/javascript" src="{{ static_url('plugins/boostrapv3/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultCoreAdmin&rev=' ~ config.global.version.js) }}"></script>

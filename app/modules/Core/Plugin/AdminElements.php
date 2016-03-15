@@ -16,16 +16,19 @@ class AdminElements extends Component
 {
     private $_leftbar = [
         'User' => [
+            'name' => 'Nguoi dung',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-users"></i>',
             'sub-menu' => [
                 'Create' => [
+                    'name' => 'Them',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
+                    'name' => 'danh sach',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -33,16 +36,19 @@ class AdminElements extends Component
             ]
         ],
         'Category' => [
+            'name' => 'Danh muc tin tuc',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
+                    'name' => 'Them',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
+                    'name' => 'danh sach',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -50,16 +56,19 @@ class AdminElements extends Component
             ]
         ],
         'Pcategory' => [
+            'name' => 'Danh muc san pham',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
+                    'name' => 'Them',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
+                    'name' => 'danh sach',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -67,16 +76,19 @@ class AdminElements extends Component
             ]
         ],
         'Article' => [
+            'name' => 'bai viet',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
+                    'name' => 'Them',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
+                    'name' => 'danh sach',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -84,16 +96,19 @@ class AdminElements extends Component
             ]
         ],
         'Product' => [
+            'name' => 'san pham',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
+                    'name' => 'Them',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
+                    'name' => 'danh sach',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -107,7 +122,6 @@ class AdminElements extends Component
      */
     public function getSidebar()
     {
-        $lang = $this->di->get('lang');
         $controllerName = strtolower($this->view->getControllerName());
         $actionName = $this->view->getActionName() == 'index' ? '' : $this->view->getActionName();
 
@@ -119,10 +133,10 @@ class AdminElements extends Component
             }
 
             if ($option['controller'] !== '' && $option['action'] !== '') {
-                echo $this->tag->linkTo($option['controller'] . '/' . $option['action'], $caption);
+                echo $this->tag->linkTo($option['controller'] . '/' . $option['action'], $option['name']);
             } else {
                 echo '<a href="javascript:;">';
-                echo '<span class="title">' . $caption . '</span>';
+                echo '<span class="title">' . $option['name'] . '</span>';
                 echo '<span class="arrow '. ($this->dispatcher->getModuleName() == strtolower($caption)? 'open' : '') .'"></span>';
                 echo '</a>';
 
@@ -143,7 +157,7 @@ class AdminElements extends Component
                         }
                     }
 
-                    echo $this->tag->linkTo($sub_option['controller'] . '/' . strtolower($caption) . '/' . $sub_option['action'], $sub_caption);
+                    echo $this->tag->linkTo($sub_option['controller'] . '/' . strtolower($caption) . '/' . $sub_option['action'], $sub_option['name']);
                     if ($sub_option['icon'] !== '') {
                         echo '<span class="icon-thumbnail">' . $sub_option['icon'] . '</span>';
                     }
