@@ -27,7 +27,7 @@ class SiteController extends AbstractController
      * @var integer
      */
     protected $articleRecordPerPage = 6;
-    protected $productRecordPerPage = 8;
+    protected $productRecordPerPage = 1;
 
     /**
      * Homepage.
@@ -245,8 +245,25 @@ class SiteController extends AbstractController
         ]);
     }
 
-    public function contact()
+    // Ajax load more product
+    public function viewmoreproduct($myProducts, $myCategory)
     {
-        die('a');
+        $meta = $result = [];
+
+        foreach ($myProducts->items as $item) {
+            $result['data'][] = [
+                'name' => $item->name,
+                'image' => $this->url->getStaticBaseUri() . $item->getMediumImage(),
+                'seodescription' => $item->seodescription,
+                'slug' => $item->getSeo()->slug
+            ];
+        }
+
+        $meta['status'] = true;
+        // $meta['message'] = 'test ajax';
+        $this->view->setVars([
+            '_meta' => $meta,
+            '_result' => $result
+        ]);
     }
 }

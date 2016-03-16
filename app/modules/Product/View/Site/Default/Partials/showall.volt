@@ -1,44 +1,25 @@
+<script type="text/javascript">
+    var paginateUrl = `{{ paginateUrl }}`;
+    var page = `{{ myProducts.current }}`;
+    var recordPerPage = `{{ myProducts.limit }}`;
+    var totalPage = `{{ myProducts.total_pages }}`;
+    var totalItems = `{{ myProducts.total_items }}`;
+</script>
 <section>
+    <ul class="product" id="product-list">
+        {% if myProducts.total_items > 0 %}
+            {% for item in myProducts.items %}
+                <li>
+                    <img width="220" height="200" src="{{ static_url(item.getThumbnailImage()) }}" alt="">
+                    <h3>{{ item.name }}</h3>
+                </li>
+            {% endfor %}
 
-    <ul class="breadcrumb" xmlns:v="http://rdf.data-vocabulary.org/#">
-        <li typeof="v:Breadcrumb"><a href="#">Trang chủ</a> <span>›</span></li>
-        <li typeof="v:Breadcrumb"><a href="#">Sản phẩm thiết bị</a> <span>›</span></li>
-        <li typeof="v:Breadcrumb"><h1><a href="#">Thiết bị ngành nước</a></h1></li>
+        {% else %}
+            No data found.
+        {% endif %}
     </ul>
-
-    <ul class="product">
-        <li>
-            <img width="220" height="200" src="images/valve-bi.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-buom.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-cong.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-bi.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-bi.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-buom.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-cong.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-        <li>
-            <img width="220" height="200" src="images/valve-bi.jpg" alt="">
-            <h3>Valve Bướm, valve bi, Valve cổng</h3>
-        </li>
-    </ul>
-    <a href="javascript:void(0)" class="viewmore">Xem thêm còn 20 sản phẩm</a>
+    {% if myProducts.current != myProducts.total_pages%}
+    <a href="javascript:void(0)" class="viewmore" id="product" data-page="{{ myProducts.next }}">Xem thêm còn <span class="rest">{{ myProducts.total_items - (myProducts.current * myProducts.limit) }}</span> sản phẩm</a>
+    {% endif %}
 </section>

@@ -16,19 +16,19 @@ class AdminElements extends Component
 {
     private $_leftbar = [
         'User' => [
-            'name' => 'Nguoi dung',
+            'name' => 'Thành viên',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-users"></i>',
             'sub-menu' => [
                 'Create' => [
-                    'name' => 'Them',
+                    'name' => 'Thêm',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
-                    'name' => 'danh sach',
+                    'name' => 'Tất cả',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -36,39 +36,19 @@ class AdminElements extends Component
             ]
         ],
         'Category' => [
-            'name' => 'Danh muc tin tuc',
+            'name' => 'DM Bài viết',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
-                    'name' => 'Them',
+                    'name' => 'Thêm',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
-                    'name' => 'danh sach',
-                    'controller' => 'admin',
-                    'action' => '',
-                    'icon' => '<i class="fa fa-bars"></i>',
-                ]
-            ]
-        ],
-        'Pcategory' => [
-            'name' => 'Danh muc san pham',
-            'controller' => '',
-            'action' => '',
-            'icon' => '<i class="fa fa-adn"></i>',
-            'sub-menu' => [
-                'Create' => [
-                    'name' => 'Them',
-                    'controller' => 'admin',
-                    'action' => 'create',
-                    'icon' => '<i class="fa fa-plus"></i>',
-                ],
-                'Listing' => [
-                    'name' => 'danh sach',
+                    'name' => 'Tất cả',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -76,19 +56,39 @@ class AdminElements extends Component
             ]
         ],
         'Article' => [
-            'name' => 'bai viet',
+            'name' => 'Bài viết',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
-                    'name' => 'Them',
+                    'name' => 'Thêm',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
-                    'name' => 'danh sach',
+                    'name' => 'Tất cả',
+                    'controller' => 'admin',
+                    'action' => '',
+                    'icon' => '<i class="fa fa-bars"></i>',
+                ]
+            ]
+        ],
+        'Pcategory' => [
+            'name' => 'DM Sản phẩm',
+            'controller' => '',
+            'action' => '',
+            'icon' => '<i class="fa fa-adn"></i>',
+            'sub-menu' => [
+                'Create' => [
+                    'name' => 'Thêm',
+                    'controller' => 'admin',
+                    'action' => 'create',
+                    'icon' => '<i class="fa fa-plus"></i>',
+                ],
+                'Listing' => [
+                    'name' => 'Tất cả',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
@@ -96,19 +96,19 @@ class AdminElements extends Component
             ]
         ],
         'Product' => [
-            'name' => 'san pham',
+            'name' => 'Sản phẩm',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-adn"></i>',
             'sub-menu' => [
                 'Create' => [
-                    'name' => 'Them',
+                    'name' => 'Thêm',
                     'controller' => 'admin',
                     'action' => 'create',
                     'icon' => '<i class="fa fa-plus"></i>',
                 ],
                 'Listing' => [
-                    'name' => 'danh sach',
+                    'name' => 'Tất cả',
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',

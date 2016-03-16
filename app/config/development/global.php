@@ -8,8 +8,8 @@ return [
         'css' => 1,
         'js' =>1
     ],
-    'baseUrl' => 'http://cec.dev/',
-    'staticUrl' => 'http://cec.dev/public/',
+    'baseUrl' => 'cec.dev',
+    'staticUrl' => 'cec.dev/public',
     'prefix' => 'blog_',
     'title' => 'CEC - Development',
     'template' => [

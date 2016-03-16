@@ -5,6 +5,7 @@ use Phalcon\Mvc\Application as PhApplication;
 use Phalcon\DI;
 use Phalcon\Events\Manager as PhEventsManager;
 use Phalcon\Registry as PhRegistry;
+use Core\Helper\Utilities;
 
 /**
  * Application class.
@@ -122,6 +123,23 @@ class Application extends PhApplication
         $config = $this->_config;
         $eventsManager = new PhEventsManager();
         $this->setEventsManager($eventsManager);
+
+        $eventsManager->attach('application:beforeHandleRequest',function($event, $application) {
+            $response = $this->di->get('response');
+            $dispatcher = $this->di->get('dispatcher');
+
+            //Detect mobile device
+            require_once(ROOT_PATH . '/app/libraries/Mobile_Detect.php');
+            $detect = new \Mobile_Detect();
+            if ($detect->isMobile() && SUBDOMAIN != 'm' && $dispatcher->getControllerName() == 'site') {
+
+                //begin redirect link to mobile version
+                $curPageURL = base64_decode(Utilities::getCurrentUrl());
+                $curPageURL = str_replace(array('http://', 'https://'), array('http://m.', 'https://m.'), $curPageURL);
+
+                return $response->redirect($curPageURL, true, 301);
+            }
+        });
 
         /**
          * Init base systems first.

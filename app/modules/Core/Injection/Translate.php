@@ -6,7 +6,6 @@ use Engine\Config;
 use Phalcon\Translate\Adapter\NativeArray as PhTranslateArray;
 use Phalcon\Events\Event as PhEvent;
 use Phalcon\Mvc\Dispatcher;
-use Core\Model\Language as LanguageModel;
 
 /**
  * Core translate api.

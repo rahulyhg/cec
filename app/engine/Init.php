@@ -155,8 +155,11 @@ trait Init
          * application
          */
         $url = new PhUrl();
-        $url->setBaseUri($config->global->baseUrl);
-        $url->setStaticBaseUri($config->global->staticUrl);
+        if (SUBDOMAIN == 'm') {
+            $config->global->baseUrl = 'm.' . $config->global->baseUrl;
+        }
+        $url->setBaseUri($di->get('request')->getScheme() . '://' . $config->global->baseUrl . '/');
+        $url->setStaticBaseUri($di->get('request')->getScheme() . '://' . $config->global->staticUrl . '/');
         $di->set('url', $url);
 
         return $url;
