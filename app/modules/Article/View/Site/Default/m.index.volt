@@ -3,6 +3,11 @@
 {% block css %}
     <link href="{{ static_url('min/index.php?g=cssDefaultHomeSiteMobile&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
 {% endblock %}
+
+{% block title %}
+    Trang chủ
+{% endblock %}
+
 {% block content %}
 <section>
     <div class="hometitle"><h3>Hoạt động tại CEC</h3></div>

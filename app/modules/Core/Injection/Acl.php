@@ -9,6 +9,7 @@ use Phalcon\Acl as PhAcl;
 use Phalcon\DI;
 use Phalcon\Events\Event as PhEvent;
 use Phalcon\Mvc\Dispatcher;
+use User\Model\User as UserModel;
 
 /**
  * Access Control List Injection.
@@ -100,18 +101,24 @@ class Acl extends AbstractInjection
         if ($cookie->has('remember-me')) {
             $rememberMe = $cookie->get('remember-me');
             $userId = $rememberMe->getValue();
-            $myUser = User::findFirst([
+            $myUser = UserModel::findFirst([
                 'id = :id: AND status = :status:',
                 'bind' => [
                     'id' => $userId,
-                    'status' => User::STATUS_ENABLE
+                    'status' => UserModel::STATUS_ENABLE
                 ]
             ]);
             if ($myUser) {
-
+                $me =  new \stdClass();
+                $me->id = $myUser->id;
+                $me->email = $myUser->email;
+                $me->name = $myUser->name;
+                $me->role = $myUser->role;
+                $me->roleName = $myUser->getRoleName();
+                $me->avatar = $myUser->avatar;
             }
 
-            $this->session->set('me', $me);
+            $session->set('me', $me);
             $role = $myUser->role;
         } else {
             //Get role name from session
