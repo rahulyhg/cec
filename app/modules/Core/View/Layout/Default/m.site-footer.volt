@@ -2,14 +2,14 @@
     <div class="rowfoot">
         <ul class="footermenu">
             <li>
-                <a href="bai-viet.html">Tư vấn thiết kế</a>
-                <a href="bai-viet.html">Xử lý nước</a>
-                <a href="product.html">Sản phẩm thiết bị</a>
+                <a href="{{ url('tu-van-thiet-ke') }}">Tư vấn thiết kế</a>
+                <a href="{{ url('xu-ly-nuoc') }}">Xử lý nước</a>
+                <a href="{{ url('san-pham-thiet-bi') }}">Sản phẩm thiết bị</a>
             </li>
             <li>
-                <a href="cong-trinh-tieu-bieu.html">Công trình tiêu biểu</a>
-                <a href="mau-nha-dep.html">Các mẫu nhà đẹp</a>
-                <a href="bai-viet.html">Giới thiệu CEC</a>
+                <a href="{{ url('cong-trinh-tieu-bieu') }}">Công trình tiêu biểu</a>
+                <a href="{{ url('cac-mau-nha-dep') }}">Các mẫu nhà đẹp</a>
+                <a href="{{ url('gioi-thieu') }}">Giới thiệu CEC</a>
             </li>
         </ul>
         <div class="footcontact">Cty TNHH Xây Dựng và Môi Trường CEC <br/>

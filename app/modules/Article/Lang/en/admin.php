@@ -22,6 +22,7 @@ $messages = [
     'th.title' => 'Tiêu đề',
     'th.status' => 'Trạng thái',
     'th.type' => 'Loại',
+    'th.displaytohome' => 'Home',
     'td.edit' => 'Sửa',
 
     'form.category' => 'Danh mục',

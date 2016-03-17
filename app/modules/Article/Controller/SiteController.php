@@ -146,7 +146,7 @@ class SiteController extends AbstractController
                             if ($ancestors) {
                                 foreach ($ancestors as $category) {
                                     if ($category->level != 1) {
-                                        $this->bc->add($category->name, $category->getSeo()->slug);
+                                        $this->bc->add($category->name, $category->count > 0 ? $category->getSeo()->slug : $slug . "/#");
                                     }
                                 }
                             }
@@ -181,7 +181,7 @@ class SiteController extends AbstractController
                             if ($ancestors) {
                                 foreach ($ancestors as $category) {
                                     if ($category->level != 1) {
-                                        $this->bc->add($category->name, $category->getSeo()->slug);
+                                        $this->bc->add($category->name, $category->count > 0 ? $category->getSeo()->slug : $slug . "/#");
                                     }
                                 }
                             }

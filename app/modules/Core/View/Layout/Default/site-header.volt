@@ -1,9 +1,9 @@
 <header>
     <div class="head">
-        <a href="{{ url('/') }}" class="logo"><img width="300" height="60" src="{{ static_url('assets/default/images/logo-cec.png') }}" alt="logo-cec" ></a>
+        <a href="{{ url('') }}" class="logo"><img width="300" height="60" src="{{ static_url('assets/default/images/logo-cec.png') }}" alt="logo-cec" ></a>
 
-        <a href="lien-he.html" class="contact">Liên hệ</a>
-        <a href="bai-viet.html" class="aboutus">Giới thiệu CEC</a>
+        <a href="{{ url('lien-he') }}" class="contact">Liên hệ</a>
+        <a href="{{ url('gioi-thieu') }}" class="aboutus">Giới thiệu CEC</a>
 
         <!--<a href="tel:0918496939" class="hotline">Công ty TNHH Xây Dựng & Môi Trường CEC</a>-->
     </div>

@@ -1,0 +1,14 @@
+td img {
+    position: absolute;
+}
+td p {
+    margin-left: 75px;
+    margin-top: -4px;
+}
+td small {
+    display: inline-block;
+    float: left;
+    margin-left: 75px;
+    margin-top: -14px;
+    color: red;
+}

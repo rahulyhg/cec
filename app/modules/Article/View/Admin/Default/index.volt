@@ -44,8 +44,8 @@
                                     {{ 'th.type'|i18n }}
                                 </a>
                             </th>
-                            <th style="width:18%">
-                                {{ 'th.category'|i18n }}
+                            <th style="width:10%">
+                                {{ 'th.displaytohome'|i18n }}
                             </th>
                             <th style="width:12%">
                                 <a href="{{ url.getBaseUri() }}admin/article?orderby=status&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
@@ -79,13 +79,14 @@
                                 <input type="checkbox" name="fbulkid[]" value="{{ item.id }}" {% if formData['fbulkid'] is defined %}{% for key, value in formData['fbulkid'] if value == item.id %}checked="checked"{% endfor %}{% endif %} id="checkbox{{ item.id }}"/>
                             </td>
                             <td class="v-align-middle">
-                                <img src="{{ static_url(item.getThumbnailImage()) }}" class="img-rounded" alt="{{ item.getThumbnailImage() }}" width="50" height="50">
-                                &nbsp; {{ item.title }} <br/>
-                                <small class="user-role"><a href="{{ url(item.getSeo().slug) }}">{{ url(item.getSeo().slug) }}</a></small>
+                                <img src="{{ static_url(item.getThumbnailImage()) }}" class="img-rounded" alt="{{ item.getThumbnailImage() }}" width="70" height="70">
+                                &nbsp; <p>{{ item.title }}</p>
+                                <small><a href="{{ url(item.getSeo().slug) }}" target="_blank">{{ url(item.getSeo().slug) }}</a></small> <br/>
+                                <small>{{ item.getCategory().name }}</small>
                             </td>
                             <td><span class="text-primary">{{ item.getTypeName()|i18n }}</span></td>
                             <td>
-                                {{ item.getCategory().name }}
+                                {{ item.getDisplayToHomeName()|i18n }}
                             </td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>
                             <td class="v-align-middle">

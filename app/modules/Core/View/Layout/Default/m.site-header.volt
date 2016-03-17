@@ -6,11 +6,11 @@
             <li><a href="{{ url("") }}">Trang chủ</a></li>
             {% for cat in myPcategories %}
                 <li>
-                    <a href="{{ cat.count }}">{{ cat.name }}</a>
+                    <a href="{% if cat.count > 0 %}{{ url(cat.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ cat.name }}</a>
                     {% if cat.child|length > 0%}
                         <div class="submenu">
                         {% for child in cat.child %}
-                            <a href="{{ url(child.getSeo().slug) }}">{{ child.name }}</a>
+                            <a href="{% if child.count > 0 %}{{ url(child.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ child.name }}</a>
                         {% endfor %}
                         </div>
                     {% endif %}
@@ -18,11 +18,11 @@
             {% endfor %}
             {% for cat in myCategories %}
                 <li>
-                    <a href="{{ url(cat.getSeo().slug) }}">{{ cat.name }}</a>
+                    <a href="{% if cat.count > 0 %}{{ url(cat.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ cat.name }}</a>
                     {% if cat.child|length > 0%}
                         <div class="submenu">
                         {% for child in cat.child %}
-                            <a href="{{ url(child.getSeo().slug) }}">{{ child.name }}</a>
+                            <a href="{% if child.count > 0 %}{{ url(child.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ child.name }}</a>
                         {% endfor %}
                         </div>
                     {% endif %}

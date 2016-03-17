@@ -28,5 +28,6 @@ $messages = [
     'message-status-notempty' => 'Chưa chọn trạng thái.',
     'message-slug-unique' => 'Đường dẫn đã có rồi.',
     'message-slug-notfound' => 'Đường dẫn không tồn tại.',
+    'message-slug-notempty' => 'Chưa nhập đường dẫn.',
     'message-updateurl-ok' => 'Đường dẫn đã được cập nhật',
 ];
