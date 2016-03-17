@@ -236,23 +236,23 @@ footer p{display:block; overflow:hidden; padding:5px 0; font-size:14px; color:#f
 }
 
 .my-gallery {
-    width: 212px;
-    height: 52px;
-    position: absolute;
-    top: 0;
-    margin-top: 55px;
-    margin-left: 172px;
+    width: auto;
+    max-width: 190px;
+    height: 38px;
+    margin-left: 12px;
     overflow: hidden;
     background-color: #333;
     padding-left: 2px;
     padding-top: 3px;
+    position: absolute;
+    margin-top: -293px;
 }
 .my-gallery img {
-  width: 50px !important;
-  height: 50px !important;
+  width: 35px !important;
+  height: 35px !important;
 }
 .my-gallery figure {
-  display: block;
+  display: inline-block;
   float: left;
   margin: 0 3px 3px 0;
 }

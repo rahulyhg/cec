@@ -12,21 +12,12 @@
         </div>
         <!-- END ACTION BAR -->
     </div>
-    <!-- RIGHT SIDE -->
-    <div class="pull-right full-height visible-sm visible-xs">
-        <!-- START ACTION BAR -->
-        <div class="sm-action-bar">
-            <a href="#" class="btn-link" data-toggle="quickview" data-toggle-element="#quickview">
-                <span class="icon-set menu-hambuger-plus"></span>
-            </a>
-        </div>
-        <!-- END ACTION BAR -->
-    </div>
+
     <!-- END MOBILE CONTROLS -->
     <div class=" pull-left sm-table">
         <div class="header-inner">
             <div class="brand inline">
-                <img src="img/logo.png" alt="logo" data-src="img/logo.png" data-src-retina="img/logo_2x.png" width="78" height="22">
+                <img src="{{ static_url('assets/default/images/logo-cec-web.png') }}" alt="logo" width="30" height="30">
             </div>
         </div>
     </div>

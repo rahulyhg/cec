@@ -27,7 +27,7 @@ class SiteController extends AbstractController
      * @var integer
      */
     protected $articleRecordPerPage = 6;
-    protected $productRecordPerPage = 1;
+    protected $productRecordPerPage = 8;
 
     /**
      * Homepage.

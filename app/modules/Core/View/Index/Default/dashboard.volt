@@ -6,7 +6,7 @@
 
 {% block content %}
 <!-- START CONTAINER FLUID -->
-<div class="container-fluid container-fixed-lg bg-white" rel="user-admin">
+<div class="container-fluid container-fixed-lg bg-white">
 
 </div>
 <!-- END CONTAINER FLUID -->

@@ -10,15 +10,15 @@
         <title>
             {% block title %}{% endblock %} - {{ config.global.title }}
         </title>
-        <link href="{{ static_url('min/index.php?g=cssDefaultCoreSite&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
+        <link href="{{ static_url('min/index.php?g=cssDefaultCoreSiteMobile&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
         {% block css %}{% endblock %}
         <script type="text/javascript" src="{{ static_url('plugins/jquery/jquery-1.11.1.min.js') }}"></script>
     </head>
 
     <body>
         {% block content %}{% endblock %}
-        {% include '../../Core/View/Layout/Default/site-header.volt' %}
-        {% include '../../Core/View/Layout/Default/site-footer.volt' %}
+        {% include '../../Core/View/Layout/Default/m.site-header.volt' %}
+        {% include '../../Core/View/Layout/Default/m.site-footer.volt' %}
     </body>
     <script type="text/javascript" src="{{ static_url('min/index.php?g=jsDefaultCoreSite&rev=' ~ config.global.version.js) }}"></script>
 </html>

@@ -100,4 +100,26 @@ $(document).ready(function() {
             is_busy = false;
         });
     });
+
+    // Mobile menu
+    $('.menu').click(function(e) {
+        $('nav').slideToggle(500);
+        $(this).toggleClass("actmenu");
+        $("section").toggleClass("fixbody");
+        $('footer').toggleClass("fixbody");
+    });
+
+    $(".over").click(function(){
+        $("nav").slideToggle();
+        $(".actmenu").removeClass("actmenu");
+        $("section").removeClass("fixbody");
+        $("footer").removeClass("fixbody");
+    });
+
+    $('.closemenu').click(function(e) {
+        $("nav").slideToggle();
+        $(".actmenu").removeClass("actmenu");
+        $("section").removeClass("fixbody");
+        $("footer").removeClass("fixbody");
+    });
 });

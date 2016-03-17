@@ -114,4 +114,15 @@ return array(
         '../plugins/photoswipe/default-skin/default-skin.css',
         '../assets/default/css/core/product.css',
     ],
+    'cssDefaultCoreSiteMobile' => [
+        '../assets/default/css/core/m.global.css',
+    ],
+    'cssDefaultHomeSiteMobile' => [
+        '../assets/default/css/core/m.home.css',
+    ],
+    'cssDefaultProductSiteMobile' => [
+        '../plugins/photoswipe/photoswipe.css',
+        '../plugins/photoswipe/default-skin/default-skin.css',
+        '../assets/default/css/core/m.product.css',
+    ],
 );

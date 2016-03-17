@@ -115,6 +115,20 @@ class AdminElements extends Component
                 ]
             ]
         ],
+        'Slug' => [
+            'name' => 'SEO friendly',
+            'controller' => '',
+            'action' => '',
+            'icon' => '<i class="fa fa-users"></i>',
+            'sub-menu' => [
+                'Listing' => [
+                    'name' => 'Tất cả',
+                    'controller' => 'admin',
+                    'action' => '',
+                    'icon' => '<i class="fa fa-bars"></i>',
+                ]
+            ]
+        ],
     ];
 
     /**

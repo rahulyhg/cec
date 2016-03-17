@@ -6,7 +6,7 @@ use Phalcon\Mvc\Model\Behavior;
 use Phalcon\Mvc\Model\BehaviorInterface;
 use Phalcon\Mvc\Model\Exception;
 use Phalcon\Mvc\ModelInterface;
-use Phalcon\Image\Adapter\GD as PhImage;
+use Phalcon\Image\Adapter\Imagick as PhImage;
 
 class Imageable extends Behavior implements BehaviorInterface
 {

@@ -1,0 +1,44 @@
+.hometitle{display:block; height:40px; background:#fff; border-top:2px solid #d8d8d8; position:relative; top:25px; width:100%; margin:0 auto 5px; text-align:center}
+.hometitle h3{display:inline-block; overflow:hidden; padding:10px 20px; font-size:20px; color:#888; text-transform:uppercase; margin-top:-20px; background:white}
+
+.whatwedo{display:block; overflow:hidden; margin:10px auto}
+
+.whatwedo li{float:left; overflow:hidden; width:50%;}
+.whatwedo li a{display:block; width:95%; overflow:hidden; margin:auto; position:relative}
+.whatwedo li img{display:block; width:100%; height:auto; margin:auto;}
+.whatwedo li h3{display:block; overflow:hidden; padding:5px; background:#8ec043; font-size:14px; color:#fff; }
+
+.whatwedo li p{display:block; overflow:hidden; padding:10px; font-size:14px; color:#333; line-height:22px}
+
+ 
+
+.whatwedo li:first-child{float:none; display:block; overflow:hidden; width:100%}
+.whatwedo li:first-child h3{display:block; overflow:hidden; padding:10px; background:rgba(255,179,0,0.96); font-size:16px; color:#fff; position:absolute; 
+bottom:0; left:0; right:0;}
+
+/**/
+.projects{display:block; overflow:hidden; margin:10px auto}
+
+.projects li{float:left; overflow:hidden; width:50%;}
+.projects li a{display:block; width:95%; overflow:hidden; margin:auto; position:relative}
+.projects li img{display:block; width:100%; height:auto; margin:auto}
+.projects li h3{display:block; overflow:hidden; padding:5px; background:#8ec043; font-size:14px; color:#fff;}
+
+.projects li p{display:block; overflow:hidden; padding:10px; font-size:14px; color:#333; line-height:22px}
+
+.projects li:first-child{float:none; display:block; overflow:hidden; width:100%}
+.projects li:first-child h3{display:block; overflow:hidden; padding:10px; background:rgba(255,179,0,0.96); font-size:15px; color:#fff; position:absolute; 
+bottom:0; left:0; right:0;}
+
+
+
+
+
+
+
+
+
+
+
+
+
