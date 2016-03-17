@@ -34,14 +34,12 @@
           <!-- START Login Background Pic Wrapper-->
           <div class="bg-pic">
             <!-- START Background Pic-->
-            <img src="{{static_url('assets/default/img/login.jpg')}}" data-src="" data-src-retina="" alt="" class="lazy">
+            <img src="{{static_url('assets/default/img/login-bg.jpg')}}" data-src="" data-src-retina="" alt="" class="lazy">
             <!-- END Background Pic-->
             <!-- START Background Caption-->
             <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
-              <h2 class="semi-bold text-white">
-                        Pages make it easy to enjoy what matters the most in the life</h2>
               <p class="small">
-                images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise © 2013-2014 REVOX.
+                © 2016 SAIGONCEC Co.,Ltd
               </p>
             </div>
             <!-- END Background Caption-->
