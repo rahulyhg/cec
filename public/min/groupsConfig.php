@@ -58,6 +58,9 @@ return array(
         '../plugins/jquery-nestable/jquery.nestable.min.js',
         '../assets/default/js/pcategory/admin-nestables.js',
     ],
+    'jsDefaultSlugAdmin' => [
+        '../assets/default/js/slug/admin-main.js',
+    ],
     'jsDefaultCoreSite' => [
         '../plugins/photoswipe/photoswipe.min.js',
         '../plugins/photoswipe/photoswipe-ui-default.min.js',

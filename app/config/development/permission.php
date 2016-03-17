@@ -36,6 +36,7 @@ return [
 
     ROLE_ADMIN => [
         'User' => [
+            'error/*',
             'admin/*',
         ],
         'Core' => [
@@ -58,7 +59,11 @@ return [
         'Product' => [
             'error/*',
             'admin/*'
-        ]
+        ],
+        'Slug' => [
+            'error/*',
+            'admin/*',
+        ],
     ],
 
     ROLE_MOD => [

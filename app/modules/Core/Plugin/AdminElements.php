@@ -116,7 +116,7 @@ class AdminElements extends Component
             ]
         ],
         'Slug' => [
-            'name' => 'SEO friendly',
+            'name' => 'SEO đường dẫn',
             'controller' => '',
             'action' => '',
             'icon' => '<i class="fa fa-users"></i>',

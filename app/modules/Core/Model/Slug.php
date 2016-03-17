@@ -3,7 +3,6 @@ namespace Core\Model;
 
 use Engine\Db\AbstractModel;
 use Engine\Behavior\Model\Imageable;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
 
 /**
@@ -243,5 +242,43 @@ class Slug extends AbstractModel
         }
 
         return $class;
+    }
+
+    public function getModelName()
+    {
+        $name = '';
+
+        switch ($this->model) {
+            case self::MODEL_PRODUCT:
+                $name = 'label-model-product';
+                break;
+            case self::MODEL_ARTICLE:
+                $name = 'label-model-article';
+                break;
+            case self::MODEL_PCATEGORY:
+                $name = 'label-model-product-category';
+                break;
+            case self::MODEL_CATEGORY:
+                $name = 'label-model-article-category';
+                break;
+        }
+
+        return $name;
+    }
+
+    public function getObjectName()
+    {
+        $name = "";
+        $model = '\\' . $this->model . '\\Model\\' . $this->model;
+
+        $myObject = $model::findFirst($this->objectid);
+
+        if ($this->model == self::MODEL_ARTICLE) {
+            $name = $myObject->title;
+        } else {
+            $name = $myObject->name;
+        }
+
+        return $name;
     }
 }

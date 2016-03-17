@@ -13,5 +13,5 @@ $default = [
     'default.change-password' => 'Đổi mật khẩu',
     'default.logout' => 'Thoát',
     'default.submit' => 'Đồng ý',
-    'default.clear' => 'Xoá'
+    'default.clear' => 'Xoá',
 ];
