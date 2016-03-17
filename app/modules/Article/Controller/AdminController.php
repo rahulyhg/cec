@@ -49,6 +49,7 @@ class AdminController extends AbstractAdminController
                     $formData['fbulkid'] = $bulkid;
 
                     if ($this->request->getPost('fbulkaction') == 'delete') {
+                        $coverpath = $category = [];
                         $deletearr = $bulkid;
 
                         // Start a transaction
@@ -56,10 +57,16 @@ class AdminController extends AbstractAdminController
                         $successId = [];
 
                         foreach ($deletearr as $deleteid) {
-                            $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]])->delete();
+                            $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]]);
+                            $category[] = $myArticle->cid;
+                            $coverpath[] = $myArticle->image;
+                            $coverpath[] = $myArticle->getMediumImage();
+                            $coverpath[] = $myArticle->getThumbnailImage();
 
+                            $result = $myArticle->delete();
+                            
                             // If fail stop a transaction
-                            if ($myUsers == false) {
+                            if ($result == false) {
                                 $this->db->rollback();
                                 return;
                             } else {
@@ -68,6 +75,38 @@ class AdminController extends AbstractAdminController
                         }
                         // Commit a transaction
                         if ($this->db->commit() == true) {
+                            // delete cover
+                            foreach ($coverpath as $imgpath) {
+                                $this->file->delete($imgpath);
+                            }
+
+                            foreach ($successId as $articleId) {
+                                // delete slug
+                                SlugModel::findFirst([
+                                    'objectid = :id: AND model = "Article"',
+                                    'bind' => ['id' => $articleId]
+                                ])->delete();
+                                // delete image gallaries
+                                $myImages = ImageModel::find([
+                                    'aid = :aid:',
+                                    'bind' => ['aid' => $articleId]
+                                ]);
+                                if ($myImages) {
+                                    foreach ($myImages as $img) {
+                                        $this->file->delete($img->path);
+                                        $this->file->delete($img->getMediumImage());
+                                        $this->file->delete($img->getThumbnailImage());
+                                        $img->delete();
+                                    }
+                                }
+                                // count down Category
+                                foreach ($category as $catId) {
+                                    $myCategory = Category::findFirst($catId);
+                                    $myCategory->count = $myCategory->count - 1;
+                                    $myCategory->update();
+                                }
+                            }
+
                             $this->flash->success(str_replace('###idlist###', implode(', ', $successId), $this->lang->_('default.message-bulk-delete-success')));
 
                             $formData['fbulkid'] = null;
@@ -161,6 +200,11 @@ class AdminController extends AbstractAdminController
                 $myArticle->image = $formData['image'];
 
                 if ($myArticle->create()) {
+                    // update count for Category
+                    $myCategory = Category::findFirst($myArticle->cid);
+                    $myCategory->count = $myCategory->count + 1;
+                    $myCategory->update();
+
                     // insert to slug table
                     $mySlug = new SlugModel();
                     $mySlug->assign([
@@ -353,10 +397,15 @@ class AdminController extends AbstractAdminController
         $message = '';
         $myArticle = ArticleModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
 
+        // update count for Category
+        $myCategory = Category::findFirst($myArticle->cid);
+        $myCategory->count = $myCategory->count - 1;
+        $myCategory->update();
+
         // delete slug
         SlugModel::findFirst([
-            'hash = :hash:',
-            'bind' => ['hash' => md5($myArticle->title)]
+            'objectid = :id: AND model = "Article"',
+            'bind' => ['id' => $myArticle->id]
         ])->delete();
 
         // delete cover

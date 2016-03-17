@@ -61,6 +61,11 @@ class Pcategory extends AbstractModel
     public $status;
 
     /**
+    * @Column(type="integer", nullable=true, column="pc_count")
+    */
+    public $count;
+
+    /**
     * @Column(type="string", nullable=true, column="pc_seo_description")
     */
     public $seodescription;

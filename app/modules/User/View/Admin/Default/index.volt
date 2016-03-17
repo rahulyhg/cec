@@ -66,7 +66,6 @@
                                     </select>
                                     <input type="submit" name="fsubmitbulk" class="btn btn-primary" value="{{ 'default.button-submit-bulk'|i18n }}" />
                                     </div>
-                                </div>
                                 <div class="clear"></div>
                             </td>
                         </tr>

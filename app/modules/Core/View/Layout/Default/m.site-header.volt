@@ -6,7 +6,7 @@
             <li><a href="{{ url("") }}">Trang chủ</a></li>
             {% for cat in myPcategories %}
                 <li>
-                    <a href="{{ url(cat.getSeo().slug) }}">{{ cat.name }}</a>
+                    <a href="{{ cat.count }}">{{ cat.name }}</a>
                     {% if cat.child|length > 0%}
                         <div class="submenu">
                         {% for child in cat.child %}

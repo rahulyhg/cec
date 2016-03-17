@@ -49,7 +49,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="4">
                                 <div class="bulk-actions">
                                     <select
                                         class="cs-select cs-skin-slide"

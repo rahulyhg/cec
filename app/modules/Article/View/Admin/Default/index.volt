@@ -14,7 +14,7 @@
 
 {% block content %}
 <!-- START CONTAINER FLUID -->
-<div class="container-fluid container-fixed-lg bg-white" rel="article-admin">
+<div class="container-fluid container-fixed-lg bg-white">
     <!-- BEGIN PlACE PAGE CONTENT HERE -->
     <!-- START PANEL -->
     <div class="panel panel-transparent">
@@ -54,7 +54,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="5">
                                 <div class="bulk-actions">
                                     <select
                                         class="cs-select cs-skin-slide"
@@ -64,7 +64,6 @@
                                         <option value="delete">{{ 'default.select-delete'|i18n }}</option>
                                     </select>
                                     <input type="submit" name="fsubmitbulk" class="btn btn-primary" value="{{ 'default.button-submit-bulk'|i18n }}" />
-                                    </div>
                                 </div>
                                 <div class="clear"></div>
                             </td>

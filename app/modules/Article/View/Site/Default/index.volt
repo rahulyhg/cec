@@ -1,5 +1,9 @@
 {% extends "../../Core/View/Layout/Default/site-main.volt" %}
 
+{% block title %}
+    Trang chủ
+{% endblock %}
+
 {% block css %}
     <link href="{{ static_url('min/index.php?g=cssDefaultHomeSite&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
 {% endblock %}

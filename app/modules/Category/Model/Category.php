@@ -61,6 +61,11 @@ class Category extends AbstractModel
     public $status;
 
     /**
+    * @Column(type="integer", nullable=true, column="c_count")
+    */
+    public $count;
+
+    /**
     * @Column(type="string", nullable=true, column="c_seo_description")
     */
     public $seodescription;

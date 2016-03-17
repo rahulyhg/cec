@@ -174,6 +174,12 @@ class AdminController extends AbstractAdminController
         $message = '';
         $myCategory = Category::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
 
+        // delete slug
+        SlugModel::findFirst([
+            'objectid = :id: AND model = "Category"',
+            'bind' => ['id' => $myCategory->id]
+        ])->delete();
+
         if ($myCategory->delete()) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
         } else {

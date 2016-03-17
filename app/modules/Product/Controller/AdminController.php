@@ -48,6 +48,7 @@ class AdminController extends AbstractAdminController
                     $formData['fbulkid'] = $bulkid;
 
                     if ($this->request->getPost('fbulkaction') == 'delete') {
+                        $coverpath = $category = [];
                         $deletearr = $bulkid;
 
                         // Start a transaction
@@ -55,10 +56,16 @@ class AdminController extends AbstractAdminController
                         $successId = [];
 
                         foreach ($deletearr as $deleteid) {
-                            $myProducts = ProductModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]])->delete();
+                            $myProducts = ProductModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]]);
+                            $category[] = $myProducts->pcid;
+                            $coverpath[] = $myProducts->image;
+                            $coverpath[] = $myProducts->getMediumImage();
+                            $coverpath[] = $myProducts->getThumbnailImage();
+
+                            $result = $myProducts->delete();
 
                             // If fail stop a transaction
-                            if ($myProducts == false) {
+                            if ($result == false) {
                                 $this->db->rollback();
                                 return;
                             } else {
@@ -67,6 +74,25 @@ class AdminController extends AbstractAdminController
                         }
                         // Commit a transaction
                         if ($this->db->commit() == true) {
+                            // delete cover
+                            foreach ($coverpath as $imgpath) {
+                                $this->file->delete($imgpath);
+                            }
+
+                            foreach ($successId as $productId) {
+                                // delete slug
+                                SlugModel::findFirst([
+                                    'objectid = :id: AND model = "Product"',
+                                    'bind' => ['id' => $productId]
+                                ])->delete();
+                                // count down Category
+                                foreach ($category as $catId) {
+                                    $myCategory = ProductCategory::findFirst($catId);
+                                    $myCategory->count = $myCategory->count - 1;
+                                    $myCategory->update();
+                                }
+                            }
+
                             $this->flash->success(str_replace('###idlist###', implode(', ', $successId), $this->lang->_('default.message-bulk-delete-success')));
 
                             $formData['fbulkid'] = null;
@@ -159,6 +185,11 @@ class AdminController extends AbstractAdminController
                 $myProduct->image = $formData['image'];
 
                 if ($myProduct->create()) {
+                    // update count for Category
+                    $myPcategory = ProductCategory::findFirst($myProduct->pcid);
+                    $myPcategory->count = $myPcategory->count + 1;
+                    $myPcategory->update();
+
                     // insert to slug table
                     $mySlug = new SlugModel();
                     $mySlug->assign([
@@ -280,6 +311,11 @@ class AdminController extends AbstractAdminController
     {
         $message = '';
         $myProduct = ProductModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
+
+        // update count for Category
+        $myPcategory = ProductCategory::findFirst($myProduct->pcid);
+        $myPcategory->count = $myPcategory->count - 1;
+        $myPcategory->update();
 
         // delete slug
         SlugModel::findFirst([

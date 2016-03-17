@@ -39,7 +39,7 @@ class AdminElements extends Component
             'name' => 'DM Bài viết',
             'controller' => '',
             'action' => '',
-            'icon' => '<i class="fa fa-adn"></i>',
+            'icon' => '<i class="fa fa-folder-open"></i>',
             'sub-menu' => [
                 'Create' => [
                     'name' => 'Thêm',
@@ -59,7 +59,7 @@ class AdminElements extends Component
             'name' => 'Bài viết',
             'controller' => '',
             'action' => '',
-            'icon' => '<i class="fa fa-adn"></i>',
+            'icon' => '<i class="fa fa-file-pdf-o"></i>',
             'sub-menu' => [
                 'Create' => [
                     'name' => 'Thêm',
@@ -79,7 +79,7 @@ class AdminElements extends Component
             'name' => 'DM Sản phẩm',
             'controller' => '',
             'action' => '',
-            'icon' => '<i class="fa fa-adn"></i>',
+            'icon' => '<i class="fa fa-folder-open"></i>',
             'sub-menu' => [
                 'Create' => [
                     'name' => 'Thêm',
@@ -99,7 +99,7 @@ class AdminElements extends Component
             'name' => 'Sản phẩm',
             'controller' => '',
             'action' => '',
-            'icon' => '<i class="fa fa-adn"></i>',
+            'icon' => '<i class="fa fa-cube"></i>',
             'sub-menu' => [
                 'Create' => [
                     'name' => 'Thêm',
