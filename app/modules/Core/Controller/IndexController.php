@@ -34,10 +34,12 @@ class IndexController extends AbstractAdminController
      */
     public function dashboardAction()
     {
-        $this->bc->add($this->lang->_('title-index'), 'admin/dashboard');
-        $this->bc->add($this->lang->_('title-listing'), '');
+        $content = $this->filesystem->read('app/modules/Core/View/Layout/Default/site-footer.volt');
+
+        $this->bc->add($this->lang->_('title-dashboard'), 'admin/dashboard');
         $this->view->setVars([
             'bc' => $this->bc->generate(),
+            'editContent' => $content
         ]);
     }
 }

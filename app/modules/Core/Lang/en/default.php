@@ -14,4 +14,6 @@ $default = [
     'default.logout' => 'Thoát',
     'default.submit' => 'Đồng ý',
     'default.clear' => 'Xoá',
+
+    'title-dashboard' => 'Dashboard'
 ];

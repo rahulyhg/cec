@@ -492,7 +492,7 @@ trait Init
     }
 
     /**
-     * Init file manager.
+     * Init file public.
      *
      * @param DI $di Dependency Injection.
      *
@@ -502,8 +502,28 @@ trait Init
     {
         $di->set('file', function() {
             $cache = null;
-            $filesystem = new FlySystem(
+            $filepublic = new FlySystem(
                 new FlyLocalAdapter(PUBLIC_PATH),
+                $cache
+            );
+
+            return $filepublic;
+        });
+    }
+
+    /**
+     * Init file system.
+     *
+     * @param DI $di Dependency Injection.
+     *
+     * @return void
+     */
+    protected function _initFilesystem($di)
+    {
+        $di->set('filesystem', function() {
+            $cache = null;
+            $filesystem = new FlySystem(
+                new FlyLocalAdapter(ROOT_PATH),
                 $cache
             );
 

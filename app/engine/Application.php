@@ -51,6 +51,7 @@ class Application extends PhApplication
             'cookie',
             'crypt',
             'file',
+            'filesystem',
             'flash'
         ],
         'console' => [
