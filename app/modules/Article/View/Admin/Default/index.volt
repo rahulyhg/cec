@@ -38,11 +38,14 @@
                                   <label for="checkall"></label>
                                 </div>
                             </th>
-                            <th style="width:63%">{{ 'th.title'|i18n }}</th>
+                            <th style="width:45%">{{ 'th.title'|i18n }}</th>
                             <th style="width:15%">
                                 <a href="{{ url.getBaseUri() }}admin/article?orderby=type&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
                                     {{ 'th.type'|i18n }}
                                 </a>
+                            </th>
+                            <th style="width:18%">
+                                {{ 'th.category'|i18n }}
                             </th>
                             <th style="width:12%">
                                 <a href="{{ url.getBaseUri() }}admin/article?orderby=status&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
@@ -81,6 +84,9 @@
                                 <small class="user-role"><a href="{{ url(item.getSeo().slug) }}">{{ url(item.getSeo().slug) }}</a></small>
                             </td>
                             <td><span class="text-primary">{{ item.getTypeName()|i18n }}</span></td>
+                            <td>
+                                {{ item.getCategory().name }}
+                            </td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>
                             <td class="v-align-middle">
                                 <div class="btn-group btn-group-xs pull-right">

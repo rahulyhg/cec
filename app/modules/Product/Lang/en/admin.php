@@ -11,7 +11,7 @@ $messages = [
     'label-status-enable' => 'Hiện',
     'label-status-disable' => 'Ẩn',
 
-    'th.category' => 'DM Sản phẩm',
+    'th.category' => 'Danh mục',
     'th.name' => 'Tên',
     'th.status' => 'Trạng thái',
     'td.edit' => 'Sửa',

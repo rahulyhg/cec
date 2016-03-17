@@ -146,4 +146,22 @@ class Pcategory extends AbstractModel
             self::STATUS_DISABLE,
         ];
     }
+
+    /**
+     * Get label style for status
+     */
+    public function getStatusStyle()
+    {
+        $class = '';
+        switch ($this->status) {
+            case self::STATUS_ENABLE:
+                $class = 'label label-info';
+                break;
+            case self::STATUS_DISABLE:
+                $class = 'label label-important';
+                break;
+        }
+
+        return $class;
+    }
 }

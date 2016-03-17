@@ -75,7 +75,7 @@
                         <label class="col-sm-3 control-label">{{ 'form.seokeyword'|i18n }}</label>
                         <div class="col-sm-8">
                             <textarea
-                                class="form-control"
+                                class="form-control tagsinput custom-tag-input"
                                 placeholder=""
                                 name="seokeyword">{% if formData['seokeyword'] is defined %}{{ formData['seokeyword'] }}{% endif %}</textarea>
                         </div>

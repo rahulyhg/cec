@@ -46,6 +46,7 @@
                         {{ 'panel-drag'|i18n }}
                     </div>
                     <span class="pull-right btn-nestable-group">
+                        <span class="label label-{{ cat.getStatusStyle() }}">{{ cat.getStatusName()|i18n }}</span> &nbsp;
                         <div class="btn-group btn-group-xs pull-right">
                             <a href="{{ url('admin/category/edit/' ~ cat.id) }}" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; {{ 'panel-edit'|i18n }}</a>
                             <a href="javascript:deleteConfirm('{{ url('admin/category/delete/' ~ cat.id) }}', '{{ cat.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>

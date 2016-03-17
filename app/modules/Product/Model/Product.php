@@ -15,6 +15,7 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  * @link      http://thephalconphp.com/
  *
  * @Source('cec_product');
+ * @HasOne('pcid', '\Pcategory\Model\Pcategory', 'id', {'alias': 'category'})
  * @HasOne('id', '\Core\Model\Slug', 'objectid', {'alias': 'seo'})
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  */

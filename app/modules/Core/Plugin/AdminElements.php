@@ -39,7 +39,7 @@ class AdminElements extends Component
             'name' => 'DM Bài viết',
             'controller' => '',
             'action' => '',
-            'icon' => '<i class="fa fa-folder-open"></i>',
+            'icon' => 'DB',
             'sub-menu' => [
                 'Create' => [
                     'name' => 'Thêm',
@@ -79,7 +79,7 @@ class AdminElements extends Component
             'name' => 'DM Sản phẩm',
             'controller' => '',
             'action' => '',
-            'icon' => '<i class="fa fa-folder-open"></i>',
+            'icon' => 'DS',
             'sub-menu' => [
                 'Create' => [
                     'name' => 'Thêm',

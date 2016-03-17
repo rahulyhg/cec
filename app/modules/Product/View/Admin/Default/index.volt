@@ -38,7 +38,10 @@
                                   <label for="checkall"></label>
                                 </div>
                             </th>
-                            <th style="width:60%">{{ 'th.name'|i18n }}</th>
+                            <th style="width:45%">{{ 'th.name'|i18n }}</th>
+                            <th style="width:18%">
+                                {{ 'th.category'|i18n }}
+                            </th>
                             <th style="width:15%">
                                 <a href="{{ url.getBaseUri() }}admin/product?orderby=status&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
                                     {{ 'th.status'|i18n }}
@@ -74,6 +77,9 @@
                             <td class="v-align-middle">
                                 <img src="{{ static_url(item.getThumbnailImage()) }}" class="img-rounded" alt="{{ item.getThumbnailImage() }}" width="50" height="50">
                                 &nbsp; {{ item.name }}
+                            </td>
+                            <td>
+                                {{ item.getCategory().name }}
                             </td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>
                             <td class="v-align-middle">

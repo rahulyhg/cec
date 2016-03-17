@@ -87,7 +87,7 @@
                             <div class="col-sm-9">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    class="form-control tagsinput custom-tag-input"
                                     placeholder=""
                                     name="seokeyword"
                                     value="{% if formData['seokeyword'] is defined %}{{ formData['seokeyword'] }}{% endif %}"

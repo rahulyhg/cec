@@ -16,6 +16,7 @@ use Phalcon\Mvc\Model\Validator\PresenceOf;
  *
  * @Source('cec_article');
  * @HasOne('id', '\Core\Model\Slug', 'objectid', {'alias': 'seo'})
+ * @HasOne('cid', '\Category\Model\Category', 'id', {'alias': 'category'})
  * @HasMany('id', '\Core\Model\Image', 'aid', {'alias': 'galleries'})
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  */

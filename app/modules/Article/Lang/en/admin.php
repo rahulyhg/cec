@@ -11,13 +11,14 @@ $messages = [
 
     'label-status-enable' => 'Hiện',
     'label-status-disable' => 'Ẩn',
-    'label-ishome-enable' => 'Hiện',
-    'label-ishome-disable' => 'Ẩn',
+    'label-ishome-enable' => 'Có',
+    'label-ishome-disable' => 'Không',
     'label-type-normal' => 'Bình thường',
     'label-type-project' => 'Dự án',
     'label-type-activity' => 'Hoạt động',
     'label-type-page' => 'Đơn lẻ',
 
+    'th.category' => 'Danh mục',
     'th.title' => 'Tiêu đề',
     'th.status' => 'Trạng thái',
     'th.type' => 'Loại',
