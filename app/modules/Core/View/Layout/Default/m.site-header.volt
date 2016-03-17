@@ -2,27 +2,32 @@
     <a href="{{ url("") }}" class="logo"><img width="300" height="60" src="{{ static_url('assets/default/images/logo-cec.png') }}" alt="logo-cec" ></a>
     <a class="menu"><span></span>Menu</a>
     <nav>
-        {% set level = 1 %}
-        {% for n, cat in myCategories %}
-            {% if cat.level == level %}
+        <ul>
+            <li><a href="{{ url("") }}">Trang chủ</a></li>
+            {% for cat in myPcategories %}
+                <li>
+                    <a href="{{ url(cat.getSeo().slug) }}">{{ cat.name }}</a>
+                    {% if cat.child|length > 0%}
+                        <div class="submenu">
+                        {% for child in cat.child %}
+                            <a href="{{ url(child.getSeo().slug) }}">{{ child.name }}</a>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
                 </li>
-            {% elseif cat.level > level %}
-                <ul class="dd-list">
-            {% else %}
+            {% endfor %}
+            {% for cat in myCategories %}
+                <li>
+                    <a href="{{ url(cat.getSeo().slug) }}">{{ cat.name }}</a>
+                    {% if cat.child|length > 0%}
+                        <div class="submenu">
+                        {% for child in cat.child %}
+                            <a href="{{ url(child.getSeo().slug) }}">{{ child.name }}</a>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
                 </li>
-                {% set x = level - cat.level %}
-                {% for i in x..1 if i > 0 %}
-                    </ul>
-                    </li>
-                {% endfor %}
-            {% endif %}
-            <li class="dd-item dd3-item">
-                <a>{{ cat.name }}</a>
-            {% set level = cat.level %}
-        {% endfor %}
-        {% for i in level..0 if i > 1 %}
-            </li>
-            </ul>
-        {% endfor %}
+            {% endfor %}
+        </ul>
     </nav>
 </header>

@@ -118,7 +118,7 @@
 
                         <div class="row">
                             <div class="col-sm-3">
-                            *: Required field
+                            *: {{ 'default.required'|i18n }}
                             </div>
                             <div class="col-sm-9">
                                 <button class="btn btn-success" type="submit" name="fsubmit">{{ 'form.button-submit'|i18n }}</button>

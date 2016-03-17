@@ -80,6 +80,8 @@ class Pcategory extends AbstractModel
     */
     public $datemodified;
 
+    public $child;
+
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
 

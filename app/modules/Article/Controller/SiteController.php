@@ -38,10 +38,31 @@ class SiteController extends AbstractController
      */
     public function indexAction()
     {
-        $myCategories = CategoryModel::find([
+        $myArticleCategories = CategoryModel::find([
             'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
             'order' => 'lft'
         ]);
+        $myCategories = [];
+        foreach ($myArticleCategories as $cat) {
+            if ($cat->root > 0) {
+                $myCategories[$cat->root]->child[] = $cat;
+            } else {
+                $myCategories[$cat->id] = $cat;
+            }
+        }
+
+        $myProductCategories = PcategoryModel::find([
+            'lft > 1 AND status = ' . PcategoryModel::STATUS_ENABLE,
+            'order' => 'lft'
+        ]);
+        $myPcategories = [];
+        foreach ($myProductCategories as $cat) {
+            if ($cat->root > 1) {
+                $myPcategories[$cat->root]->child[] = $cat;
+            } else {
+                $myPcategories[$cat->id] = $cat;
+            }
+        }
 
         $myArticleActivity = ArticleModel::find([
             'conditions' => 'type = ' . ArticleModel::TYPE_ACTIVITY,
@@ -57,6 +78,7 @@ class SiteController extends AbstractController
 
         $this->view->setVars([
             'myCategories' =>  $myCategories,
+            'myPcategories' =>  $myPcategories,
             'myArticleActivity' => $myArticleActivity,
             'myArticleProject' => $myArticleProject
         ]);
@@ -212,13 +234,35 @@ class SiteController extends AbstractController
             }
         }
 
-        $myCategories = CategoryModel::find([
+        $myArticleCategories = CategoryModel::find([
             'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
             'order' => 'lft'
         ]);
+        $myCategories = [];
+        foreach ($myArticleCategories as $cat) {
+            if ($cat->root > 0) {
+                $myCategories[$cat->root]->child[] = $cat;
+            } else {
+                $myCategories[$cat->id] = $cat;
+            }
+        }
+
+        $myProductCategories = PcategoryModel::find([
+            'lft > 1 AND status = ' . PcategoryModel::STATUS_ENABLE,
+            'order' => 'lft'
+        ]);
+        $myPcategories = [];
+        foreach ($myProductCategories as $cat) {
+            if ($cat->root > 1) {
+                $myPcategories[$cat->root]->child[] = $cat;
+            } else {
+                $myPcategories[$cat->id] = $cat;
+            }
+        }
 
         $this->view->setVars([
             'myCategories' =>  $myCategories,
+            'myPcategories' =>  $myPcategories,
             'slug' => $slug
         ]);
     }

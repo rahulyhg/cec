@@ -411,10 +411,10 @@ class AdminController extends AbstractAdminController
 
                 $validated = true;
             } else {
-                $this->flash->error('Wrong password!');
+                $this->flash->error($this->lang->_('message.wrong-password'));
             }
         } else {
-            $this->flash->error('Wrong user information!');
+            $this->flash->error($this->lang->_('message.user-not-found'));
         }
 
         return $validated;

@@ -200,7 +200,7 @@ class AdminController extends AbstractAdminController
                     }
 
                     $formData = []; //Reset form
-                    $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-create-user-success')));
+                    $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-create-article-success')));
                 } else {
                     foreach ($myArticle->getMessages() as $msg) {
                         $message .= $this->lang->_($msg->getMessage()) . '<br />';
@@ -288,7 +288,7 @@ class AdminController extends AbstractAdminController
                         }
                     }
 
-                    $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-update-user-success')));
+                    $this->flash->success(str_replace('###name###', $myArticle->title, $this->lang->_('message-update-article-success')));
                 } else {
                     foreach ($myArticle->getMessages() as $msg) {
                         $message .= $this->lang->_($msg->getMessage()) . '<br />';

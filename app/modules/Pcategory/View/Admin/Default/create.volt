@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">SEO Description</label>
+                        <label class="col-sm-3 control-label">{{ 'form.seodescription'|i18n }}</label>
                         <div class="col-sm-9">
                             <textarea
                                 class="form-control"
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">SEO Keyword</label>
+                        <label class="col-sm-3 control-label">{{ 'form.seokeyword'|i18n }}</label>
                         <div class="col-sm-9">
                             <textarea
                                 class="form-control"
@@ -118,11 +118,11 @@
                 <div class="col-sm-8">
                     <div class="row">
                         <div class="col-sm-3">
-                        <span class="required">*</span>: Required field
+                        <span class="required">*</span>: {{ 'default.required'|i18n }}
                         </div>
                         <div class="col-sm-9">
-                            <button class="btn btn-success" type="submit" name="fsubmit">Submit</button>
-                            <button class="btn btn-default"><i class="pg-close"></i> Clear</button>
+                            <button class="btn btn-success" type="submit" name="fsubmit">{{ 'form.button-submit'|i18n }}</button>
+                            <button class="btn btn-default"><i class="pg-close"></i> {{ 'form.button-clear'|i18n }}</button>
                         </div>
                     </div>
                 </div>

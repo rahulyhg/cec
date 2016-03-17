@@ -52,3 +52,6 @@ img.edit-image {
 .bootstrap-tagsinput .tag.label {
     font-size: 12px;
 }
+.breadcrumb, .breadcrumb li p, .table thead tr th {
+    font-family: "Arial"
+}

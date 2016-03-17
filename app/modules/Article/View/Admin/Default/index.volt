@@ -39,7 +39,7 @@
                                 </div>
                             </th>
                             <th style="width:63%">{{ 'th.title'|i18n }}</th>
-                            <th style="width:10%">
+                            <th style="width:15%">
                                 <a href="{{ url.getBaseUri() }}admin/article?orderby=type&ordertype={% if formData['orderType']|lower == 'desc'%}asc{% else %}desc{% endif %}{% if formData['conditions']['keyword'] != '' %}&keyword={{ formData['conditions']['keyword'] }}{% endif %}">
                                     {{ 'th.type'|i18n }}
                                 </a>

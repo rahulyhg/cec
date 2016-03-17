@@ -34,13 +34,13 @@
                 </span>
                 </button>
                 <ul class="dropdown-menu profile-dropdown" role="menu">
-                    <li><a href="#"><i class="pg-settings_small"></i> Change password</a>
+                    <li><a href="#"><i class="pg-settings_small"></i> {{ 'default.change-password'|i18n }}</a>
                 </li>
             </li>
         </li>
         <li class="bg-master-lighter">
             <a href="{{ url('admin/user/logout') }}" class="clearfix">
-                <span class="pull-left">Logout</span>
+                <span class="pull-left">{{ 'default.logout'|i18n }}</span>
                 <span class="pull-right"><i class="pg-power"></i></span>
             </a>
         </li>

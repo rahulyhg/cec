@@ -1,13 +1,17 @@
 <?php
 $default = [
-    'default.button-create' => 'Create',
-    'default.select-action' => '--- Select action ---',
-    'default.select-delete' => 'Delete',
-    'default.button-submit-bulk' => 'Submit',
-    'default.no-bulk-selected' => 'No item select.',
-    'default.message-bulk-delete-success' => 'Item with ID <strong>###idlist###</strong> was deleted successfully.',
-    'default.message-bulk-delete-fail' => 'Deleted bulk failed.',
-    'default.message-no-bulk-action' => 'No action choose.',
-    'default.message-csrf-protected' => 'CSRF Protected. Please re-enter the page.',
-    'default.required' => 'Required field',
+    'default.button-create' => 'Thêm',
+    'default.select-action' => '--- Chọn hành động ---',
+    'default.select-delete' => 'Xoá',
+    'default.button-submit-bulk' => 'Thực thi',
+    'default.no-bulk-selected' => 'Chưa có item nào đc chọn.',
+    'default.message-bulk-delete-success' => 'Item vói ID <strong>###idlist###</strong> đã được xoá.',
+    'default.message-bulk-delete-fail' => 'Thực thi xoá thất bại.',
+    'default.message-no-bulk-action' => 'Không có hành động nào để thực thi.',
+    'default.message-csrf-protected' => 'CSRF đã chặn. Vui lòng nhập lại trang.',
+    'default.required' => 'Bắt buộc',
+    'default.change-password' => 'Đổi mật khẩu',
+    'default.logout' => 'Thoát',
+    'default.submit' => 'Đồng ý',
+    'default.clear' => 'Xoá'
 ];
