@@ -5,38 +5,55 @@
 {% endblock %}
 
 {% block content %}
-<style type="text/css" media="screen">
-    #editor {
-        position: absolute;
-        top: 115px;
-        right: 0;
-        bottom: 0;
-        left: 250px;
-        height: auto;
-    }
-</style>
-
 <!-- START CONTAINER FLUID -->
 <div class="container-fluid container-fixed-lg bg-white">
-    <pre id="editor">
-        {{ editContent|e }}
-    </pre>
+    <div class="panel panel-transparent">
+        <div class="panel-body">
+            <div class="col-md-8">
+              <div class="panel panel-transparent">
+                <div class="panel-heading">
+                  <div class="panel-title">{{ 'panel-title-overview'|i18n }}
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <p>
+                      <ul>
+                          <li>Server: {{ request.getServerAddress()}}</li>
+                          <li>Client: {{ request.getClientAddress()}}</li>
+                          <li>Charset: {{ request.getBestCharset()}}</li>
+                          <li>Language: {{ request.getBestLanguage()}}</li>
+                          <li>User Agent: {{ request.getUserAgent()}}</li>
+                      </ul>
+
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-heading separator">
+                  <div class="panel-title"> {{ 'panel-title-editfile'|i18n }}
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <h3>
+                      <span class="semi-bold">Phiên bản Web
+                  </h3>
+                  <p class="text-black hint-text">
+                      <a href="{{ url('admin/editfile/header') }}">header <i class="fa fa-pencil"></i></a> <br/>
+                      <a href="{{ url('admin/editfile/footer') }}">footer <i class="fa fa-pencil"></i></a>
+                  </p>
+                  <h3>
+                      <span class="semi-bold">Phiên bản Mobile
+                  </h3>
+                  <p class="text-black hint-text">
+                      <a {{ url('admin/editfile/mfooter') }}>footer <i class="fa fa-pencil"></i></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END CONTAINER FLUID -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"></script>
-<script>
-    var editor = ace.edit("editor");
-    editor.getSession().setMode("ace/mode/twig");
-    editor.setTheme("ace/theme/terminal");
-    editor.getSession().setTabSize(4);
-    editor.getSession().setUseSoftTabs(true);
-    editor.commands.addCommand({
-        name: 'myCommand',
-        bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
-        exec: function(editor) {
-            console.log(editor.getValue());
-        },
-        readOnly: true // false if this command should not apply in readOnly mode
-    });
-</script>
 {% endblock %}
