@@ -14,7 +14,7 @@
     <!-- BEGIN SIDEBAR MENU -->
     <div class="sidebar-menu">
         <ul class="menu-items">
-            <li class="m-t-30">
+            <li class="m-t-30 active">
                 <a href="{{ url('admin/dashboard') }}" class="detailed">
                     <span class="title">Dashboard</span>
                     <span class="details">234 notifications</span>
