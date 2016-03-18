@@ -63,7 +63,7 @@ return [
         'Slug' => [
             'error/*',
             'admin/*',
-        ],
+        ]
     ],
 
     ROLE_MOD => [

@@ -32,6 +32,12 @@ class AdminElements extends Component
                     'controller' => 'admin',
                     'action' => '',
                     'icon' => '<i class="fa fa-bars"></i>',
+                ],
+                'Contact' => [
+                    'name' => 'Khách hàng',
+                    'controller' => 'admin',
+                    'action' => 'showcontact',
+                    'icon' => '<i class="fa fa-bars"></i>',
                 ]
             ]
         ],

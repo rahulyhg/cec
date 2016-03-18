@@ -7,6 +7,7 @@ use Article\Model\Article as ArticleModel;
 use Product\Model\Product as ProductModel;
 use Category\Model\Category as CategoryModel;
 use Pcategory\Model\Pcategory as PcategoryModel;
+use User\Model\Contact as ContactModel;
 use Core\Helper\Utilities;
 
 /**
@@ -95,6 +96,23 @@ class SiteController extends AbstractController
     {
         //Special slug
         if ($slug == 'lien-he') {
+            if ($this->request->hasPost('fsubmit')) {
+                $formData = [];
+
+                if ($this->security->checkToken()) {
+                    $formData = array_merge($formData, $this->request->getPost());
+
+                    $myContact = new ContactModel();
+                    $myContact->assign($formData);
+                    if ($myContact->create()) {
+                        $this->flash->success('Chúng tôi đã nhận được yêu cầu của quí khách. Cảm ơn.');
+                    } else {
+                        $this->flash->error('Quí khách vui lòng nhập lại sau.');
+                    }
+                } else {
+                    $this->flash->error($this->lang->_('default.message-csrf-protected'));
+                }
+            }
             $this->bc->add('Trang chủ', '');
             $this->bc->add('Liên hệ', 'lien-he');
             $this->view->setVars([
@@ -309,5 +327,10 @@ class SiteController extends AbstractController
             '_meta' => $meta,
             '_result' => $result
         ]);
+    }
+
+    public function addcontact()
+    {
+        echo 'a';
     }
 }

@@ -27,7 +27,7 @@ $messages = [
 
     'message-create-product-success' => 'Sản phẩm <strong>###name###</strong> đã được tạo.',
     'message-update-product-success' => 'Sản phẩm <strong>###name###</strong> đã được cập nhật.',
-    'message-category-notempty' => 'Chưa chọn danh mục sản phẩm.',
+    'message-pcid-notempty' => 'Chưa chọn danh mục sản phẩm.',
     'message-name-notempty' => 'Chưa nhập tên sản phẩm.',
     'message-status-notempty' => 'Chưa chọn trạng thái.',
     'message-delete-success' => 'Sản phẩm vơi ID <strong>###id###</strong> đã được xoá.',

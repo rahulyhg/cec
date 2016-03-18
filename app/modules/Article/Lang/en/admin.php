@@ -40,6 +40,7 @@ $messages = [
 
     'message-create-article-success' => 'Bài viết <strong>###name###</strong> đã được tạo.',
     'message-update-article-success' => 'Bài viết <strong>###name###</strong> đã được cập nhật.',
+    'message-cid-notempty' => 'Chưa chọn danh mục.',
     'message-title-notempty' => 'Chưa nhập tiêu đề.',
     'message-content-notempty' => 'Chưa nhập nội dung.',
     'message-type-notempty' => 'Chưa chọn loại bài viết.',

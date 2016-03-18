@@ -18,7 +18,7 @@
 
         </div>
         <div class="panel-body">
-            {{ content() }}
+            {% if mySlugs|length > 0 %}
             <div class="table-responsive">
                 <form method="post" action="">
                 <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}" />
@@ -55,6 +55,9 @@
                 </table>
                 </form>
             </div>
+            {% else %}
+                No data found.
+            {% endif %}
         </div>
         <div class="pull-right">
         {% if paginator.items is defined and paginator.total_pages > 1 %}

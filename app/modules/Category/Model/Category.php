@@ -2,8 +2,8 @@
 namespace Category\Model;
 
 use Engine\Db\AbstractModel;
-use Engine\Behavior\Model\Imageable;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Validator\Regex;
 
 /**
  * Category Model.
@@ -90,9 +90,26 @@ class Category extends AbstractModel
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
 
-    public function initialize()
+    /**
+     * Form field validation
+     */
+    public function validation()
     {
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'name',
+                'message' => 'message-name-notempty'
+            ]
+        ));
 
+        $this->validate(new PresenceOf(
+            [
+                'field'  => 'status',
+                'message' => 'message-status-notempty'
+            ]
+        ));
+
+        return $this->validationHasFailed() != true;
     }
 
     public function getStatusName()

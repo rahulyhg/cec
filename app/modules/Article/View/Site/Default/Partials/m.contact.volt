@@ -7,17 +7,20 @@
     <span>Email: tuvancec@gmail.com</span>
 
     <p>Mọi thông tin, Quý Khách có thể liên với chùng tôi theo thông tin trên hoặc Quý Khách hãy điền thông tin theo mẫu form bên dưới để chúng tôi hỗ trợ cho Quý Khách. </p>
-
-    <form action="" >
-        <input class="error" type="text" placeholder="Công ty của Quý Khách *">
-        <label>Quý khách chưa nhập Tên công ty</label>
-        <input type="text" placeholder="Họ Tên Quý Khách *">
-        <input type="text" placeholder="Địa chỉ *">
-        <input type="text" placeholder="Điện thoại *">
-        <input type="text" placeholder="Email *">
-        <textarea name="" cols="" rows="" placeholder="Nội dung *"></textarea>
+    <span style="color: blue">{{ content() }}</span>
+    <form action="" method="post">
+        <input
+            type="hidden"
+            name="{{ security.getTokenKey() }}"
+            value="{{ security.getToken() }}" />
+        <input type="text" name="company" placeholder="Công ty của Quý Khách *" required>
+        <input type="text" name="fullname" placeholder="Họ Tên Quý Khách *" required>
+        <input type="text" name="address" placeholder="Địa chỉ *" required>
+        <input type="text" name="phone" placeholder="Điện thoại *" required>
+        <input type="text" name="email" placeholder="Email *" required>
+        <textarea name="content" cols="" rows="" placeholder="Nội dung *" required></textarea>
         <button type="reset">Xóa</button>
-        <button type="submit">Gửi</button>
+        <button type="submit" name="fsubmit">Gửi</button>
     </form>
 
 </div>

@@ -34,7 +34,7 @@
                 </span>
                 </button>
                 <ul class="dropdown-menu profile-dropdown" role="menu">
-                    <li><a href="#"><i class="pg-settings_small"></i> {{ 'default.change-password'|i18n }}</a>
+                    <li><a href="{{ url('admin/user/changepassword') }}"><i class="pg-settings_small"></i> {{ 'default.change-password'|i18n }}</a>
                 </li>
             </li>
         </li>

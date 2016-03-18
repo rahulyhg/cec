@@ -4,6 +4,7 @@ namespace Article\Model;
 use Engine\Db\AbstractModel;
 use Engine\Behavior\Model\Imageable;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Validator\Regex;
 
 /**
  * Article Model.
@@ -108,6 +109,14 @@ class Article extends AbstractModel
      */
     public function validation()
     {
+        $this->validate(new Regex(
+            [
+                'field'  => 'cid',
+                'pattern' => '/[1-9]+/',
+                'message' => 'message-cid-notempty'
+            ]
+        ));
+
         $this->validate(new PresenceOf(
             [
                 'field'  => 'title',

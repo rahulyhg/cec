@@ -3,6 +3,7 @@ namespace User\Controller;
 
 use Core\Controller\AbstractAdminController;
 use User\Model\User as UserModel;
+use User\Model\Contact as ContactModel;
 
 /**
  * User admin home.
@@ -243,14 +244,14 @@ class AdminController extends AbstractAdminController
     public function deleteAction($id = 0)
     {
         $message = '';
-        $myUser = UserModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]])->delete();
+        $myUser = UserModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
 
         // delete avatar
         if ($myUser->avatar != "") {
             $this->file->delete($myUser->avatar);
         }
 
-        if ($myUser) {
+        if ($myUser->delete()) {
             $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
         } else {
             foreach ($myUser->getMessages() as $msg) {
@@ -260,6 +261,58 @@ class AdminController extends AbstractAdminController
         }
 
         return $this->response->redirect('admin/user');
+    }
+
+    /**
+     * User change password action.
+     *
+     * @return void
+     *
+     * @Route("/changepassword", methods={"GET", "POST"}, name="admin-user-changepassword")
+     */
+    public function changepasswordAction($id = 0)
+    {
+        $formData = [];
+        $message = '';
+
+        if ($this->request->hasPost('fsubmit')) {
+            if ($this->security->checkToken()) {
+                $formData = array_merge($formData, $this->request->getPost());
+                $myUser = UserModel::findFirst([
+                    'id = :id:',
+                    'bind' => ['id' => (int) $id]
+                ]);
+
+                $myUser->assign($formData);
+                if ($myUser->update()) {
+                    $this->flash->success(str_replace('###name###', $myUser->name, $this->lang->_('message-update-user-success')));
+                } else {
+                    foreach ($myUser->getMessages() as $msg) {
+                        $message .= $this->lang->_($msg->getMessage()) . '<br />';
+                    }
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->error($this->lang->_('default.message-csrf-protected'));
+            }
+        }
+
+        /**
+         * Find user by id
+         */
+        $myUser = UserModel::findFirst([
+            'id = :id:',
+            'bind' => ['id' => (int) $id]
+        ]);
+
+        $formData = $myUser->toArray();
+
+        $this->bc->add($this->lang->_('title-index'), 'admin/user');
+        $this->bc->add($this->lang->_('title-edit'), '');
+        $this->view->setVars([
+            'formData' => $formData,
+            'bc' => $this->bc->generate()
+        ]);
     }
 
     /**
@@ -439,5 +492,106 @@ class AdminController extends AbstractAdminController
         $this->session->destroy();
 
         return $this->response->redirect('admin/user/login');
+    }
+
+    /**
+     * Contact main action.
+     *
+     * @return void
+     *
+     * @Route("/showcontact", methods={"GET", "POST"}, name="admin-user-showcontact")
+     */
+    public function showcontactAction()
+    {
+        $currentUrl = $this->getCurrentUrl();
+        $formData = $jsonData = [];
+
+        if ($this->request->hasPost('fsubmitbulk')) {
+            if ($this->security->checkToken()) {
+                $bulkid = $this->request->getPost('fbulkid', null, []);
+
+                if (empty($bulkid)) {
+                    $this->flash->error($this->lang->_('default.no-bulk-selected'));
+                } else {
+                    $formData['fbulkid'] = $bulkid;
+
+                    if ($this->request->getPost('fbulkaction') == 'delete') {
+                        $deletearr = $bulkid;
+
+                        // Start a transaction
+                        $this->db->begin();
+                        $successId = [];
+
+                        foreach ($deletearr as $deleteid) {
+                            $myContacts = ContactModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $deleteid]])->delete();
+
+                            // If fail stop a transaction
+                            if ($myContacts == false) {
+                                $this->db->rollback();
+                                return;
+                            } else {
+                                $successId[] = $deleteid;
+                            }
+                        }
+                        // Commit a transaction
+                        if ($this->db->commit() == true) {
+                            $this->flash->success(str_replace('###idlist###', implode(', ', $successId), $this->lang->_('default.message-bulk-delete-success')));
+
+                            $formData['fbulkid'] = null;
+                        } else {
+                            $this->flash->error($this->lang->_('default.message-bulk-delete-fail'));
+                        }
+                    } else {
+                        $this->flash->warning($this->lang->_('default.message-no-bulk-action'));
+                    }
+                }
+            } else {
+                $this->flash->error($this->lang->_('default.message-csrf-protected'));
+            }
+        }
+
+        // Search keyword in specified field model
+        $searchKeywordInData = [
+            'fullname'
+        ];
+        $page = (int) $this->request->getQuery('page', null, 1);
+        $orderBy = (string) $this->request->getQuery('orderby', null, 'id');
+        $orderType = (string) $this->request->getQuery('ordertype', null, 'asc');
+        $keyword = (string) $this->request->getQuery('keyword', null, '');
+        // optional Filter
+        $id = (int) $this->request->getQuery('id', null, 0);
+        $name = (int) $this->request->getQuery('fullname', null, 0);
+        $status = (int) $this->request->getQuery('status', null, 0);
+        $datecreated = (int) $this->request->getQuery('datecreated', null, 0);
+        $formData['columns'] = '*';
+        $formData['conditions'] = [
+            'keyword' => $keyword,
+            'searchKeywordIn' => $searchKeywordInData,
+            'filterBy' => [
+                'id' => $id,
+                'fullname' => $name,
+                'datecreated' => $datecreated,
+            ],
+        ];
+        $formData['orderBy'] = $orderBy;
+        $formData['orderType'] = $orderType;
+
+        $paginateUrl = $currentUrl . '?orderby=' . $formData['orderBy'] . '&ordertype=' . $formData['orderType'];
+        if ($formData['conditions']['keyword'] != '') {
+            $paginateUrl .= '&keyword=' . $formData['conditions']['keyword'];
+        }
+
+        $myContacts = ContactModel::getList($formData, $this->recordPerPage, $page);
+
+        $this->bc->add($this->lang->_('title-index'), 'admin/user');
+        $this->bc->add($this->lang->_('title-listing'), '');
+        $this->view->setVars([
+            'formData' => $formData,
+            'myContacts' => $myContacts,
+            'recordPerPage' => $this->recordPerPage,
+            'bc' => $this->bc->generate(),
+            'paginator' => $myContacts,
+            'paginateUrl' => $paginateUrl
+        ]);
     }
 }

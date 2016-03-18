@@ -4,6 +4,7 @@ namespace Product\Model;
 use Engine\Db\AbstractModel;
 use Engine\Behavior\Model\Imageable;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Validator\Regex;
 
 /**
  * Product Model.
@@ -103,6 +104,15 @@ class Product extends AbstractModel
      */
     public function validation()
     {
+        $this->validate(new Regex(
+            [
+                'field'  => 'pcid',
+                'pattern' => '/[1-9]+/',
+                'message' => 'message-pcid-notempty'
+            ]
+        ));
+
+
         $this->validate(new PresenceOf(
             [
                 'field'  => 'name',

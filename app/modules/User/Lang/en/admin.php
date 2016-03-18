@@ -1,6 +1,7 @@
 <?php
 $messages = [
     'page-title-index' => 'Quản lý thành viên',
+    'page-title-showcontact' => 'Quản lý khách hàng',
     'page-title-create' => 'Thêm thành viên',
     'page-title-edit' => 'Sửa thành viên',
     'page-title-login' => 'Đăng nhập',
@@ -17,6 +18,13 @@ $messages = [
     'th.email' => 'Địa chỉ Email',
     'th.status' => 'Trạng thái',
     'td.edit' => 'Sửa',
+
+    'th.fullname' => 'Khách hàng',
+    'th.company' => 'Công ty',
+    'th.address' => 'Địa chỉ',
+    'th.phone' => 'Số điện thoại',
+    'th.fax' => 'Fax',
+    'th.content' => 'Nội dung',
 
     'form.name' => 'Tên',
     'form.email' => 'Địa chỉ Email',
