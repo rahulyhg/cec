@@ -45,7 +45,7 @@ class SiteController extends AbstractController
         ]);
         $myCategories = [];
         foreach ($myArticleCategories as $cat) {
-            if ($cat->root > 0) {
+            if ($cat->root > 1) {
                 $myCategories[$cat->root]->child[] = $cat;
             } else {
                 $myCategories[$cat->id] = $cat;
@@ -258,7 +258,7 @@ class SiteController extends AbstractController
         ]);
         $myCategories = [];
         foreach ($myArticleCategories as $cat) {
-            if ($cat->root > 0) {
+            if ($cat->root > 1) {
                 $myCategories[$cat->root]->child[] = $cat;
             } else {
                 $myCategories[$cat->id] = $cat;
@@ -329,8 +329,15 @@ class SiteController extends AbstractController
         ]);
     }
 
-    public function addcontact()
+    /**
+     * Homepage.
+     *
+     * @return void
+     *
+     * @Route("notfound", methods={"GET"}, name="site-article-index")
+     */
+    public function notfoundAction()
     {
-        echo 'a';
+        $this->response->setStatusCode('404', 'Page not found');
     }
 }

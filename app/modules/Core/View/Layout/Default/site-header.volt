@@ -10,13 +10,13 @@
     <nav>
         <ul>
             <li><a href="{{ url("") }}">Trang chủ</a></li>
-            {% for cat in myPcategories %}
+            {% for pcat in myPcategories %}
                 <li>
-                    <a href="{% if cat.count > 0 %}{{ url(cat.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ cat.name }}</a>
-                    {% if cat.child|length > 0%}
+                    <a href="{% if pcat.count > 0 %}{{ url(pcat.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ pcat.name }}</a>
+                    {% if pcat.child|length > 0%}
                         <div class="submenu">
-                        {% for child in cat.child %}
-                            <a href="{% if child.count > 0 %}{{ url(child.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ child.name }}</a>
+                        {% for pchild in pcat.child %}
+                            <a href="{% if pchild.count > 0 %}{{ url(pchild.getSeo().slug) }}{% else %}javascript:;{% endif %}">{{ pchild.name }}</a>
                         {% endfor %}
                         </div>
                     {% endif %}

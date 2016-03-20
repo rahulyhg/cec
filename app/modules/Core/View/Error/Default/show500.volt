@@ -1,1 +1,1 @@
-500 Internal Server Error page.(Custom)
+500 Internal Server Error page.(Core)

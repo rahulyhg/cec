@@ -1,1 +1,1 @@
-Not found (Core/Index/index)
+{% include '../../Core/View/Layout/Default/notfound.volt' %}

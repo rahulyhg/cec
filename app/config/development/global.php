@@ -10,7 +10,7 @@ return [
     ],
     'baseUrl' => 'cec.dev',
     'staticUrl' => 'cec.dev/public',
-    'prefix' => 'blog_',
+    'prefix' => 'cec_',
     'title' => 'CEC - Development',
     'template' => [
         // Controller Scope => Template Name
@@ -21,7 +21,6 @@ return [
     ],
     'defaultLanguage' => 'en', // Default language, which will be choose when region language is not available.
     'cookieEncryptionkey' => 'KkX+DVfEA>196yN',
-    'tinypngApiKey' => 'g2TEDWMaD9hpyQvqQFoFqNUqfLB-Jkcf', //nguyenducduy.it@gmail.com
     'cache' => [
         'lifetime' => 86400,
         'adapter' => 'File',

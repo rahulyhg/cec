@@ -1,7 +1,7 @@
 {% extends "../../Core/View/Layout/Default/admin-main.volt" %}
 
 {% block title %}
-    {{ 'page-title-index'|i18n }} | {{ config.global.title }}
+    {{ 'page-title-dashboard'|i18n }} | {{ config.global.title }}
 {% endblock %}
 
 {% block content %}
@@ -47,7 +47,7 @@
                       <span class="semi-bold">Phiên bản Mobile
                   </h3>
                   <p class="text-black hint-text">
-                      <a {{ url('admin/editfile/mfooter') }}>footer <i class="fa fa-pencil"></i></a>
+                      <a href="{{ url('admin/editfile/mfooter') }}">footer <i class="fa fa-pencil"></i></a>
                   </p>
                 </div>
               </div>

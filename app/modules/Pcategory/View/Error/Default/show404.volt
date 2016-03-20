@@ -1,1 +1,1 @@
-404 Not Found! (Category)
+{% include '../../Core/View/Layout/Default/forbidden.volt' %}

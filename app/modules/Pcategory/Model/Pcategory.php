@@ -3,6 +3,7 @@ namespace Pcategory\Model;
 
 use Engine\Db\AbstractModel;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Core\Model\Slug;
 
 /**
  * Product Category Model.
@@ -88,6 +89,13 @@ class Pcategory extends AbstractModel
 
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
+
+    public function getSeo()
+    {
+        return $this->getRelated('seo', [
+            'conditions' => 'model = "' . Slug::MODEL_PCATEGORY . '"'
+        ]);
+    }
 
     /**
      * Form field validation

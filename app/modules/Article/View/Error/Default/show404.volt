@@ -1,1 +1,1 @@
-404 Not Found! (Article)
+{% include '../../Core/View/Layout/Default/forbidden.volt' %}

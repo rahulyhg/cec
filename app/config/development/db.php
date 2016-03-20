@@ -7,5 +7,6 @@ return [
         'username' => 'root',
         'password' => 'uCGoiZzJd7L94TWWVbau7nMnt',
         'dbname' => 'cec',
+        'persistent' => true
     ]
 ];

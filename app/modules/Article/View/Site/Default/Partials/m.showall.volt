@@ -7,28 +7,38 @@
 </script>
 <ul class="projects" id="article-list">
     {% if myArticles.total_items > 0 %}
-        {% for item in myArticles.items %}
+    {% for item in myArticles.items %}
+        {% if item.type == php('\Article\Model\Article::TYPE_GALLERY') %}
             <li>
-                <a href="{{ url(item.getSeo().slug) }}">
+                <a href="javascript:;">
                     <img width="380" height="253" src="{{ static_url(item.getMediumImage()) }}" alt="" >
                     <h3>{{ item.title }}</h3>
                 </a>
                 <p>{{ item.seodescription }}</p>
                 {% set myGalleries = item.getGalleries() %}
                 {% if myGalleries|length > 0 %}
-                <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-                {% for img in myGalleries %}
-                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                        <a href="{{ static_url(img.path) }}" itemprop="contentUrl" data-size="964x1024">
-                            <img src="{{ static_url(img.getThumbnailImage()) }}" itemprop="thumbnail" alt="{{ img.name }}" />
-                        </a>
-                    <figcaption itemprop="caption description">{{ img.name }}</figcaption>
-                    </figure>
-                {% endfor %}
-                </div>
+                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    {% for img in myGalleries %}
+                        <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                            <a href="{{ static_url(img.path) }}" itemprop="contentUrl" data-size="964x1024">
+                                <img src="{{ static_url(img.getThumbnailImage()) }}" itemprop="thumbnail" alt="{{ img.name }}" />
+                            </a>
+                        <figcaption itemprop="caption description">{{ img.name }}</figcaption>
+                        </figure>
+                    {% endfor %}
+                    </div>
                 {% endif %}
             </li>
-        {% endfor %}
+        {% else %}
+            <li>
+                <a href="{{ url(item.getSeo().slug) }}">
+                    <img width="380" height="253" src="{{ static_url(item.getMediumImage()) }}" alt="" >
+                    <h3>{{ item.title }}</h3>
+                </a>
+                <p>{{ item.seodescription }}</p>
+            </li>
+        {% endif %}
+    {% endfor %}
     {% else %}
         No data found
     {% endif %}

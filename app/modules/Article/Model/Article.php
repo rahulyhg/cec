@@ -5,6 +5,7 @@ use Engine\Db\AbstractModel;
 use Engine\Behavior\Model\Imageable;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
 use Phalcon\Mvc\Model\Validator\Regex;
+use Core\Model\Slug;
 
 /**
  * Article Model.
@@ -103,6 +104,14 @@ class Article extends AbstractModel
     const TYPE_ACTIVITY = 3;
     const TYPE_PROJECT = 5;
     const TYPE_PAGE = 7;
+    const TYPE_GALLERY = 9;
+
+    public function getSeo()
+    {
+        return $this->getRelated('seo', [
+            'conditions' => 'model = "' . Slug::MODEL_ARTICLE . '"'
+        ]);
+    }
 
     /**
      * Form field validation
@@ -381,6 +390,9 @@ class Article extends AbstractModel
             case self::TYPE_PAGE:
                 $name = 'label-type-page';
                 break;
+            case self::TYPE_GALLERY:
+                $name = 'label-type-gallery';
+                break;
         }
 
         return $name;
@@ -404,6 +416,10 @@ class Article extends AbstractModel
             [
                 "name" => 'label-type-page',
                 "value" => self::TYPE_PAGE
+            ],
+            [
+                "name" => 'label-type-gallery',
+                "value" => self::TYPE_GALLERY
             ]
         ];
     }
@@ -414,7 +430,8 @@ class Article extends AbstractModel
             self::TYPE_NORMAL,
             self::TYPE_PROJECT,
             self::TYPE_ACTIVITY,
-            self::TYPE_PAGE
+            self::TYPE_PAGE,
+            self::TYPE_GALLERY
         ];
     }
 }

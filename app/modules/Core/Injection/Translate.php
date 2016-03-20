@@ -56,7 +56,7 @@ class Translate extends AbstractInjection
         $messages = [];
         $directory = $di->get('registry')->directories->modules . ucfirst($dispatcher->getModuleName()) . '/Lang/'
             . $languageCode . '/'
-            . $dispatcher->getControllerName();
+            . strtolower($dispatcher->getControllerName());
         $extension = '.php';
 
         if (file_exists($directory . $extension)) {

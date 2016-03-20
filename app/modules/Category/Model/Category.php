@@ -4,6 +4,7 @@ namespace Category\Model;
 use Engine\Db\AbstractModel;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
 use Phalcon\Mvc\Model\Validator\Regex;
+use Core\Model\Slug;
 
 /**
  * Category Model.
@@ -89,6 +90,13 @@ class Category extends AbstractModel
 
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
+
+    public function getSeo()
+    {
+        return $this->getRelated('seo', [
+            'conditions' => 'model = "' . Slug::MODEL_CATEGORY . '"'
+        ]);
+    }
 
     /**
      * Form field validation

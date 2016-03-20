@@ -3,16 +3,18 @@
  * Global configuration.
  */
 return [
-    'profiler' => true,
+    'profiler' => false,
     'version' => [
         'css' => 1,
         'js' =>1
     ],
-    'baseUrl' => 'http://blog.dev/',
-    'staticUrl' => 'http://blog.dev/public/',
-    'prefix' => 'blog_',
-    'title' => 'Open source Blogging Platform',
+    'baseUrl' => 'cec.dev',
+    'staticUrl' => 'cec.dev/public',
+    'prefix' => 'cec',
+    'title' => 'SaigonCEC',
     'template' => [
+        // Controller Scope => Template Name
+        'Index' => 'Default',
         'Error' => 'Default',
         'Admin' => 'Default',
         'Site' => 'Default'
@@ -61,8 +63,8 @@ return [
         ],
         'sanitize' => true
     ],
-    'category' => [
-        'directory' => '/uploads/category/',
+    'product_article' => [
+        'directory' => '/uploads/product_article/',
         'minsize' => 1000,
         'maxsize' => 1000000,
         'mimes' => [
@@ -71,6 +73,20 @@ return [
             'image/jpg',
             'image/png',
         ],
-        'sanitize' => true
+        'sanitize' => true,
+        'isoverwrite' => false
+    ],
+    'article_content' => [
+        'directory' => '/uploads/article_content/',
+        'minsize' => 1000,
+        'maxsize' => 1000000,
+        'mimes' => [
+            'image/gif',
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+        ],
+        'sanitize' => true,
+        'isoverwrite' => false
     ],
 ];

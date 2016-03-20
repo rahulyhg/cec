@@ -5,11 +5,13 @@ $messages = [
     'page-title-create' => 'Thêm thành viên',
     'page-title-edit' => 'Sửa thành viên',
     'page-title-login' => 'Đăng nhập',
+    'page-title-changepassword' => 'Đổi mật khẩu',
 
     'title-index' => 'Thành viên',
     'title-listing' => 'Tất cả',
     'title-create' => 'Thêm',
     'title-edit' => 'Sửa',
+    'title-changepassword' => 'Đổi mật khẩu',
 
     'label-status-enable' => 'Kích hoạt',
     'label-status-disable' => 'Khoá',
@@ -30,6 +32,8 @@ $messages = [
     'form.email' => 'Địa chỉ Email',
     'form.status' => 'Trạng thái',
     'form.password' => 'Mật khẩu',
+    'form.new-password' => 'Mật khẩu mới',
+    'form.repeat-new-password' => 'Nhập lại mật khẩu mới',
     'form.role' => 'Nhóm',
     'form.avatar' => 'Ảnh đại diện',
     'form.button-submit' => 'Đồng ý',
@@ -37,6 +41,7 @@ $messages = [
 
     'message-create-user-success' => 'Thành viên <strong>###name###</strong> đã được tạo.',
     'message-update-user-success' => 'Thành viên <strong>###name###</strong> đã được cập nhật.',
+    'message-changepassword-success' => 'Mật khẩu đã được cập nhật.',
     'message-name-notempty' => 'Chưa nhập tên.',
     'message-password-notempty' => 'Chưa nhập mật khẩu.',
     'message-email-notempty' => 'Chưa nhập địa chỉ email.',
@@ -47,6 +52,7 @@ $messages = [
     'message-delete-success' => 'Thành viên với ID <strong>###id###</strong> đã được xoá.',
     'message.wrong-password' => 'Mật khẩu sai.',
     'message.user-not-found' => 'Thành viên không tồn tại.',
+    'message-repeat-password-notmatch' => 'Mật khẩu nhập lại không trùng khớp',
 
     'form.login-username-label' => 'Đăng nhập',
     'form.login-username-placeholder' => 'Địa chỉ email',

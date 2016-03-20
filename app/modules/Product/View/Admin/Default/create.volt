@@ -38,7 +38,7 @@
                                     class="cs-select cs-skin-slide"
                                     data-init-plugin="cs-select"
                                     name="pcid">
-                                    <option value="0">----</option>
+                                    <option value="1">----</option>
                                     {% for n, cat in categories %}
                                         <option
                                             value="{{ cat.id }}"

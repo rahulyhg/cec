@@ -1,1 +1,1 @@
-404 Not Found! (Slug)
+{% include '../../Core/View/Layout/Default/forbidden.volt' %}

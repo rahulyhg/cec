@@ -17,6 +17,7 @@ $messages = [
     'label-type-project' => 'Dự án',
     'label-type-activity' => 'Hoạt động',
     'label-type-page' => 'Đơn lẻ',
+    'label-type-gallery' => 'Bộ sưu tập',
 
     'th.category' => 'Danh mục',
     'th.title' => 'Tiêu đề',

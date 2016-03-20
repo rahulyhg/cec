@@ -1,1 +1,1 @@
-404 Not Found! (Product)
+{% include '../../Core/View/Layout/Default/forbidden.volt' %}

@@ -184,6 +184,7 @@ trait Init
             'username' => $config->db->mysql->username,
             'password' => $config->db->mysql->password,
             'dbname' => $config->db->mysql->dbname,
+            'persistent' => $config->db->mysql->persistent,
         ]);
 
         $isProfiler = $config->global->profiler;
@@ -241,7 +242,7 @@ trait Init
             function () use ($config) {
                 if (ENV == ENV_PRODUCTION && isset($config->global->metadata)) {
                     $metaDataConfig = $config->global->metadata;
-                    $metadataAdapter = '\Phalcon\Mvc\Model\Metadata\\' . $metaDataConfig->adapter;
+                    $metadataAdapter = '\Phalcon\Mvc\Model\MetaData\\' . $metaDataConfig->adapter;
                     $metaData = new $metadataAdapter($config->global->metadata->toArray());
                 } else {
                     $metaData = new \Phalcon\Mvc\Model\MetaData\Memory();

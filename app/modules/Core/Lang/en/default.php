@@ -1,6 +1,7 @@
 <?php
 $default = [
     'page-title-editfile' => 'Sửa file',
+    'page-title-dashboard' => 'Thông tin chung',
     'default.button-create' => 'Thêm',
     'default.select-action' => '--- Chọn hành động ---',
     'default.select-delete' => 'Xoá',

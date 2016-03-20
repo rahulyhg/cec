@@ -270,7 +270,7 @@ class AdminController extends AbstractAdminController
      *
      * @Route("/changepassword", methods={"GET", "POST"}, name="admin-user-changepassword")
      */
-    public function changepasswordAction($id = 0)
+    public function changepasswordAction()
     {
         $formData = [];
         $message = '';
@@ -278,19 +278,25 @@ class AdminController extends AbstractAdminController
         if ($this->request->hasPost('fsubmit')) {
             if ($this->security->checkToken()) {
                 $formData = array_merge($formData, $this->request->getPost());
-                $myUser = UserModel::findFirst([
-                    'id = :id:',
-                    'bind' => ['id' => (int) $id]
-                ]);
 
-                $myUser->assign($formData);
-                if ($myUser->update()) {
-                    $this->flash->success(str_replace('###name###', $myUser->name, $this->lang->_('message-update-user-success')));
+                if ($formData['newpassword'] != $formData['repeatnewpassword']) {
+                    $this->flash->error($this->lang->_('message-repeat-password-notmatch'));
                 } else {
-                    foreach ($myUser->getMessages() as $msg) {
-                        $message .= $this->lang->_($msg->getMessage()) . '<br />';
+                    $myUser = UserModel::findFirst([
+                        'id = :id:',
+                        'bind' => ['id' => (int) $this->session->get('me')->id]
+                    ]);
+
+                    $myUser->password = $this->security->hash($formData['newpassword']);
+
+                    if ($myUser->update()) {
+                        $this->flash->success($this->lang->_('message-changepassword-success'));
+                    } else {
+                        foreach ($myUser->getMessages() as $msg) {
+                            $message .= $this->lang->_($msg->getMessage()) . '<br />';
+                        }
+                        $this->flash->error($message);
                     }
-                    $this->flash->error($message);
                 }
             } else {
                 $this->flash->error($this->lang->_('default.message-csrf-protected'));
@@ -302,13 +308,13 @@ class AdminController extends AbstractAdminController
          */
         $myUser = UserModel::findFirst([
             'id = :id:',
-            'bind' => ['id' => (int) $id]
+            'bind' => ['id' => (int) $this->session->get('me')->id]
         ]);
 
         $formData = $myUser->toArray();
 
         $this->bc->add($this->lang->_('title-index'), 'admin/user');
-        $this->bc->add($this->lang->_('title-edit'), '');
+        $this->bc->add($this->lang->_('title-changepassword'), '');
         $this->view->setVars([
             'formData' => $formData,
             'bc' => $this->bc->generate()

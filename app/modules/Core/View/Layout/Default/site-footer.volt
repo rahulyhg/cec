@@ -1,4 +1,4 @@
-        <footer>
+                <footer>
     <div class="rowfoot">
         <ul class="footermenu">
             <li>
@@ -22,4 +22,4 @@
         <p>© 2016 CEC Co., Ltd</p>
     </div>
 </footer>
-    
+        

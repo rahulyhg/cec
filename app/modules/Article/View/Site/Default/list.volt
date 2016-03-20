@@ -19,7 +19,13 @@
         {{ myArticle.title }}
     {% endif %}
 
-    Liên hệ
+    {% if slug == 'lien-he' %}
+        Liên hệ
+    {% endif %}
+
+    {% if slug == 'notfound' %}
+        404 Trang không tìm thấy
+    {% endif %}
 {% endblock %}
 
 {% block content %}
