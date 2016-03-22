@@ -28,6 +28,15 @@
                     {% endif %}
                 </li>
             {% endfor %}
+            <li>
+                <a href="{{ url('gioi-thieu') }}" class="aboutus">Giới thiệu CEC</a>
+            </li>
+            <li>
+                <a href="{{ url('lien-he') }}" class="contact">Liên hệ</a>
+            </li>
+            <li class="closemenu">
+                Đóng lại
+            </li>
         </ul>
     </nav>
 </header>

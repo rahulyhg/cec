@@ -66,7 +66,7 @@
                             <td class="v-align-middle">{{ item.content }}</td>
                             <td class="v-align-middle">
                                 <div class="btn-group btn-group-xs pull-right">
-                                    <a href="javascript:deleteConfirm('{{ url('admin/user/delete/' ~ item.id) }}', '{{ item.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                                    <a href="javascript:deleteConfirm('{{ url('admin/user/deletecontact/' ~ item.id) }}', '{{ item.id }}');" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             </td>
                         </tr>

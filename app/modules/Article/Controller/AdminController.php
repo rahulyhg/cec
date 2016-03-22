@@ -64,7 +64,7 @@ class AdminController extends AbstractAdminController
                             $coverpath[] = $myArticle->getThumbnailImage();
 
                             $result = $myArticle->delete();
-                            
+
                             // If fail stop a transaction
                             if ($result == false) {
                                 $this->db->rollback();
@@ -296,6 +296,17 @@ class AdminController extends AbstractAdminController
                         $this->file->delete($myArticle->getThumbnailImage());
                         $this->file->delete($myArticle->getMediumImage());
                     }
+                }
+
+                // Update count category if has change
+                if ($formData['cid'] != $myArticle->cid) {
+                    $myCategory = Category::findFirst($myArticle->cid);
+                    $myCategory->count = $myCategory->count - 1;
+                    $myCategory->update();
+
+                    $myNewCategory = Category::findFirst($formData['cid']);
+                    $myNewCategory->count = $myNewCategory->count + 1;
+                    $myNewCategory->update();
                 }
 
                 $myArticle->cid = (int) $formData['cid'];

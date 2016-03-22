@@ -47,6 +47,7 @@
                       <span class="semi-bold">Phiên bản Mobile
                   </h3>
                   <p class="text-black hint-text">
+                      <a href="{{ url('admin/editfile/mheader') }}">header <i class="fa fa-pencil"></i></a> <br/>
                       <a href="{{ url('admin/editfile/mfooter') }}">footer <i class="fa fa-pencil"></i></a>
                   </p>
                 </div>

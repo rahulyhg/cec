@@ -18,7 +18,7 @@
 
         </div>
         <div class="panel-body">
-            {% if mySlugs|length > 0 %}
+            {% if mySlugs.items|length > 0 %}
             <div class="table-responsive">
                 <form method="post" action="">
                 <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}" />
@@ -32,7 +32,6 @@
                                     {{ 'th.status'|i18n }}
                                 </a>
                             </th>
-                            <th style="width:12%"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,11 +43,6 @@
                             </td>
                             <td class="v-align-middle">{{ item.getModelName()|i18n }}</td>
                             <td class="v-align-middle"><span class="{{ item.getStatusStyle() }}">{{ item.getStatusName()|i18n }}</span></td>
-                            <td class="v-align-middle">
-                                <div class="btn-group btn-group-xs pull-right">
-                                    <a href="{{ url('admin/slug/edit/' ~ item.id) }}" class="btn btn-default"><i class="fa fa-pencil"></i>&nbsp; {{ 'td.edit'|i18n }}</a>
-                                </div>
-                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

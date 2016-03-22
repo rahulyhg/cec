@@ -9,6 +9,7 @@ use Category\Model\Category as CategoryModel;
 use Pcategory\Model\Pcategory as PcategoryModel;
 use User\Model\Contact as ContactModel;
 use Core\Helper\Utilities;
+use Company\Model\Company as CompanyModel;
 
 /**
  * Article site home.
@@ -81,7 +82,8 @@ class SiteController extends AbstractController
             'myCategories' =>  $myCategories,
             'myPcategories' =>  $myPcategories,
             'myArticleActivity' => $myArticleActivity,
-            'myArticleProject' => $myArticleProject
+            'myArticleProject' => $myArticleProject,
+            'myCompany' => CompanyModel::findFirst()
         ]);
     }
 
@@ -96,18 +98,20 @@ class SiteController extends AbstractController
     {
         //Special slug
         if ($slug == 'lien-he') {
+            $formData = [];
             if ($this->request->hasPost('fsubmit')) {
-                $formData = [];
-
                 if ($this->security->checkToken()) {
                     $formData = array_merge($formData, $this->request->getPost());
 
                     $myContact = new ContactModel();
                     $myContact->assign($formData);
                     if ($myContact->create()) {
+                        $formData = [];
                         $this->flash->success('Chúng tôi đã nhận được yêu cầu của quí khách. Cảm ơn.');
                     } else {
-                        $this->flash->error('Quí khách vui lòng nhập lại sau.');
+                        foreach ($myContact->getMessages() as $msg) {
+                            $this->flash->error($this->lang->_($msg->getMessage()));
+                        }
                     }
                 } else {
                     $this->flash->error($this->lang->_('default.message-csrf-protected'));
@@ -116,6 +120,7 @@ class SiteController extends AbstractController
             $this->bc->add('Trang chủ', '');
             $this->bc->add('Liên hệ', 'lien-he');
             $this->view->setVars([
+                'formData' => $formData,
                 'bc' => $this->bc->generate()
             ]);
         } else {
@@ -151,6 +156,26 @@ class SiteController extends AbstractController
                                 'status' => CategoryModel::STATUS_ENABLE
                             ]
                         ];
+
+                        // if only 1 article, go to it
+                        $myArticlesCount = ArticleModel::count([
+                            'cid = :cid:',
+                            'bind' => [
+                                'cid' => $mySlug->objectid
+                            ]
+                        ]);
+                        if ($myArticlesCount == 1) {
+                            return $this->response->redirect(
+                                ArticleModel::findFirst([
+                                    'cid = :cid:',
+                                    'bind' => [
+                                        'cid' => $mySlug->objectid
+                                    ]
+                                ])->getSeo()->slug,
+                                true,
+                                301
+                            );
+                        }
 
                         $myArticles = ArticleModel::getList($formData, $this->articleRecordPerPage, $page);
                         $myCategory = CategoryModel::findFirst($mySlug->objectid);
@@ -281,7 +306,8 @@ class SiteController extends AbstractController
         $this->view->setVars([
             'myCategories' =>  $myCategories,
             'myPcategories' =>  $myPcategories,
-            'slug' => $slug
+            'slug' => $slug,
+            'myCompany' => CompanyModel::findFirst()
         ]);
     }
 
@@ -330,11 +356,67 @@ class SiteController extends AbstractController
     }
 
     /**
-     * Homepage.
+     * load geo code.
      *
      * @return void
      *
-     * @Route("notfound", methods={"GET"}, name="site-article-index")
+     * @Route("getmap", methods={"GET"}, name="site-article-getmap")
+     */
+    public function getmapAction()
+    {
+        $address = $this->request->getQuery('address');
+
+        // url encode the address
+        $address = urlencode($address);
+
+        // google map geocode api url
+        $url = "http://maps.google.com/maps/api/geocode/json?address={$address}";
+
+        // get the json response
+        $resp_json = file_get_contents($url);
+
+        // decode the json
+        $resp = json_decode($resp_json, true);
+
+        // response status will be 'OK', if able to geocode given address
+        if($resp['status']=='OK'){
+
+            // get the important data
+            $lati = $resp['results'][0]['geometry']['location']['lat'];
+            $longi = $resp['results'][0]['geometry']['location']['lng'];
+            $formatted_address = $resp['results'][0]['formatted_address'];
+
+            // verify if data is complete
+            if($lati && $longi && $formatted_address){
+
+                // put the data in the array
+                $data_arr = array();
+
+                array_push(
+                    $data_arr,
+                        $lati,
+                        $longi,
+                        $formatted_address
+                    );
+
+                $this->view->setVars([
+                    '_result' => $data_arr
+                ]);
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * not found page.
+     *
+     * @return void
+     *
+     * @Route("notfound", methods={"GET"}, name="site-article-notfound")
      */
     public function notfoundAction()
     {

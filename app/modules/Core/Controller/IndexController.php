@@ -62,7 +62,9 @@ class IndexController extends AbstractAdminController
                 $file = 'app/modules/Core/View/Layout/Default/m.site-footer.volt';
                 break;
 
-
+            case 'mheader':
+                $file = 'app/modules/Core/View/Layout/Default/m.site-header.volt';
+                break;
         }
 
         $content = $this->filesystem->read($file);

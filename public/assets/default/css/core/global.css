@@ -175,3 +175,6 @@ footer p{display:block; overflow:hidden; padding:5px 0; font-size:14px; color:#f
 .my-gallery figcaption {
   display: none;
 }
+.rightcontact {
+    height: 30em;
+}

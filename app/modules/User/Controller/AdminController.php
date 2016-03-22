@@ -600,4 +600,28 @@ class AdminController extends AbstractAdminController
             'paginateUrl' => $paginateUrl
         ]);
     }
+
+    /**
+     * Delete contact action.
+     *
+     * @return void
+     *
+     * @Get("/deletecontact/{id:[0-9]+}", name="admin-user-deletecontact")
+     */
+    public function deletecontactAction($id = 0)
+    {
+        $message = '';
+        $myContact = ContactModel::findFirst(['id = :id:', 'bind' => ['id' => (int) $id]]);
+
+        if ($myContact->delete()) {
+            $this->flash->success(str_replace('###id###', $id, $this->lang->_('message-delete-success')));
+        } else {
+            foreach ($myContact->getMessages() as $msg) {
+                $message .= $this->lang->_($msg->getMessage()) . "</br>";
+            }
+            $this->flashSession->error($message);
+        }
+
+        return $this->response->redirect('admin/user/showcontact');
+    }
 }

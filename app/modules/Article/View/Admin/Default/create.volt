@@ -31,6 +31,21 @@
                         {{ content() }}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">
+                                {{ 'form.title'|i18n }}
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder=""
+                                    name="title"
+                                    value="{% if formData['title'] is defined %}{{ formData['title'] }}{% endif %}"
+                                     />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
                                 {{ 'form.category'|i18n }}
                                 <span class="required">*</span>
                             </label>
@@ -50,21 +65,6 @@
                                         </option>
                                     {% endfor %}
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">
-                                {{ 'form.title'|i18n }}
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-sm-10">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder=""
-                                    name="title"
-                                    value="{% if formData['title'] is defined %}{{ formData['title'] }}{% endif %}"
-                                     />
                             </div>
                         </div>
                         <div class="form-group">

@@ -16,6 +16,10 @@
         <link href="{{ static_url('min/index.php?g=cssDefaultCoreSite&rev=' ~ config.global.version.css) }}" rel="stylesheet" type="text/css">
         {% block css %}{% endblock %}
         <script type="text/javascript" src="{{ static_url('plugins/jquery/jquery-1.11.1.min.js') }}"></script>
+        <script type="text/javascript">
+            var root_url = "{{ url.getBaseUri() }}";
+            var static_url = "{{ url.getStaticBaseUri() }}";
+        </script>
     </head>
 
     <body>

@@ -194,6 +194,11 @@ return array (
         0 => 'error/*',
         1 => 'admin/*',
       ),
+      'Company' => 
+      array (
+        0 => 'error/*',
+        1 => 'admin/*',
+      ),
     ),
     10 => 
     array (
@@ -284,5 +289,6 @@ return array (
     3 => 'pcategory',
     4 => 'product',
     5 => 'slug',
+    6 => 'company',
   ),
 );

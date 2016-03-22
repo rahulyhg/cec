@@ -41,6 +41,26 @@ class AdminElements extends Component
                 ]
             ]
         ],
+        'Company' => [
+            'name' => 'Công ty',
+            'controller' => '',
+            'action' => '',
+            'icon' => 'CO',
+            'sub-menu' => [
+                'Create' => [
+                    'name' => 'Thêm',
+                    'controller' => 'admin',
+                    'action' => 'create',
+                    'icon' => '<i class="fa fa-plus"></i>',
+                ],
+                'Listing' => [
+                    'name' => 'Tất cả',
+                    'controller' => 'admin',
+                    'action' => '',
+                    'icon' => '<i class="fa fa-bars"></i>',
+                ]
+            ]
+        ],
         'Category' => [
             'name' => 'DM Bài viết',
             'controller' => '',

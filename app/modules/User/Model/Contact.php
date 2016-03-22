@@ -3,6 +3,7 @@ namespace User\Model;
 
 use Engine\Db\AbstractModel;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Validator\Email;
 
 /**
  * Contact Model.
@@ -105,6 +106,13 @@ class Contact extends AbstractModel
             [
                 'field'  => 'content',
                 'message' => 'message-content-notempty'
+            ]
+        ));
+
+        $this->validate(new Email(
+            [
+                'field'  => 'email',
+                'message' => 'message-email-invalid'
             ]
         ));
 

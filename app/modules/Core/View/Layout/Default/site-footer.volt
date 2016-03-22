@@ -12,14 +12,16 @@
                 <a href="{{ url('gioi-thieu') }}">Giới thiệu CEC</a>
             </li>
         </ul>
-        <div class="footcontact">Cty TNHH Xây Dựng và Môi Trường CEC <br/>
-           364/90B Tô Ký, Tân Chánh Hiệp, Q.12, HCMC. <br/>
-           Tel: 0987.40.58.67 - 0989.82.86.77<br/>
-           Fax: 08 6255 9179 <br/>
-           Email: tuvancec@gmail.com
+        <div class="footcontact">
+            {% if myCompany is defined %}
+                {{ myCompany.name }} <br/>
+                Địa chỉ: {{ myCompany.address }} <br/>
+                Tel: {{ myCompany.tel }} <br/>
+                Fax: {{ myCompany.fax }}  <br/>
+                Email: {{ myCompany.email }}
+            {% endif %}
         </div>
 
         <p>© 2016 CEC Co., Ltd</p>
     </div>
 </footer>
-        

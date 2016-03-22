@@ -58,3 +58,9 @@ img.edit-image {
 .panel .panel-heading .panel-title {
     font-family: "Arial"
 }
+body.menu-pin .page-sidebar {
+    width: 300px;
+}
+body.menu-pin .page-container .page-content-wrapper .content {
+    padding-left: 300px;
+}
