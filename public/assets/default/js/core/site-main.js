@@ -49,11 +49,6 @@ $(document).ready(function() {
         });
     });
 
-    if ($('#article-list').length > 0) {
-        // execute above function
-        initPhotoSwipeFromDOM('.my-gallery');
-    }
-
     $('.viewmore#product').on('click', function(e) {
         var is_busy = false;
         var stopped = false;
@@ -122,4 +117,5 @@ $(document).ready(function() {
         $("section").removeClass("fixbody");
         $("footer").removeClass("fixbody");
     });
+
 });

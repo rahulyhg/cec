@@ -40,26 +40,28 @@ class SiteController extends AbstractController
      */
     public function indexAction()
     {
+        $articleRootId = CategoryModel::findFirstByLft(1)->id;
         $myArticleCategories = CategoryModel::find([
             'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
             'order' => 'lft'
         ]);
         $myCategories = [];
         foreach ($myArticleCategories as $cat) {
-            if ($cat->root > 1) {
+            if ($cat->root > $articleRootId) {
                 $myCategories[$cat->root]->child[] = $cat;
             } else {
                 $myCategories[$cat->id] = $cat;
             }
         }
 
+        $productRootId = PcategoryModel::findFirstByLft(1)->id;
         $myProductCategories = PcategoryModel::find([
             'lft > 1 AND status = ' . PcategoryModel::STATUS_ENABLE,
             'order' => 'lft'
         ]);
         $myPcategories = [];
         foreach ($myProductCategories as $cat) {
-            if ($cat->root > 1) {
+            if ($cat->root > $productRootId) {
                 $myPcategories[$cat->root]->child[] = $cat;
             } else {
                 $myPcategories[$cat->id] = $cat;
@@ -277,26 +279,28 @@ class SiteController extends AbstractController
             }
         }
 
+        $articleRootId = CategoryModel::findFirstByLft(1)->id;
         $myArticleCategories = CategoryModel::find([
             'lft > 1 AND status = ' . CategoryModel::STATUS_ENABLE,
             'order' => 'lft'
         ]);
         $myCategories = [];
         foreach ($myArticleCategories as $cat) {
-            if ($cat->root > 1) {
+            if ($cat->root > $articleRootId) {
                 $myCategories[$cat->root]->child[] = $cat;
             } else {
                 $myCategories[$cat->id] = $cat;
             }
         }
 
+        $productRootId = PcategoryModel::findFirstByLft(1)->id;
         $myProductCategories = PcategoryModel::find([
             'lft > 1 AND status = ' . PcategoryModel::STATUS_ENABLE,
             'order' => 'lft'
         ]);
         $myPcategories = [];
         foreach ($myProductCategories as $cat) {
-            if ($cat->root > 1) {
+            if ($cat->root > $productRootId) {
                 $myPcategories[$cat->root]->child[] = $cat;
             } else {
                 $myPcategories[$cat->id] = $cat;
@@ -421,5 +425,42 @@ class SiteController extends AbstractController
     public function notfoundAction()
     {
         $this->response->setStatusCode('404', 'Page not found');
+    }
+
+    /**
+     * return html slider
+     *
+     * @return void
+     *
+     * @Route("getslide", methods={"GET"}, name="site-article-getslide")
+     */
+    public function getslideAction()
+    {
+        $html = '';
+        $html .= '<div class="wrapgalleria">';
+        $html .= '<a href="javascript:void(0)" class="closed">╳</a>';
+        $html .= '    <div id="galleria" class="owl-carousel owl-theme">';
+
+        $myArticleList = ArticleModel::find([
+            'type = :type:',
+            'bind' => [
+                'type' => ArticleModel::TYPE_GALLERY
+            ]
+        ]);
+
+        if ($myArticleList) {
+            foreach ($myArticleList as $item) {
+                $html .= '<div class="item"><img src="'. $this->url->getStaticBaseUri() . $item->image .'" alt=""></div>';
+            }
+        }
+
+        $html .= '    </div>';
+        $html .= '</div>';
+        $html .= '<div class="overlay"></div>';
+        echo $html;
+        exit();
+        // $this->view->setVars([
+        //     '_result' => $html
+        // ]);
     }
 }

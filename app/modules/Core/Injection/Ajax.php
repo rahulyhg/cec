@@ -38,6 +38,7 @@ class Ajax extends AbstractInjection
             ]);
 
             $this->getDI()->get('response')->setContentType('application/json', 'UTF-8');
+
             $data = $this->getDI()->get('view')->getParamsToView();
 
             /* Set global params if is not set in controller/action */

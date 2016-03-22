@@ -62,9 +62,9 @@ return array(
         '../assets/default/js/slug/admin-main.js',
     ],
     'jsDefaultCoreSite' => [
-        '../plugins/photoswipe/photoswipe.min.js',
-        '../plugins/photoswipe/photoswipe-ui-default.min.js',
-        '../assets/default/js/core/custom-photoswipe.js',
+        '../plugins/owl/owl.carousel.min.js',
+        // '../plugins/photoswipe/photoswipe-ui-default.min.js',
+        // '../assets/default/js/core/custom-photoswipe.js',
         '../assets/default/js/core/site-main.js',
     ],
     /**
@@ -113,7 +113,7 @@ return array(
         '../assets/default/css/core/home.css',
     ],
     'cssDefaultProductSite' => [
-        '../plugins/photoswipe/photoswipe.css',
+        '../plugins/owl/owl-carousel.css',
         '../plugins/photoswipe/default-skin/default-skin.css',
         '../assets/default/css/core/product.css',
     ],
@@ -124,7 +124,7 @@ return array(
         '../assets/default/css/core/m.home.css',
     ],
     'cssDefaultProductSiteMobile' => [
-        '../plugins/photoswipe/photoswipe.css',
+        '../plugins/owl/owl-carousel.css',
         '../plugins/photoswipe/default-skin/default-skin.css',
         '../assets/default/css/core/m.product.css',
     ],
