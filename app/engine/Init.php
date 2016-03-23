@@ -30,6 +30,7 @@ use Engine\Exception as EnException;
 use Engine\Exception\PrettyExceptions as PrettyExceptions;
 use League\Flysystem\Adapter\Local as FlyLocalAdapter;
 use League\Flysystem\Filesystem as FlySystem;
+use Vanchelo\Mailer\MailerService as MailerService;
 
 /**
  * Application initialization trait.
@@ -529,6 +530,22 @@ trait Init
             );
 
             return $filesystem;
+        });
+    }
+
+    /**
+     * Init send mail service.
+     *
+     * @param DI $di Dependency Injection.
+     *
+     * @return void
+     */
+    protected function _initMailer($di, $config)
+    {
+        $di->set('mailer', function() use ($config) {
+            $mailerService = new MailerService($config->global->mail->toArray());
+
+            return $mailerService->mailer();
         });
     }
 }

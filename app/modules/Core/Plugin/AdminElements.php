@@ -15,6 +15,26 @@ use Phalcon\Mvc\User\Component;
 class AdminElements extends Component
 {
     private $_leftbar = [
+        'Homepage' => [
+            'name' => 'Item trang chủ',
+            'controller' => '',
+            'action' => '',
+            'icon' => '<i class="fa fa-users"></i>',
+            'sub-menu' => [
+                'Create' => [
+                    'name' => 'Thêm',
+                    'controller' => 'admin',
+                    'action' => 'create',
+                    'icon' => '<i class="fa fa-plus"></i>',
+                ],
+                'Listing' => [
+                    'name' => 'Tất cả',
+                    'controller' => 'admin',
+                    'action' => '',
+                    'icon' => '<i class="fa fa-bars"></i>',
+                ]
+            ]
+        ],
         'User' => [
             'name' => 'Thành viên',
             'controller' => '',

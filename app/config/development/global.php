@@ -19,6 +19,20 @@ return [
         'Admin' => 'Default',
         'Site' => 'Default'
     ],
+    'mail' => [
+        'driver' => 'smtp', // mail, sendmail, smtp
+        'host'   => 'smtp.gmail.com',
+        'port'   => 465,
+        'from'   => [
+            'address' => 'contact.saigoncec@gmail.com',
+            'name'    => 'SaigonCEC Contact'
+        ],
+        'encryption' => 'ssl',
+        'username'   => 'contact.saigoncec@gmail.com',
+        'password'   => 'saigoncec2016',
+        'sendmail'   => '/usr/sbin/sendmail -bs',
+        // 'viewsDir'   => __DIR__ . '/../app/views/', // optional
+    ],
     'defaultLanguage' => 'en', // Default language, which will be choose when region language is not available.
     'cookieEncryptionkey' => 'KkX+DVfEA>196yN',
     'cache' => [
@@ -78,6 +92,19 @@ return [
     ],
     'article_content' => [
         'directory' => '/uploads/article_content/',
+        'minsize' => 1000,
+        'maxsize' => 1000000,
+        'mimes' => [
+            'image/gif',
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+        ],
+        'sanitize' => true,
+        'isoverwrite' => false
+    ],
+    'homepage' => [
+        'directory' => '/uploads/homepage/',
         'minsize' => 1000,
         'maxsize' => 1000000,
         'mimes' => [

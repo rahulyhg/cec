@@ -89,4 +89,17 @@ return [
         'sanitize' => true,
         'isoverwrite' => false
     ],
+    'homepage' => [
+        'directory' => '/uploads/homepage/',
+        'minsize' => 1000,
+        'maxsize' => 1000000,
+        'mimes' => [
+            'image/gif',
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+        ],
+        'sanitize' => true,
+        'isoverwrite' => false
+    ],
 ];

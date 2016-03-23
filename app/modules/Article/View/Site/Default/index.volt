@@ -11,14 +11,14 @@
 <section>
     <div class="hometitle"><h3>Hoạt động tại CEC</h3></div>
     <ul class="whatwedo">
-        {% if myArticleActivity|length > 0 %}
-            {% for item in myArticleActivity %}
+        {% if myHomepageActivity|length > 0 %}
+            {% for item in myHomepageActivity %}
                 <li>
-                    <a href="{{ url(item.getSeo().slug) }}">
+                    <a href="{{ item.url }}">
                         <img width="380" height="253" src="{{ static_url(item.getThumbnailImage()) }}" alt="" >
                         <h3>{{ item.title }}</h3>
                     </a>
-                    <p>{{ item.seodescription }}</p>
+                    <p>{{ item.summary }}</p>
                 </li>
             {% endfor %}
         {% endif %}

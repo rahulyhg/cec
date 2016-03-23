@@ -50,6 +50,9 @@ return array(
         '../plugins/summernote/js/summernote.min.js',
         '../assets/default/js/product/admin-main.js',
     ],
+    'jsDefaultHomepageAdmin' => [
+        '../assets/default/js/homepage/admin-main.js',
+    ],
     'jsDefaultCategoryAdmin' => [
         '../plugins/jquery-nestable/jquery.nestable.min.js',
         '../assets/default/js/category/admin-nestables.js',

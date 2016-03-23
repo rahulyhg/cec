@@ -52,7 +52,8 @@ class Application extends PhApplication
             'crypt',
             'file',
             'filesystem',
-            'flash'
+            'flash',
+            'mailer'
         ],
         'console' => [
             'environment',

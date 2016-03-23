@@ -1,14 +1,12 @@
 <?php
-namespace Company\Model;
+namespace Homepage\Model;
 
 use Engine\Db\AbstractModel;
-use Engine\Behavior\Model\Imageable;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
 use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Email;
+use Engine\Behavior\Model\Imageable;
 
 /**
- * Company Model.
+ * Homepage Model.
  *
  * @category  ThePhalconPHP
  * @author    Nguyen Duc Duy <nguyenducduy.it@gmail.com>
@@ -16,67 +14,92 @@ use Phalcon\Mvc\Model\Validator\Email;
  * @license   New BSD License
  * @link      http://thephalconphp.com/
  *
- * @Source('cec_company');
+ * @Source('cec_homepage');
  * @Behavior('\Engine\Behavior\Model\Timestampable');
  */
-class Company extends AbstractModel
+class Homepage extends AbstractModel
 {
     /**
     * @Primary
     * @Identity
-    * @Column(type="integer", nullable=false, column="co_id")
+    * @Column(type="integer", nullable=false, column="hp_id")
     */
     public $id;
 
     /**
-    * @Column(type="string", nullable=true, column="co_name")
+    * @Column(type="string", nullable=true, column="hp_title")
     */
-    public $name;
+    public $title;
 
     /**
-    * @Column(type="string", nullable=true, column="co_address")
+    * @Column(type="string", nullable=true, column="hp_summary")
     */
-    public $address;
+    public $summary;
 
     /**
-    * @Column(type="string", nullable=true, column="co_email")
+    * @Column(type="string", nullable=true, column="hp_seo_description")
     */
-    public $email;
+    public $seodescription;
 
     /**
-    * @Column(type="string", nullable=true, column="co_tel")
+    * @Column(type="string", nullable=true, column="hp_seo_keyword")
     */
-    public $tel;
+    public $seokeyword;
 
     /**
-    * @Column(type="string", nullable=false, column="co_fax")
+    * @Column(type="string", nullable=false, column="hp_image")
     */
-    public $fax;
+    public $image;
 
     /**
-    * @Column(type="integer", nullable=true, column="co_type")
+    * @Column(type="string", nullable=false, column="hp_url")
+    */
+    public $url;
+
+    /**
+    * @Column(type="integer", nullable=true, column="hp_display_order")
+    */
+    public $displayorder;
+
+    /**
+    * @Column(type="integer", nullable=true, column="hp_type")
     */
     public $type;
 
     /**
-    * @Column(type="integer", nullable=false, column="co_status")
+    * @Column(type="integer", nullable=false, column="hp_status")
     */
     public $status;
 
     /**
-    * @Column(type="integer", nullable=true, column="co_datecreated")
+    * @Column(type="integer", nullable=true, column="hp_datecreated")
     */
     public $datecreated;
 
     /**
-    * @Column(type="integer", nullable=true, column="co_datemodified")
+    * @Column(type="integer", nullable=true, column="hp_datemodified")
     */
     public $datemodified;
 
     const STATUS_ENABLE = 1;
     const STATUS_DISABLE = 3;
-    const TYPE_ROOT = 1;
-    const TYPE_LEAF = 3;
+
+    /**
+     * Initialize model
+     */
+    public function initialize()
+    {
+        $config = $this->getDI()->get('config');
+
+        $this->image = $config->global->homepage->directory . date('Y') . '/' . date('m');
+        $this->addBehavior(new Imageable([
+            'uploadPath' => $this->image,
+            'sanitize' => $config->global->homepage->sanitize,
+            'allowedFormats' => $config->global->homepage->mimes->toArray(),
+            'allowedMinimumSize' => $config->global->homepage->minsize,
+            'allowedMaximunSize' => $config->global->homepage->maxsize
+        ]));
+    }
 
     /**
      * Form field validation
@@ -85,39 +108,24 @@ class Company extends AbstractModel
     {
         $this->validate(new PresenceOf(
             [
-                'field'  => 'name',
-                'message' => 'message-name-notempty'
+                'field'  => 'title',
+                'message' => 'message-title-notempty'
             ]
         ));
 
         $this->validate(new PresenceOf(
             [
-                'field'  => 'email',
-                'message' => 'message-email-notempty'
+                'field'  => 'image',
+                'message' => 'message-image-notempty'
             ]
         ));
 
         $this->validate(new PresenceOf(
             [
-                'field'  => 'tel',
-                'message' => 'message-tel-notempty'
+                'field'  => 'url',
+                'message' => 'message-url-notempty'
             ]
         ));
-
-        $this->validate(new PresenceOf(
-            [
-                'field'  => 'status',
-                'message' => 'message-status-notempty'
-            ]
-        ));
-
-        $this->validate(new Email(
-            [
-                'field'  => 'email',
-                'message' => 'message-email-invalid'
-            ]
-        ));
-
 
         return $this->validationHasFailed() != true;
     }
@@ -261,5 +269,33 @@ class Company extends AbstractModel
         }
 
         return $class;
+    }
+
+    /**
+     * Get thumbnail image
+     * @return [string] Images thumb url.
+     */
+    public function getThumbnailImage()
+    {
+        $pos = strrpos($this->image, '.');
+        $extPart = substr($this->image, $pos+1) != '' ? substr($this->image, $pos+1) : 'jpeg';
+        $namePart =  substr($this->image,0, $pos);
+        $file = $namePart . '-thumb.' . $extPart;
+
+        return $file;
+    }
+
+    /**
+     * Get medium image
+     * @return [string] Images medium url.
+     */
+    public function getMediumImage()
+    {
+        $pos = strrpos($this->image, '.');
+        $extPart = substr($this->image, $pos+1) != '' ? substr($this->image, $pos+1) : 'jpeg';
+        $namePart =  substr($this->image,0, $pos);
+        $file = $namePart . '-medium.' . $extPart;
+
+        return $file;
     }
 }

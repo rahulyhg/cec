@@ -68,6 +68,10 @@ return [
             'error/*',
             'admin/*',
         ],
+        'Homepage' => [
+            'error/*',
+            'admin/*',
+        ],
     ],
 
     ROLE_MOD => [

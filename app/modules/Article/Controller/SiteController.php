@@ -10,6 +10,7 @@ use Pcategory\Model\Pcategory as PcategoryModel;
 use User\Model\Contact as ContactModel;
 use Core\Helper\Utilities;
 use Company\Model\Company as CompanyModel;
+use Homepage\Model\Homepage as HomepageModel;
 
 /**
  * Article site home.
@@ -68,9 +69,9 @@ class SiteController extends AbstractController
             }
         }
 
-        $myArticleActivity = ArticleModel::find([
-            'conditions' => 'type = ' . ArticleModel::TYPE_ACTIVITY,
-            'order' => 'id ASC',
+        $myHomepageActivity = HomepageModel::find([
+            'conditions' => 'status = ' . HomepageModel::STATUS_ENABLE,
+            'order' => 'id DESC',
             'limit' => 3
         ]);
 
@@ -83,7 +84,7 @@ class SiteController extends AbstractController
         $this->view->setVars([
             'myCategories' =>  $myCategories,
             'myPcategories' =>  $myPcategories,
-            'myArticleActivity' => $myArticleActivity,
+            'myHomepageActivity' => $myHomepageActivity,
             'myArticleProject' => $myArticleProject,
             'myCompany' => CompanyModel::findFirst()
         ]);
@@ -108,6 +109,19 @@ class SiteController extends AbstractController
                     $myContact = new ContactModel();
                     $myContact->assign($formData);
                     if ($myContact->create()) {
+                        // send email
+                        $this->mailer->send('Email/default', [
+                            'company' => 'Công ty TNHH Xây Dựng & Môi Trường CEC',
+                            'name' => $myContact->fullname,
+                            'tel' => $myContact->phone,
+                            'email' => $myContact->email,
+                            'address' => $myContact->address,
+                            'content' => $myContact->content
+                            ], function($message) {
+                            $message->to(CompanyModel::findFirst()->email);
+                            $message->subject('Khách hàng mới');
+                        });
+
                         $formData = [];
                         $this->flash->success('Chúng tôi đã nhận được yêu cầu của quí khách. Cảm ơn.');
                     } else {
